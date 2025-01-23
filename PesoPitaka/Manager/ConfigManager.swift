@@ -54,7 +54,7 @@ extension CommonModel {
         model.awkward = AwkwardManager.getIDFV()
         model.atmosphere = UIDevice.current.systemVersion
         model.silently = "vpesoapi"
-        model.gently = ""
+        model.gently = UserDefaults.standard.object(forKey: LOGIN_TOKEN) as? String ?? ""
         model.blew = AwkwardManager.getIDFV()
         return model
     }
@@ -119,6 +119,16 @@ extension UIColor {
 }
 
 class DeviceMetrics {
+    
+    static var navigationBarHeight:CGFloat {
+        var navBarHeight: CGFloat = 64.0;
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.delegate!.window!!
+            let safeTop = window.safeAreaInsets.top
+            navBarHeight = safeTop > 0 ? (safeTop + 44) : 44
+        }
+        return navBarHeight
+    }
     
     static var statusBarHeight: CGFloat {
         return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.statusBarManager?.statusBarFrame.height ?? 0

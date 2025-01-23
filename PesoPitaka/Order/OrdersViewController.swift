@@ -8,12 +8,20 @@
 import UIKit
 
 class OrdersViewController: BaseViewController {
+    
+    lazy var orView: OrderView = {
+        let orView = OrderView()
+        return orView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = .purple
+        view.addSubview(orView)
+        orView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
 

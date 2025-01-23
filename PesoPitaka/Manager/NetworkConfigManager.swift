@@ -9,6 +9,8 @@ import Alamofire
 import Combine
 import UIKit
 
+let SCHEME_URL = firstUrl + middleUrl + lastURL
+
 enum ContentType: String {
     case json = "application/json"
     case formUrlEncoded = "application/x-www-form-urlencoded"
@@ -110,8 +112,8 @@ final class NetworkConfigManager {
     
     // MARK: - pic
     func requsetData(url: String,
-                    parameters: [String: String]? = nil,
-                    contentType: ContentType? = nil)
+                     parameters: [String: String]? = nil,
+                     contentType: ContentType? = nil)
     -> AnyPublisher<Data, Error> {
         return Future { promise in
             var headers: HTTPHeaders = [:]

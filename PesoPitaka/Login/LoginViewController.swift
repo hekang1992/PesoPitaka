@@ -26,11 +26,11 @@ class LoginViewController: BaseViewController {
         
         loginView.sendBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.getCodeInfo()
-        }).disposed(by: disposing)
+        }).disposed(by: disposeBag)
         
         loginView.loginBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.getLoginInfo()
-        }).disposed(by: disposing)
+        }).disposed(by: disposeBag)
         
         
     }

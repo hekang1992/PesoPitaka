@@ -18,6 +18,8 @@ target 'PesoPitaka' do
   
   pod 'Kingfisher', '~> 7.11.0'
   
+  pod 'TYAlertController', '~> 1.2.0'
+  
   pod 'IQKeyboardManagerSwift', '~> 6.5.16'
   
   pod 'SAMKeychain', '~> 1.5.3'

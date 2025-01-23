@@ -10,13 +10,13 @@ import RxSwift
 
 class BaseView: UIView {
 
-    let disposing = DisposeBag()
+    let disposeBag = DisposeBag()
 
 }
 
 class BaseViewCell: UITableView {
 
-    let disposing = DisposeBag()
+    let disposeBag = DisposeBag()
 
 }
 

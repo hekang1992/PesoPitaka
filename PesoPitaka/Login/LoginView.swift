@@ -255,7 +255,7 @@ extension LoginView {
             guard let self = self else { return }
             cyBtn.isSelected.toggle()
             isClickPri = cyBtn.isSelected ? "0" : "1"
-        }).disposed(by: disposing)
+        }).disposed(by: disposeBag)
         
         
     }

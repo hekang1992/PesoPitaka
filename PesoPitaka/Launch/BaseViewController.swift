@@ -11,7 +11,7 @@ import Combine
 
 class BaseViewController: UIViewController {
     
-    let disposing = DisposeBag()
+    let disposeBag = DisposeBag()
 
     var cancellables = Set<AnyCancellable>()
     

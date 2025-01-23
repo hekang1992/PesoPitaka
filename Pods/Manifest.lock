@@ -18,6 +18,7 @@ PODS:
   - SAMKeychain (1.5.3)
   - SnapKit (5.7.1)
   - Toast-Swift (5.1.1)
+  - TYAlertController (1.2.0)
 
 DEPENDENCIES:
   - IQKeyboardManagerSwift (~> 6.5.16)
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - SAMKeychain (~> 1.5.3)
   - SnapKit (~> 5.7.1)
   - Toast-Swift (~> 5.1.1)
+  - TYAlertController (~> 1.2.0)
 
 SPEC REPOS:
   trunk:
@@ -43,6 +45,7 @@ SPEC REPOS:
     - SAMKeychain
     - SnapKit
     - Toast-Swift
+    - TYAlertController
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
@@ -56,7 +59,8 @@ SPEC CHECKSUMS:
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   Toast-Swift: 7a03a532afe3a560d4044bc7c237e2864d295173
+  TYAlertController: c121090edb0bea7426f987da94cdddd81eef4231
 
-PODFILE CHECKSUM: f86382f08854a2c8020ed244a8d5b6022aa4e9f9
+PODFILE CHECKSUM: 502cd725563188a7984335f400da6fc7872e5c4e
 
 COCOAPODS: 1.16.2
