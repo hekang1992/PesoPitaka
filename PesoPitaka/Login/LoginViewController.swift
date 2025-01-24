@@ -53,7 +53,8 @@ extension LoginViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     
                 }
                 ToastConfig.showMessage(form: self.view, message: model.washed)
@@ -79,7 +80,8 @@ extension LoginViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     let phone = model.henceforth.phone ?? ""
                     let token = model.henceforth.token ?? ""
                     LoginSuccessConfig.saveLoginInfo(phone: phone, token: token)

@@ -12,25 +12,31 @@ import Combine
 class BaseViewController: UIViewController {
     
     let disposeBag = DisposeBag()
-
+    
     var cancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
     }
     
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension BaseViewController {
+    
+    func toGuideVc(from type: String, week: String) {
+        if type == "familiarf" {
+            let oneVc = GuideOneViewController()
+            oneVc.week.accept(week)
+            self.navigationController?.pushViewController(oneVc, animated: true)
+        }else if type == "familiarg" {
+            let twoVc = TwoAuthViewController()
+            twoVc.week.accept(week)
+            self.navigationController?.pushViewController(twoVc, animated: true)
+        }
     }
-    */
-
+    
+    
 }

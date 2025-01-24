@@ -167,7 +167,8 @@ class SettingViewController: BaseViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     ToastConfig.showMessage(form: view, message: "It is already the latest version.")
                 }
             } catch  {
@@ -224,7 +225,8 @@ class SettingViewController: BaseViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     self.dismiss(animated: true) {
                         LoginSuccessConfig.removeLoginInfo()
                         loginSuccessPush.toRootVc()
@@ -249,7 +251,8 @@ class SettingViewController: BaseViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     self.dismiss(animated: true) {
                         LoginSuccessConfig.removeLoginInfo()
                         loginSuccessPush.toRootVc()

@@ -45,16 +45,22 @@ class GuideViewController: BaseViewController {
         
         guideView.nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             let week = self?.dict.value?["week"] ?? ""
-            self?.productDetailInfo(from: week)
+            self?.productDetailInfo(from: week, type: "1")
         }).disposed(by: disposeBag)
         
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let week = self.dict.value?["week"] ?? ""
+        productDetailInfo(from: week, type: "0")
+    }
+    
 }
 
 extension GuideViewController {
     
-    private func productDetailInfo(from weak: String) {
+    private func productDetailInfo(from weak: String, type: String) {
         let dict = ["curiosity": "0",
                     "week": weak,
                     "creature": "maga"]
@@ -67,9 +73,15 @@ extension GuideViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     if let authModel = model.henceforth.indicating, let help = authModel.help, !help.isEmpty {
-                        self.toGuideVc(from: help, week: weak)
+                        if type == "1" {
+                            self.toGuideVc(from: help, week: weak)
+                        }else {
+                            //UI
+                            uiInfo(for: model)
+                        }
                     }else {
                         
                     }
@@ -81,11 +93,34 @@ extension GuideViewController {
         result.store(in: &cancellables)
     }
     
-    private func toGuideVc(from type: String, week: String) {
-        if type == "familiarf" {
-            let oneVc = GuideOneViewController()
-            oneVc.week.accept(week)
-            self.navigationController?.pushViewController(oneVc, animated: true)
+    private func uiInfo(for model: BaseModel) {
+        let type = model.henceforth.indicating?.help ?? ""
+        let defaultImage = UIImage(named: "futhaimage")
+        let processImage = UIImage(named: "processimaged")
+        switch type {
+        case "familiarf":
+            
+            break
+        case "familiarg":
+            guideView.oneView.bgImageView.image = defaultImage
+        case "familiarh":
+            guideView.oneView.bgImageView.image = defaultImage
+            guideView.twoView.bgImageView.image = defaultImage
+        case "familiari":
+            guideView.oneView.bgImageView.image = defaultImage
+            guideView.twoView.bgImageView.image = defaultImage
+            guideView.threeView.bgImageView.image = processImage
+        case "familiarj":
+            guideView.oneView.bgImageView.image = defaultImage
+            guideView.twoView.bgImageView.image = defaultImage
+            guideView.threeView.bgImageView.image = defaultImage
+            guideView.fourView.bgImageView.image = defaultImage
+        default:
+            guideView.oneView.bgImageView.image = defaultImage
+            guideView.twoView.bgImageView.image = defaultImage
+            guideView.threeView.bgImageView.image = processImage
+            guideView.fourView.bgImageView.image = defaultImage
+            guideView.fiveView.bgImageView.image = defaultImage
         }
     }
     

@@ -39,6 +39,9 @@
 		73D1D01D2D4371CD0065AD80 /* AlertSuccessNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D01C2D4371CD0065AD80 /* AlertSuccessNameView.swift */; };
 		73D1D01F2D4372350065AD80 /* OneCommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D01E2D4372350065AD80 /* OneCommonView.swift */; };
 		73D1D0212D4372410065AD80 /* TwoCommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0202D4372410065AD80 /* TwoCommonView.swift */; };
+		73D1D0282D43B8430065AD80 /* TwoAuthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0272D43B8430065AD80 /* TwoAuthViewCell.swift */; };
+		73D1D02A2D43B8A70065AD80 /* OneAuthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0292D43B8A70065AD80 /* OneAuthViewCell.swift */; };
+		73D1D02C2D43B8D40065AD80 /* TwoAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D02B2D43B8D40065AD80 /* TwoAuthViewController.swift */; };
 		73D9DECE2D3FED3B00AD810A /* LoadingConfing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */; };
 		73D9DED02D3FEEE200AD810A /* LoginSuccessConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */; };
 		73D9DED62D3FF83200AD810A /* UserCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */; };
@@ -85,6 +88,9 @@
 		73D1D01C2D4371CD0065AD80 /* AlertSuccessNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSuccessNameView.swift; sourceTree = "<group>"; };
 		73D1D01E2D4372350065AD80 /* OneCommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneCommonView.swift; sourceTree = "<group>"; };
 		73D1D0202D4372410065AD80 /* TwoCommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCommonView.swift; sourceTree = "<group>"; };
+		73D1D0272D43B8430065AD80 /* TwoAuthViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoAuthViewCell.swift; sourceTree = "<group>"; };
+		73D1D0292D43B8A70065AD80 /* OneAuthViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneAuthViewCell.swift; sourceTree = "<group>"; };
+		73D1D02B2D43B8D40065AD80 /* TwoAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoAuthViewController.swift; sourceTree = "<group>"; };
 		73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingConfing.swift; sourceTree = "<group>"; };
 		73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessConfig.swift; sourceTree = "<group>"; };
 		73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +249,7 @@
 		73D1CFFD2D4257540065AD80 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				73D1D0242D43B8110065AD80 /* SpecialVc */,
 				73D1D0092D4269DC0065AD80 /* OneVc */,
 				73D1D0082D4269CC0065AD80 /* GuideVc */,
 			);
@@ -273,6 +280,16 @@
 				73D1D0202D4372410065AD80 /* TwoCommonView.swift */,
 			);
 			path = OneVc;
+			sourceTree = "<group>";
+		};
+		73D1D0242D43B8110065AD80 /* SpecialVc */ = {
+			isa = PBXGroup;
+			children = (
+				73D1D0292D43B8A70065AD80 /* OneAuthViewCell.swift */,
+				73D1D0272D43B8430065AD80 /* TwoAuthViewCell.swift */,
+				73D1D02B2D43B8D40065AD80 /* TwoAuthViewController.swift */,
+			);
+			path = SpecialVc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -412,6 +429,7 @@
 				73807D2F2D32BA8000F8B90D /* AppDelegate.swift in Sources */,
 				738D45452D3F763A00EE9E66 /* NetworkManager.swift in Sources */,
 				73D9DEE02D40AF8E00AD810A /* HeadView.swift in Sources */,
+				73D1D02A2D43B8A70065AD80 /* OneAuthViewCell.swift in Sources */,
 				73D1D0052D4263CF0065AD80 /* GuideListView.swift in Sources */,
 				73D1D01B2D4352290065AD80 /* CameraPhotoManager.swift in Sources */,
 				73D1D0072D4269920065AD80 /* GuideOneViewController.swift in Sources */,
@@ -420,8 +438,10 @@
 				73807D412D32C09300F8B90D /* LaunchViewController.swift in Sources */,
 				73807D3F2D32C07700F8B90D /* BaseViewController.swift in Sources */,
 				738D45502D3F798900EE9E66 /* LoginView.swift in Sources */,
+				73D1D0282D43B8430065AD80 /* TwoAuthViewCell.swift in Sources */,
 				73D9DED82D3FF85600AD810A /* OrdersViewController.swift in Sources */,
 				73D9DECE2D3FED3B00AD810A /* LoadingConfing.swift in Sources */,
+				73D1D02C2D43B8D40065AD80 /* TwoAuthViewController.swift in Sources */,
 				73D1CFFA2D424C2D0065AD80 /* SettingViewController.swift in Sources */,
 				738D454E2D3F78F000EE9E66 /* LoginViewController.swift in Sources */,
 				73D9DEE22D40B33E00AD810A /* OrderView.swift in Sources */,

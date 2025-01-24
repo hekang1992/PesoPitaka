@@ -74,7 +74,8 @@ class NetworkManager {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     if let model = model.henceforth.third {
                         thridToUfc(from: model)
                     }

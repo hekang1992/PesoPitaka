@@ -20,13 +20,9 @@ class TwoCommonView: BaseView {
         return descLabel
     }()
     
-    lazy var cilckBtn: UIButton = {
-        let cilckBtn = UIButton(type: .custom)
-        cilckBtn.setTitleColor(.init(colorHexStr: "#717171"), for: .normal)
-        cilckBtn.setTitle("Input your information", for: .normal)
-        cilckBtn.titleLabel?.font = .regularFontOfSize(size: 15)
-        cilckBtn.contentHorizontalAlignment = .right
-        return cilckBtn
+    lazy var nameLabel: UILabel = {
+        let nameLabel = UIUtils.createLabel(font: .regularFontOfSize(size: 14), textColor: .init(colorHexStr: "#717171")!, textAlignment: .right)
+        return nameLabel
     }()
     
     lazy var rightImageView: UIImageView = {
@@ -39,7 +35,7 @@ class TwoCommonView: BaseView {
         super.init(frame: frame)
         addSubview(bgView)
         bgView.addSubview(descLabel)
-        bgView.addSubview(cilckBtn)
+        bgView.addSubview(nameLabel)
         bgView.addSubview(rightImageView)
         
         bgView.snp.makeConstraints { make in
@@ -51,7 +47,7 @@ class TwoCommonView: BaseView {
             make.height.equalTo(20)
             make.width.equalTo(88)
         }
-        cilckBtn.snp.makeConstraints { make in
+        nameLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-20)
             make.height.equalTo(20)

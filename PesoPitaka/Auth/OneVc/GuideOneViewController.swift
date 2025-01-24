@@ -8,6 +8,7 @@
 import UIKit
 import RxRelay
 import TYAlertController
+import BRPickerView
 
 class GuideOneViewController: BaseViewController {
     
@@ -18,6 +19,8 @@ class GuideOneViewController: BaseViewController {
     var authModel = BehaviorRelay<instantlyModel?>(value: nil)
     
     var since: String = ""
+    
+    var built: Int = 0
     
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
@@ -172,11 +175,76 @@ class GuideOneViewController: BaseViewController {
         
         rightView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
-            ToastConfig.showMessage(form: view, message: "Please complete the previous process first.")
+            if self.built == 1 {
+                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera) { [weak self] image in
+                    if let image = image {
+                        self?.toServiceImage(from: "10", image: image)
+                    } else {
+                        print("User canceled camera.")
+                    }
+                }
+            }else {
+                ToastConfig.showMessage(form: view, message: "Please complete the previous process first.")
+            }
+        }).disposed(by: disposeBag)
+        
+        nextBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.productDetailInfo(from: week.value)
         }).disposed(by: disposeBag)
         
         
         getIDAuthPidInfo()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getServiceInfo {
+            
+        }
+    }
+    
+    private func getServiceInfo(complete: @escaping (() -> Void)) {
+        LoadingConfing.shared.showLoading()
+        let dict = ["week": week.value,
+                    "bloodshot": "0"]
+        let man = NetworkConfigManager()
+        let result = man.getRequest(url: "/entertain/smile", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+            LoadingConfing.shared.hideLoading()
+        }, receiveValue: { [weak self] data in
+            guard let self = self else { return }
+            do {
+                let model = try JSONDecoder().decode(BaseModel.self, from: data)
+                let herself = model.herself
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
+                    complete()
+                    if let standing = model.henceforth.standing, standing == 1 {
+                        self.rightView.isUserInteractionEnabled = false
+                        self.rightView.placeImageView.isHidden = false
+                        self.rightView.placeImageView.kf.setImage(with: URL(string: model.henceforth.residing ?? ""))
+                    }else {
+                        self.rightView.isUserInteractionEnabled = true
+                        self.rightView.placeImageView.isHidden = true
+                    }
+                    if let model = model.henceforth.came {
+                        if let built = model.built, built == 1 {
+                            self.built = built
+                            self.leftView.isUserInteractionEnabled = false
+                            self.leftView.placeImageView.isHidden = false
+                            self.leftView.placeImageView.kf.setImage(with: URL(string: model.residing ?? ""))
+                            self.oneView.nameLabel.text = model.since ?? ""
+                        }else {
+                            self.leftView.isUserInteractionEnabled = true
+                            self.leftView.placeImageView.isHidden = true
+                        }
+                    }
+                }
+            } catch  {
+                print("JSON: \(error)")
+            }
+        })
+        result.store(in: &cancellables)
     }
     
 }
@@ -225,7 +293,7 @@ extension GuideOneViewController {
             self.dismiss(animated: true) {
                 CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera) { [weak self] image in
                     if let image = image {
-                        self?.toServiceImage(from: "10", image: image)
+                        self?.toServiceImage(from: "11", image: image)
                     } else {
                         print("User canceled camera.")
                     }
@@ -245,7 +313,8 @@ extension GuideOneViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     self.model.accept(model)
                 }
             } catch  {
@@ -273,8 +342,17 @@ extension GuideOneViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
-                    self.popModel(from: model.henceforth)
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
+                    if pitiful == "11" {
+                        self.popModel(from: model.henceforth)
+                    }else {
+                        self.getServiceInfo { [weak self] in
+                            guard let self = self else { return }
+                            productDetailInfo(from: week.value)
+                        }
+                        
+                    }
                 }
             } catch  {
                 print("JSON: \(error)")
@@ -287,14 +365,133 @@ extension GuideOneViewController {
 
 extension GuideOneViewController {
     
+    private func productDetailInfo(from weak: String) {
+        let dict = ["curiosity": "0",
+                    "week": weak,
+                    "creature": "maga"]
+        let man = NetworkConfigManager()
+        LoadingConfing.shared.showLoading()
+        let result = man.requsetData(url: "/entertain/revolution", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+            LoadingConfing.shared.hideLoading()
+        }, receiveValue: { [weak self] data in
+            guard let self = self else { return }
+            do {
+                let model = try JSONDecoder().decode(BaseModel.self, from: data)
+                let herself = model.herself
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {2
+                    if let authModel = model.henceforth.indicating, let help = authModel.help, !help.isEmpty {
+                        self.toGuideVc(from: help, week: week.value)
+                    }else {
+                        
+                    }
+                }
+            } catch  {
+                print("JSON: \(error)")
+            }
+        })
+        result.store(in: &cancellables)
+    }
+    
     private func popModel(from model: henceforthModel) {
         let authView = AlertSuccessNameView(frame: self.view.bounds)
         authView.oneView.nameTx.text = model.name ?? ""
         authView.twoView.nameTx.text = model.idnumber ?? ""
-        authView.threeView.cilckBtn.setTitle(model.secretly ?? "", for: .normal)
-        authView.threeView.cilckBtn.setTitleColor(.black, for: .normal)
+        authView.threeView.nameLabel.text = model.secretly ?? ""
+        authView.threeView.nameLabel.textColor = .black
         let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
         self.present(alertVc, animated: true)
+        authView
+            .threeView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.setUpTime(for: authView.threeView.nameLabel)
+            }).disposed(by: disposeBag)
+        
+        authView.nextBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.babyInfo(from: authView)
+        }).disposed(by: disposeBag)
+        
+    }
+    
+    private func setUpTime(for label: UILabel) {
+        guard let dateComponents = extractDateComponents(from: label.text) else { return }
+        let datePickerView = createDatePickerView(with: dateComponents)
+        datePickerView.resultBlock = { [weak self] selectedDate, selectedValue in
+            guard let self = self, let selectedValue = selectedValue else { return }
+            updateTextField(label, with: selectedValue)
+        }
+        datePickerView.pickerStyle = DatePickerColorConfig.configureStyle()
+        datePickerView.show()
+    }
+    
+    private func extractDateComponents(from text: String?) -> (day: Int, month: Int, year: Int)? {
+        let defaultDate = "01-01-1900"
+        let timeStr = text ?? defaultDate
+        let timeArray = timeStr.components(separatedBy: "-")
+        guard timeArray.count == 3,
+              let day = Int(timeArray[0]),
+              let month = Int(timeArray[1]),
+              let year = Int(timeArray[2]) else {
+            return nil
+        }
+        
+        return (day, month, year)
+    }
+    
+    private func createDatePickerView(with dateComponents: (day: Int, month: Int, year: Int)) -> BRDatePickerView {
+        let datePickerView = BRDatePickerView()
+        datePickerView.pickerMode = .YMD
+        datePickerView.title = "Date"
+        datePickerView.minDate = NSDate.br_setYear(1900, month: 01, day: 01)
+        datePickerView.selectDate = NSDate.br_setYear(dateComponents.year, month: dateComponents.month, day: dateComponents.day)
+        datePickerView.maxDate = Date()
+        return datePickerView
+    }
+    
+    private func updateTextField(_ label: UILabel, with selectedValue: String) {
+        let selectedArray = selectedValue.components(separatedBy: "-")
+        guard selectedArray.count == 3 else { return }
+        let selectedDay = selectedArray[2]
+        let selectedMonth = selectedArray[1]
+        let selectedYear = selectedArray[0]
+        let formattedDate = String(format: "%@-%@-%@", selectedDay, selectedMonth, selectedYear)
+        label.text = formattedDate
+    }
+    
+    private func babyInfo(from authView: AlertSuccessNameView) {
+        LoadingConfing.shared.showLoading()
+        let pitiful = 8 + 3
+        let man = NetworkConfigManager()
+        let since = self.oneView.nameLabel.text ?? ""
+        let dict = ["secretly": authView.threeView.nameLabel.text ?? "",
+                    "protecting": authView.twoView.nameTx.text ?? "",
+                    "hadn": authView.oneView.nameTx.text ?? "",
+                    "pitiful": "\(pitiful)",
+                    "since": since,
+                    "slammed": "1"]
+        let result = man.requsetData(url: "/entertain/gotten", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+            LoadingConfing.shared.hideLoading()
+        }, receiveValue: { [weak self] data in
+            guard let self = self else { return }
+            do {
+                let model = try JSONDecoder().decode(BaseModel.self, from: data)
+                let herself = model.herself
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
+                    self.dismiss(animated: true) {
+                        self.getServiceInfo {}
+                    }
+                }
+                ToastConfig.showMessage(form: view, message: model.washed)
+            } catch  {
+                print("JSON: \(error)")
+            }
+        })
+        result.store(in: &cancellables)
     }
     
 }
@@ -315,6 +512,17 @@ extension Data {
         return compressImage(image: image,
                              compressionQuality:
                                 compressionQuality - 0.1)
+    }
+    
+}
+
+class DatePickerColorConfig {
+    static func configureStyle() -> BRPickerStyle {
+        let customStyle = BRPickerStyle()
+        customStyle.pickerColor = .white
+        customStyle.pickerTextFont = .regularFontOfSize(size: 16)
+        customStyle.selectRowTextColor = .black
+        return customStyle
     }
     
 }

@@ -58,7 +58,8 @@ extension HomeViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     self.model.accept(model)
                 }
             } catch  {
@@ -75,13 +76,14 @@ extension HomeViewController {
                     "pay": "0"]
         let man = NetworkConfigManager()
         let result = man.requsetData(url: "/entertain/father", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
-            LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
+            LoadingConfing.shared.hideLoading()
             guard let self = self else { return }
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     let pageUrl = model.henceforth.residing ?? ""
                     self.accordingUrl(from: pageUrl)
                 }
@@ -119,9 +121,10 @@ extension HomeViewController {
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
-                if herself == "0" || herself == "00" {
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
                     if let authModel = model.henceforth.indicating, let help = authModel.help, !help.isEmpty {
-                        self.toGuideVc(from: help, week: weak)
+                        self.toOneGuideVc(from: help, week: weak)
                     }else {
                         
                     }
@@ -133,7 +136,7 @@ extension HomeViewController {
         result.store(in: &cancellables)
     }
     
-    private func toGuideVc(from type: String, week: String) {
+    private func toOneGuideVc(from type: String, week: String) {
         let guideVc = GuideViewController()
         let dict = ["type": type, "week": week]
         guideVc.dict.accept(dict)

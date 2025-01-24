@@ -27,6 +27,8 @@ struct henceforthModel: Codable {
     var name: String?
     var idnumber: String?
     var secretly: String?
+    var came: cameModel?
+    var standing: Int?
     enum CodingKeys: String, CodingKey {
         case phone = "differently"
         case token = "gently"
@@ -39,6 +41,8 @@ struct henceforthModel: Codable {
         case name = "hadn"
         case idnumber = "protecting"
         case secretly = "secretly"
+        case came = "came"
+        case standing = "standing"
     }
     
 }
@@ -71,4 +75,10 @@ struct thirdModel: Codable {
     var hands: String?
     var met: String?
     var passing: String?
+}
+
+struct cameModel: Codable {
+    var built: Int?
+    var residing: String?
+    var since: String?
 }
