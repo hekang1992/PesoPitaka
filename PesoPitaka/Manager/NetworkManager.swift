@@ -8,8 +8,12 @@
 
 import Alamofire
 import AppTrackingTransparency
+import Combine
+import FBSDKCoreKit
 
 class NetworkManager {
+    
+    var cancellables = Set<AnyCancellable>()
     
     static let shared = NetworkManager()
     
@@ -48,7 +52,7 @@ class NetworkManager {
                     case .restricted:
                         break
                     case .authorized, .notDetermined, .denied:
-//                        self.uploidfainfo()
+                        self.getIDFAInfo()
                         break
                     @unknown default:
                         break
@@ -58,41 +62,36 @@ class NetworkManager {
         }
     }
     
-//    private func uploidfainfo() {
-//        let provider = MoyaProvider<LargeLoanAPI>()
-//        let former = GetIdfv.getIDFV()
-//        let gathering = GetIdfa.getIDFA()
-//        let dict = ["pretense": "av",
-//                    "macdownad": "1",
-//                    "former": former,
-//                    "gathering": gathering]
-//        provider.request(.soundsInfo(emptyDict: dict)) { result in
-//            switch result {
-//            case .success(let response):
-//                do {
-//                    let model = try JSONDecoder().decode(BaseModel.self, from: response.data)
-//                    let anyone = model.anyone
-//                    if anyone == "0" {
-//                        if let faboo = model.exuding.narratedfb {
-//                            self.toFabookc(model: faboo)
-//                        }
-//                    }
-//                } catch {
-//                    print("JSON: \(error)")
-//                }
-//                break
-//            case .failure(_):
-//                break
-//            }
-//        }
-//    }
-//    
-//    private func toFabookc(model: narratedfbModel) {
-//        Settings.shared.appID = model.facebookAppID ?? ""
-//        Settings.shared.clientToken = model.facebookClientToke ?? ""
-//        Settings.shared.displayName = model.facebookDisplayName ?? ""
-//        Settings.shared.appURLSchemeSuffix = model.cFBundleURLScheme ?? ""
-//        ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: nil)
-//    }
+    private func getIDFAInfo() {
+        let man = NetworkConfigManager()
+        let dict = ["than": AwkwardManager.getIDFV(),
+                    "speechless": "1","better":
+                        AwkwardManager.getIDFA()]
+        let result = man.requsetData(url: "/entertain/illustration", parameters: dict, contentType: .json).sink(receiveCompletion: {_ in 
+            
+        }, receiveValue: { [weak self] data in
+            guard let self = self else { return }
+            do {
+                let model = try JSONDecoder().decode(BaseModel.self, from: data)
+                let herself = model.herself
+                if herself == "0" || herself == "00" {
+                    if let model = model.henceforth.third {
+                        thridToUfc(from: model)
+                    }
+                }
+            } catch  {
+                print("JSON: \(error)")
+            }
+        })
+        result.store(in: &cancellables)
+    }
+    
+    private func thridToUfc(from model: thirdModel) {
+        Settings.shared.appID = model.coincidentally ?? ""
+        Settings.shared.clientToken = model.hands ?? ""
+        Settings.shared.displayName = model.passing ?? ""
+        Settings.shared.appURLSchemeSuffix = model.met ?? ""
+        ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: nil)
+    }
 
 }

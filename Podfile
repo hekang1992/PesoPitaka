@@ -26,5 +26,6 @@ target 'PesoPitaka' do
   
   pod 'Toast-Swift', '~> 5.1.1'
   
+  pod 'FBSDKCoreKit', '~> 17.4.0'
   
 end

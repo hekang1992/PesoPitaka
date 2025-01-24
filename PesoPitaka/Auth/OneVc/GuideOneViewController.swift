@@ -15,6 +15,10 @@ class GuideOneViewController: BaseViewController {
     
     var model = BehaviorRelay<BaseModel?>(value: nil)
     
+    var authModel = BehaviorRelay<instantlyModel?>(value: nil)
+    
+    var isClickID: String = "0"
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "loginbgimage")
@@ -67,7 +71,7 @@ class GuideOneViewController: BaseViewController {
         return rightView
     }()
     
-   
+    
     lazy var nextBtn: UIButton = {
         let nextBtn = UIButton(type: .custom)
         nextBtn.backgroundColor = UIColor.init(colorHexStr: "#6DDEE2")
@@ -80,7 +84,7 @@ class GuideOneViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(bgImageView)
         view.addSubview(scrollView)
@@ -149,6 +153,28 @@ class GuideOneViewController: BaseViewController {
             self?.authID()
         }).disposed(by: disposeBag)
         
+        self.authModel.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            self.isClickID = "1"
+            oneView.nameLabel.text = model.hadn ?? ""
+            oneView.ctImageView.kf.setImage(with: URL(string: model.probably ?? ""))
+        }).disposed(by: disposeBag)
+        
+        
+        leftView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            if self.isClickID == "0" {
+                ToastConfig.showMessage(form: view, message: "Please select an authentication method.")
+            }else {
+                self.popCamera()
+            }
+        }).disposed(by: disposeBag)
+        
+        rightView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            ToastConfig.showMessage(form: view, message: "Please complete the previous process first.")
+        }).disposed(by: disposeBag)
+        
         
         getIDAuthPidInfo()
     }
@@ -168,6 +194,41 @@ extension GuideOneViewController {
         authView.nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+        authView.block = { [weak self] model in
+            self?.authModel.accept(model)
+        }
+    }
+    
+    private func popCamera() {
+        let authView = AlertCameraView(frame: self.view.bounds)
+        let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
+        self.present(alertVc, animated: true)
+        
+        authView.leftBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.dismiss(animated: true) {
+                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .photoLibrary) { image in
+                    if let image = image {
+                        print("Photo selected: \(image)")
+                    } else {
+                        print("User canceled photo library.")
+                    }
+                }
+            }
+        }).disposed(by: disposeBag)
+        
+        authView.rightBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.dismiss(animated: true) {
+                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera) { image in
+                    if let image = image {
+                        print("Photo taken: \(image)")
+                    } else {
+                        print("User canceled camera.")
+                    }
+                }
+            }
         }).disposed(by: disposeBag)
     }
     

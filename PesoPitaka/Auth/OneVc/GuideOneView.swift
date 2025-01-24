@@ -18,13 +18,12 @@ class GuideOneView: BaseView {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "naitonicmieg")
         return ctImageView
     }()
     
     lazy var nameLabel: UILabel = {
         let nameLabel = UIUtils.createLabel(font: .regularFontOfSize(size: 15), textColor: UIColor.init(colorHexStr: "#000000")!, textAlignment: .left)
-        nameLabel.text = "UMID"
+        nameLabel.text = "Select authentication method"
         return nameLabel
     }()
     

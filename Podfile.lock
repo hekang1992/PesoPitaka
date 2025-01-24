@@ -1,5 +1,11 @@
 PODS:
   - Alamofire (5.10.2)
+  - FBAEMKit (17.4.0):
+    - FBSDKCoreKit_Basics (= 17.4.0)
+  - FBSDKCoreKit (17.4.0):
+    - FBAEMKit (= 17.4.0)
+    - FBSDKCoreKit_Basics (= 17.4.0)
+  - FBSDKCoreKit_Basics (17.4.0)
   - IQKeyboardManagerSwift (6.5.16)
   - Kingfisher (7.11.0)
   - Moya (15.0.0):
@@ -21,6 +27,7 @@ PODS:
   - TYAlertController (1.2.0)
 
 DEPENDENCIES:
+  - FBSDKCoreKit (~> 17.4.0)
   - IQKeyboardManagerSwift (~> 6.5.16)
   - Kingfisher (~> 7.11.0)
   - Moya (~> 15.0.0)
@@ -35,6 +42,9 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
     - IQKeyboardManagerSwift
     - Kingfisher
     - Moya
@@ -49,6 +59,9 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
+  FBAEMKit: 58cb5f302cdd715a56d4c1d0dfdd2e423ac1421a
+  FBSDKCoreKit: 94d7461d0cecf441b1ba7c41acfff41daa8ccd41
+  FBSDKCoreKit_Basics: 151b43db8b834d3f0e02f95d36a44ffd36265e45
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
@@ -61,6 +74,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 7a03a532afe3a560d4044bc7c237e2864d295173
   TYAlertController: c121090edb0bea7426f987da94cdddd81eef4231
 
-PODFILE CHECKSUM: 502cd725563188a7984335f400da6fc7872e5c4e
+PODFILE CHECKSUM: f26592c66286dc44eeb14908812e3533043fa13b
 
 COCOAPODS: 1.16.2

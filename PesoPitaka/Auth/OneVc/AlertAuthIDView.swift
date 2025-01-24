@@ -15,6 +15,8 @@ class AlertAuthIDView: BaseView {
     
     var model = BehaviorRelay<BaseModel?>(value: nil)
     
+    var block: ((instantlyModel) -> Void)?
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "poseimage")
@@ -95,6 +97,9 @@ extension AlertAuthIDView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlertAuthIDViewCell", for: indexPath) as! AlertAuthIDViewCell
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
+        let model = self.model.value?.henceforth.instantly?[indexPath.row]
+        cell.nameLabel.text = model?.hadn ?? ""
+        cell.ctImageView.kf.setImage(with: URL(string: model?.probably ?? ""))
         if indexPath == selectedIndexPath {
             cell.bgView.layer.borderWidth = 2
             cell.bgView.layer.borderColor = UIColor(colorHexStr: "#5FE979")?.withAlphaComponent(0.8).cgColor
@@ -117,6 +122,9 @@ extension AlertAuthIDView: UITableViewDelegate, UITableViewDataSource {
             cell.bgView.layer.borderColor = UIColor(colorHexStr: "#5FE979")?.withAlphaComponent(0.8).cgColor
         }
         selectedIndexPath = indexPath
+        if let model = self.model.value?.henceforth.instantly?[indexPath.row] {
+            self.block?(model)
+        }
     }
     
 }

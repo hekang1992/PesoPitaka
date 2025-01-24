@@ -23,6 +23,7 @@ struct henceforthModel: Codable {
     var indicating: indicatingModel?
     var alienate: [alienateModel]?
     var instantly: [instantlyModel]?
+    var third: thirdModel?
     enum CodingKeys: String, CodingKey {
         case phone = "differently"
         case token = "gently"
@@ -31,6 +32,7 @@ struct henceforthModel: Codable {
         case indicating = "indicating"
         case alienate = "alienate"
         case instantly = "instantly"
+        case third = "third"
     }
     
 }
@@ -55,4 +57,12 @@ struct alienateModel: Codable {
 struct instantlyModel: Codable {
     var hadn: String?
     var probably: String?
+}
+
+
+struct thirdModel: Codable {
+    var coincidentally: String?
+    var hands: String?
+    var met: String?
+    var passing: String?
 }

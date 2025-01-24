@@ -34,6 +34,8 @@
 		73D1D0112D432F780065AD80 /* GuidePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0102D432F780065AD80 /* GuidePhotoView.swift */; };
 		73D1D0152D4332240065AD80 /* AlertAuthIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0142D4332240065AD80 /* AlertAuthIDView.swift */; };
 		73D1D0172D43349E0065AD80 /* AlertAuthIDViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0162D43349E0065AD80 /* AlertAuthIDViewCell.swift */; };
+		73D1D0192D434E930065AD80 /* AlertCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0182D434E930065AD80 /* AlertCameraView.swift */; };
+		73D1D01B2D4352290065AD80 /* CameraPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D01A2D4352290065AD80 /* CameraPhotoManager.swift */; };
 		73D9DECE2D3FED3B00AD810A /* LoadingConfing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */; };
 		73D9DED02D3FEEE200AD810A /* LoginSuccessConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */; };
 		73D9DED62D3FF83200AD810A /* UserCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */; };
@@ -75,6 +77,8 @@
 		73D1D0102D432F780065AD80 /* GuidePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePhotoView.swift; sourceTree = "<group>"; };
 		73D1D0142D4332240065AD80 /* AlertAuthIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAuthIDView.swift; sourceTree = "<group>"; };
 		73D1D0162D43349E0065AD80 /* AlertAuthIDViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAuthIDViewCell.swift; sourceTree = "<group>"; };
+		73D1D0182D434E930065AD80 /* AlertCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCameraView.swift; sourceTree = "<group>"; };
+		73D1D01A2D4352290065AD80 /* CameraPhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPhotoManager.swift; sourceTree = "<group>"; };
 		73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingConfing.swift; sourceTree = "<group>"; };
 		73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessConfig.swift; sourceTree = "<group>"; };
 		73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */,
 				73D9DEDF2D40AF8E00AD810A /* HeadView.swift */,
 				73D1CFFB2D42525B0065AD80 /* AlertImageView.swift */,
+				73D1D01A2D4352290065AD80 /* CameraPhotoManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 				73D1D0102D432F780065AD80 /* GuidePhotoView.swift */,
 				73D1D0142D4332240065AD80 /* AlertAuthIDView.swift */,
 				73D1D0162D43349E0065AD80 /* AlertAuthIDViewCell.swift */,
+				73D1D0182D434E930065AD80 /* AlertCameraView.swift */,
 				73D1D0062D4269920065AD80 /* GuideOneViewController.swift */,
 			);
 			path = OneVc;
@@ -386,6 +392,7 @@
 				73D1D0032D42578F0065AD80 /* GuideView.swift in Sources */,
 				73D1D0152D4332240065AD80 /* AlertAuthIDView.swift in Sources */,
 				738D45522D3F799D00EE9E66 /* BaseView.swift in Sources */,
+				73D1D0192D434E930065AD80 /* AlertCameraView.swift in Sources */,
 				73D1D00F2D432DB50065AD80 /* GuideOneView.swift in Sources */,
 				73D9DEDC2D40A75800AD810A /* HomeZeroView.swift in Sources */,
 				73807D432D32C5C800F8B90D /* TotalModel.swift in Sources */,
@@ -394,6 +401,7 @@
 				738D45452D3F763A00EE9E66 /* NetworkManager.swift in Sources */,
 				73D9DEE02D40AF8E00AD810A /* HeadView.swift in Sources */,
 				73D1D0052D4263CF0065AD80 /* GuideListView.swift in Sources */,
+				73D1D01B2D4352290065AD80 /* CameraPhotoManager.swift in Sources */,
 				73D1D0072D4269920065AD80 /* GuideOneViewController.swift in Sources */,
 				73D9DEDE2D40AD6A00AD810A /* CenterView.swift in Sources */,
 				73D1CFFF2D4257780065AD80 /* GuideViewController.swift in Sources */,
