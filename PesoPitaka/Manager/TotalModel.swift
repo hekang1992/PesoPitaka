@@ -24,6 +24,9 @@ struct henceforthModel: Codable {
     var alienate: [alienateModel]?
     var instantly: [instantlyModel]?
     var third: thirdModel?
+    var name: String?
+    var idnumber: String?
+    var secretly: String?
     enum CodingKeys: String, CodingKey {
         case phone = "differently"
         case token = "gently"
@@ -33,6 +36,9 @@ struct henceforthModel: Codable {
         case alienate = "alienate"
         case instantly = "instantly"
         case third = "third"
+        case name = "hadn"
+        case idnumber = "protecting"
+        case secretly = "secretly"
     }
     
 }

@@ -17,7 +17,7 @@ class GuideOneViewController: BaseViewController {
     
     var authModel = BehaviorRelay<instantlyModel?>(value: nil)
     
-    var isClickID: String = "0"
+    var since: String = ""
     
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
@@ -155,7 +155,7 @@ class GuideOneViewController: BaseViewController {
         
         self.authModel.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            self.isClickID = "1"
+            self.since = model.hadn ?? ""
             oneView.nameLabel.text = model.hadn ?? ""
             oneView.ctImageView.kf.setImage(with: URL(string: model.probably ?? ""))
         }).disposed(by: disposeBag)
@@ -163,7 +163,7 @@ class GuideOneViewController: BaseViewController {
         
         leftView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
-            if self.isClickID == "0" {
+            if self.since.isEmpty {
                 ToastConfig.showMessage(form: view, message: "Please select an authentication method.")
             }else {
                 self.popCamera()
@@ -205,12 +205,13 @@ extension GuideOneViewController {
         let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
         self.present(alertVc, animated: true)
         
+        //photo
         authView.leftBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.dismiss(animated: true) {
-                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .photoLibrary) { image in
+                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .photoLibrary) { [weak self] image in
                     if let image = image {
-                        print("Photo selected: \(image)")
+                        self?.toServiceImage(from: "11", image: image, since: self?.since)
                     } else {
                         print("User canceled photo library.")
                     }
@@ -218,12 +219,13 @@ extension GuideOneViewController {
             }
         }).disposed(by: disposeBag)
         
+        //camera
         authView.rightBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.dismiss(animated: true) {
-                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera) { image in
+                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera) { [weak self] image in
                     if let image = image {
-                        print("Photo taken: \(image)")
+                        self?.toServiceImage(from: "10", image: image)
                     } else {
                         print("User canceled camera.")
                     }
@@ -251,6 +253,68 @@ extension GuideOneViewController {
             }
         })
         result.store(in: &cancellables)
+    }
+    
+    private func toServiceImage(from pitiful: String, image: UIImage, since: String? = "") {
+        LoadingConfing.shared.showLoading()
+        let man = NetworkConfigManager()
+        let illuminated = 0 + 1
+        let dict = ["week": week.value,
+                    "illuminated": "\(illuminated)",
+                    "since": since ?? "",
+                    "pitiful": pitiful,
+                    "things": "",
+                    "hear": "1"] as [String : String]
+        let imageData = Data.compressImage(image: image)!
+        let result = man.uploadImage(url: "/entertain/cheerfully", imageData: imageData, parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+        }, receiveValue: { [weak self] data in
+            LoadingConfing.shared.hideLoading()
+            guard let self = self else { return }
+            do {
+                let model = try JSONDecoder().decode(BaseModel.self, from: data)
+                let herself = model.herself
+                if herself == "0" || herself == "00" {
+                    self.popModel(from: model.henceforth)
+                }
+            } catch  {
+                print("JSON: \(error)")
+            }
+        })
+        result.store(in: &cancellables)
+    }
+    
+}
+
+extension GuideOneViewController {
+    
+    private func popModel(from model: henceforthModel) {
+        let authView = AlertSuccessNameView(frame: self.view.bounds)
+        authView.oneView.nameTx.text = model.name ?? ""
+        authView.twoView.nameTx.text = model.idnumber ?? ""
+        authView.threeView.cilckBtn.setTitle(model.secretly ?? "", for: .normal)
+        authView.threeView.cilckBtn.setTitleColor(.black, for: .normal)
+        let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
+        self.present(alertVc, animated: true)
+    }
+    
+}
+
+
+extension Data {
+    
+    static func compressImage(image: UIImage, compressionQuality: CGFloat = 0.8) -> Data? {
+        guard let compressedData = image.jpegData(compressionQuality: compressionQuality) else {
+            return nil
+        }
+        if compressedData.count <= 1_200_000 {
+            return compressedData
+        }
+        if compressionQuality <= 0.1 {
+            return compressedData
+        }
+        return compressImage(image: image,
+                             compressionQuality:
+                                compressionQuality - 0.1)
     }
     
 }

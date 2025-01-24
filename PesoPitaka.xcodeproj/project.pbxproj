@@ -36,6 +36,9 @@
 		73D1D0172D43349E0065AD80 /* AlertAuthIDViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0162D43349E0065AD80 /* AlertAuthIDViewCell.swift */; };
 		73D1D0192D434E930065AD80 /* AlertCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0182D434E930065AD80 /* AlertCameraView.swift */; };
 		73D1D01B2D4352290065AD80 /* CameraPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D01A2D4352290065AD80 /* CameraPhotoManager.swift */; };
+		73D1D01D2D4371CD0065AD80 /* AlertSuccessNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D01C2D4371CD0065AD80 /* AlertSuccessNameView.swift */; };
+		73D1D01F2D4372350065AD80 /* OneCommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D01E2D4372350065AD80 /* OneCommonView.swift */; };
+		73D1D0212D4372410065AD80 /* TwoCommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0202D4372410065AD80 /* TwoCommonView.swift */; };
 		73D9DECE2D3FED3B00AD810A /* LoadingConfing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */; };
 		73D9DED02D3FEEE200AD810A /* LoginSuccessConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */; };
 		73D9DED62D3FF83200AD810A /* UserCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */; };
@@ -79,6 +82,9 @@
 		73D1D0162D43349E0065AD80 /* AlertAuthIDViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAuthIDViewCell.swift; sourceTree = "<group>"; };
 		73D1D0182D434E930065AD80 /* AlertCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCameraView.swift; sourceTree = "<group>"; };
 		73D1D01A2D4352290065AD80 /* CameraPhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPhotoManager.swift; sourceTree = "<group>"; };
+		73D1D01C2D4371CD0065AD80 /* AlertSuccessNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSuccessNameView.swift; sourceTree = "<group>"; };
+		73D1D01E2D4372350065AD80 /* OneCommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneCommonView.swift; sourceTree = "<group>"; };
+		73D1D0202D4372410065AD80 /* TwoCommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCommonView.swift; sourceTree = "<group>"; };
 		73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingConfing.swift; sourceTree = "<group>"; };
 		73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessConfig.swift; sourceTree = "<group>"; };
 		73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterViewController.swift; sourceTree = "<group>"; };
@@ -262,6 +268,9 @@
 				73D1D0162D43349E0065AD80 /* AlertAuthIDViewCell.swift */,
 				73D1D0182D434E930065AD80 /* AlertCameraView.swift */,
 				73D1D0062D4269920065AD80 /* GuideOneViewController.swift */,
+				73D1D01C2D4371CD0065AD80 /* AlertSuccessNameView.swift */,
+				73D1D01E2D4372350065AD80 /* OneCommonView.swift */,
+				73D1D0202D4372410065AD80 /* TwoCommonView.swift */,
 			);
 			path = OneVc;
 			sourceTree = "<group>";
@@ -385,9 +394,12 @@
 				73D1D0112D432F780065AD80 /* GuidePhotoView.swift in Sources */,
 				73D1CFF82D41FCD00065AD80 /* TermsViewController.swift in Sources */,
 				738D45492D3F778F00EE9E66 /* BaseNavigationController.swift in Sources */,
+				73D1D0212D4372410065AD80 /* TwoCommonView.swift in Sources */,
 				73807D452D32C78200F8B90D /* NetworkConfigManager.swift in Sources */,
+				73D1D01F2D4372350065AD80 /* OneCommonView.swift in Sources */,
 				73D9DEDA2D3FF86700AD810A /* HomeViewController.swift in Sources */,
 				738D454B2D3F77BB00EE9E66 /* BaseTabBarController.swift in Sources */,
+				73D1D01D2D4371CD0065AD80 /* AlertSuccessNameView.swift in Sources */,
 				73D1D0172D43349E0065AD80 /* AlertAuthIDViewCell.swift in Sources */,
 				73D1D0032D42578F0065AD80 /* GuideView.swift in Sources */,
 				73D1D0152D4332240065AD80 /* AlertAuthIDView.swift in Sources */,
