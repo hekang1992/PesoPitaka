@@ -30,6 +30,10 @@
 		73D1D0032D42578F0065AD80 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0022D42578F0065AD80 /* GuideView.swift */; };
 		73D1D0052D4263CF0065AD80 /* GuideListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0042D4263CF0065AD80 /* GuideListView.swift */; };
 		73D1D0072D4269920065AD80 /* GuideOneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0062D4269920065AD80 /* GuideOneViewController.swift */; };
+		73D1D00F2D432DB50065AD80 /* GuideOneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D00E2D432DB50065AD80 /* GuideOneView.swift */; };
+		73D1D0112D432F780065AD80 /* GuidePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0102D432F780065AD80 /* GuidePhotoView.swift */; };
+		73D1D0152D4332240065AD80 /* AlertAuthIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0142D4332240065AD80 /* AlertAuthIDView.swift */; };
+		73D1D0172D43349E0065AD80 /* AlertAuthIDViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0162D43349E0065AD80 /* AlertAuthIDViewCell.swift */; };
 		73D9DECE2D3FED3B00AD810A /* LoadingConfing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */; };
 		73D9DED02D3FEEE200AD810A /* LoginSuccessConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */; };
 		73D9DED62D3FF83200AD810A /* UserCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */; };
@@ -67,6 +71,10 @@
 		73D1D0022D42578F0065AD80 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		73D1D0042D4263CF0065AD80 /* GuideListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideListView.swift; sourceTree = "<group>"; };
 		73D1D0062D4269920065AD80 /* GuideOneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideOneViewController.swift; sourceTree = "<group>"; };
+		73D1D00E2D432DB50065AD80 /* GuideOneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideOneView.swift; sourceTree = "<group>"; };
+		73D1D0102D432F780065AD80 /* GuidePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePhotoView.swift; sourceTree = "<group>"; };
+		73D1D0142D4332240065AD80 /* AlertAuthIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAuthIDView.swift; sourceTree = "<group>"; };
+		73D1D0162D43349E0065AD80 /* AlertAuthIDViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAuthIDViewCell.swift; sourceTree = "<group>"; };
 		73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingConfing.swift; sourceTree = "<group>"; };
 		73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessConfig.swift; sourceTree = "<group>"; };
 		73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +251,10 @@
 		73D1D0092D4269DC0065AD80 /* OneVc */ = {
 			isa = PBXGroup;
 			children = (
+				73D1D00E2D432DB50065AD80 /* GuideOneView.swift */,
+				73D1D0102D432F780065AD80 /* GuidePhotoView.swift */,
+				73D1D0142D4332240065AD80 /* AlertAuthIDView.swift */,
+				73D1D0162D43349E0065AD80 /* AlertAuthIDViewCell.swift */,
 				73D1D0062D4269920065AD80 /* GuideOneViewController.swift */,
 			);
 			path = OneVc;
@@ -364,13 +376,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73D1D0112D432F780065AD80 /* GuidePhotoView.swift in Sources */,
 				73D1CFF82D41FCD00065AD80 /* TermsViewController.swift in Sources */,
 				738D45492D3F778F00EE9E66 /* BaseNavigationController.swift in Sources */,
 				73807D452D32C78200F8B90D /* NetworkConfigManager.swift in Sources */,
 				73D9DEDA2D3FF86700AD810A /* HomeViewController.swift in Sources */,
 				738D454B2D3F77BB00EE9E66 /* BaseTabBarController.swift in Sources */,
+				73D1D0172D43349E0065AD80 /* AlertAuthIDViewCell.swift in Sources */,
 				73D1D0032D42578F0065AD80 /* GuideView.swift in Sources */,
+				73D1D0152D4332240065AD80 /* AlertAuthIDView.swift in Sources */,
 				738D45522D3F799D00EE9E66 /* BaseView.swift in Sources */,
+				73D1D00F2D432DB50065AD80 /* GuideOneView.swift in Sources */,
 				73D9DEDC2D40A75800AD810A /* HomeZeroView.swift in Sources */,
 				73807D432D32C5C800F8B90D /* TotalModel.swift in Sources */,
 				73D9DED02D3FEEE200AD810A /* LoginSuccessConfig.swift in Sources */,

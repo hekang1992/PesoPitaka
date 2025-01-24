@@ -59,6 +59,12 @@ class GuideView: BaseView {
         return fiveView
     }()
     
+    lazy var opImageView: UIImageView = {
+        let opImageView = UIImageView()
+        opImageView.image = UIImage(named: "priimagdemo.")
+        return opImageView
+    }()
+    
     lazy var nextBtn: UIButton = {
         let nextBtn = UIButton(type: .custom)
         nextBtn.backgroundColor = UIColor.init(colorHexStr: "#6DDEE2")
@@ -79,6 +85,7 @@ class GuideView: BaseView {
         guideImageView.addSubview(threeView)
         guideImageView.addSubview(fourView)
         guideImageView.addSubview(fiveView)
+        scrollView.addSubview(opImageView)
         scrollView.addSubview(nextBtn)
         bgImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -121,11 +128,16 @@ class GuideView: BaseView {
             make.centerX.equalToSuperview()
             make.top.equalTo(fourView.snp.bottom).offset(34)
         }
+        opImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(guideImageView.snp.bottom).offset(15)
+            make.size.equalTo(CGSize(width: 337, height: 30.5))
+        }
         nextBtn.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(20)
             make.centerX.equalToSuperview()
             make.height.equalTo(60)
-            make.top.equalTo(guideImageView.snp.bottom).offset(50)
+            make.top.equalTo(opImageView.snp.bottom).offset(15)
             make.bottom.equalToSuperview().offset(-20)
         }
     }

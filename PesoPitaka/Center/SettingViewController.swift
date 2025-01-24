@@ -193,8 +193,7 @@ class SettingViewController: BaseViewController {
     private func deleteInfo() {
         let logView = AlertImageView(frame: self.view.bounds)
         logView.threeBtn.isHidden = false
-        logView.threeBtn.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self = self else { return }
+        logView.threeBtn.rx.tap.subscribe(onNext: {
             logView.threeBtn.isSelected.toggle()
         }).disposed(by: disposeBag)
         logView.bgImageView.image = UIImage(named: "deleitemiamge")
