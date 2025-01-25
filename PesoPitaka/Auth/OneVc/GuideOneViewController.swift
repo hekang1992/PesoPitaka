@@ -62,14 +62,14 @@ class GuideOneViewController: BaseViewController {
     
     lazy var leftView: GuidePhotoView = {
         let leftView = GuidePhotoView()
-        leftView.ctImageView.image = UIImage(named: "fileupload")
+        leftView.mustImageView.image = UIImage(named: "fileupload")
         leftView.nameLabel.text = "Upload\nID photo"
         return leftView
     }()
     
     lazy var rightView: GuidePhotoView = {
         let rightView = GuidePhotoView()
-        rightView.ctImageView.image = UIImage(named: "facial")
+        rightView.mustImageView.image = UIImage(named: "facial")
         rightView.nameLabel.text = "Facial\nRecognition"
         return rightView
     }()
@@ -160,7 +160,7 @@ class GuideOneViewController: BaseViewController {
             guard let self = self, let model = model else { return }
             self.since = model.hadn ?? ""
             oneView.nameLabel.text = model.hadn ?? ""
-            oneView.ctImageView.kf.setImage(with: URL(string: model.probably ?? ""))
+            oneView.mustImageView.kf.setImage(with: URL(string: model.probably ?? ""))
         }).disposed(by: disposeBag)
         
         
@@ -364,34 +364,6 @@ extension GuideOneViewController {
 }
 
 extension GuideOneViewController {
-    
-    private func productDetailInfo(from weak: String) {
-        let dict = ["curiosity": "0",
-                    "week": weak,
-                    "creature": "maga"]
-        let man = NetworkConfigManager()
-        LoadingConfing.shared.showLoading()
-        let result = man.requsetData(url: "/entertain/revolution", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
-        }, receiveValue: { [weak self] data in
-            LoadingConfing.shared.hideLoading()
-            guard let self = self else { return }
-            do {
-                let model = try JSONDecoder().decode(BaseModel.self, from: data)
-                let herself = model.herself
-                let invalidValues: Set<String> = ["0", "00"]
-                if invalidValues.contains(herself) {
-                    if let authModel = model.henceforth.indicating, let help = authModel.help, !help.isEmpty {
-                        self.toGuideVc(from: help, week: week.value)
-                    }else {
-                        
-                    }
-                }
-            } catch  {
-                print("JSON: \(error)")
-            }
-        })
-        result.store(in: &cancellables)
-    }
     
     private func popModel(from model: henceforthModel) {
         let authView = AlertSuccessNameView(frame: self.view.bounds)

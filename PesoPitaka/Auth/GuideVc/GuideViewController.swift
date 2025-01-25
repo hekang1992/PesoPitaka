@@ -96,7 +96,6 @@ extension GuideViewController {
     private func uiInfo(for model: BaseModel) {
         let type = model.henceforth.indicating?.help ?? ""
         let defaultImage = UIImage(named: "futhaimage")
-        let processImage = UIImage(named: "processimaged")
         switch type {
         case "familiarf":
             
@@ -109,7 +108,7 @@ extension GuideViewController {
         case "familiari":
             guideView.oneView.bgImageView.image = defaultImage
             guideView.twoView.bgImageView.image = defaultImage
-            guideView.threeView.bgImageView.image = processImage
+            guideView.threeView.bgImageView.image = defaultImage
         case "familiarj":
             guideView.oneView.bgImageView.image = defaultImage
             guideView.twoView.bgImageView.image = defaultImage
@@ -118,7 +117,7 @@ extension GuideViewController {
         default:
             guideView.oneView.bgImageView.image = defaultImage
             guideView.twoView.bgImageView.image = defaultImage
-            guideView.threeView.bgImageView.image = processImage
+            guideView.threeView.bgImageView.image = defaultImage
             guideView.fourView.bgImageView.image = defaultImage
             guideView.fiveView.bgImageView.image = defaultImage
         }

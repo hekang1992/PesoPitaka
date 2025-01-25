@@ -16,9 +16,9 @@ class GuideOneView: BaseView {
         return bgView
     }()
     
-    lazy var ctImageView: UIImageView = {
-        let ctImageView = UIImageView()
-        return ctImageView
+    lazy var mustImageView: UIImageView = {
+        let mustImageView = UIImageView()
+        return mustImageView
     }()
     
     lazy var nameLabel: UILabel = {
@@ -36,20 +36,20 @@ class GuideOneView: BaseView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(bgView)
-        bgView.addSubview(ctImageView)
+        bgView.addSubview(mustImageView)
         bgView.addSubview(nameLabel)
         bgView.addSubview(oneImageView)
         bgView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        ctImageView.snp.makeConstraints { make in
+        mustImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(18)
             make.size.equalTo(CGSize(width: 51, height: 31))
         }
         nameLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalTo(ctImageView.snp.right).offset(17)
+            make.left.equalTo(mustImageView.snp.right).offset(17)
             make.height.equalTo(15)
         }
         oneImageView.snp.makeConstraints { make in

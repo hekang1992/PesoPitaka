@@ -17,11 +17,11 @@ class SettingViewController: BaseViewController {
         return headView
     }()
     
-    lazy var ctImageView: UIImageView = {
-        let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "centerimgebg")
-        ctImageView.isUserInteractionEnabled = true
-        return ctImageView
+    lazy var mustImageView: UIImageView = {
+        let mustImageView = UIImageView()
+        mustImageView.image = UIImage(named: "centerimgebg")
+        mustImageView.isUserInteractionEnabled = true
+        return mustImageView
     }()
     
     lazy var oneView: UIView = {
@@ -80,9 +80,9 @@ class SettingViewController: BaseViewController {
         
         super.viewDidLoad()
         view.addSubview(headView)
-        view.addSubview(ctImageView)
-        ctImageView.addSubview(oneView)
-        ctImageView.addSubview(twoView)
+        view.addSubview(mustImageView)
+        mustImageView.addSubview(oneView)
+        mustImageView.addSubview(twoView)
         oneView.addSubview(oneImageView)
         oneView.addSubview(onelabel)
         twoView.addSubview(twoImageView)
@@ -92,7 +92,7 @@ class SettingViewController: BaseViewController {
             make.left.right.top.equalToSuperview()
             make.height.equalTo(DeviceMetrics.navigationBarHeight)
         }
-        ctImageView.snp.makeConstraints { make in
+        mustImageView.snp.makeConstraints { make in
             make.width.equalTo(SCREEN_WIDTH)
             make.left.bottom.equalToSuperview()
             make.top.equalTo(headView.snp.bottom)

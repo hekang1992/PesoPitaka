@@ -17,11 +17,11 @@ class OrderView: BaseView {
         return headView
     }()
     
-    lazy var ctImageView: UIImageView = {
-        let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "centerimgebg")
-        ctImageView.isUserInteractionEnabled = true
-        return ctImageView
+    lazy var mustImageView: UIImageView = {
+        let mustImageView = UIImageView()
+        mustImageView.image = UIImage(named: "centerimgebg")
+        mustImageView.isUserInteractionEnabled = true
+        return mustImageView
     }()
     
     lazy var scrollView: UIScrollView = {
@@ -73,7 +73,7 @@ class OrderView: BaseView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(ctImageView)
+        addSubview(mustImageView)
         addSubview(headView)
         addSubview(scrollView)
         scrollView.addSubview(oneBtn)
@@ -81,7 +81,7 @@ class OrderView: BaseView {
         scrollView.addSubview(threeBtn)
         scrollView.addSubview(fourBtn)
         
-        ctImageView.snp.makeConstraints { make in
+        mustImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         headView.snp.makeConstraints { make in

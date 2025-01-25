@@ -16,32 +16,32 @@ class AlertAuthIDViewCell: BaseViewCell {
         return bgView
     }()
     
-    lazy var ctImageView: UIImageView = {
-        let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "naitonicmieg")
-        return ctImageView
+    lazy var mustImageView: UIImageView = {
+        let mustImageView = UIImageView()
+        mustImageView.image = UIImage(named: "naitonicmieg")
+        mustImageView.contentMode = .scaleAspectFit
+        return mustImageView
     }()
     
     lazy var nameLabel: UILabel = {
         let nameLabel = UIUtils.createLabel(font: .regularFontOfSize(size: 15), textColor: UIColor.init(colorHexStr: "#000000")!, textAlignment: .left)
-        nameLabel.text = "UMID"
         return nameLabel
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(bgView)
-        contentView.addSubview(ctImageView)
+        contentView.addSubview(mustImageView)
         contentView.addSubview(nameLabel)
         
-        ctImageView.snp.makeConstraints { make in
+        mustImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.left.equalToSuperview().offset(27)
             make.size.equalTo(CGSize(width: 28, height: 17))
         }
         nameLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(ctImageView.snp.centerY)
-            make.left.equalTo(ctImageView.snp.right).offset(17)
+            make.centerY.equalTo(mustImageView.snp.centerY)
+            make.left.equalTo(mustImageView.snp.right).offset(17)
             make.height.equalTo(15)
             make.bottom.equalToSuperview().offset(-31)
         }

@@ -30,6 +30,8 @@ struct henceforthModel: Codable {
     var came: cameModel?
     var standing: Int?
     var bang: [bangModel]?
+    var piece: pieceModel?
+    var summoned: summonedModel?
     enum CodingKeys: String, CodingKey {
         case phone = "differently"
         case token = "gently"
@@ -45,6 +47,8 @@ struct henceforthModel: Codable {
         case came = "came"
         case standing = "standing"
         case bang = "bang"
+        case piece = "piece"
+        case summoned = "summoned"
     }
     
 }
@@ -94,10 +98,84 @@ class bangModel: Codable {
     var went: String?
     var remember: String?
     var pitiful: String?
+    var hadn: String?
+    var helped: String?
+    var liz: String?
+    var settle: String?
+    var northwest: [glaredModel]?
     var glared: [glaredModel]?
+    var bang: [bangModel]?
+    enum CodingKeys: String, CodingKey {
+        case herself = "herself"
+        case fiercely = "fiercely"
+        case knot = "knot"
+        case points = "points"
+        case went = "went"
+        case remember = "remember"
+        case pitiful = "pitiful"
+        case hadn = "hadn"
+        case helped = "helped"
+        case liz = "liz"
+        case settle = "settle"
+        case northwest = "northwest"
+        case glared = "glared"
+        case bang = "bang"
+    }
+    required init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.herself = try container.decodeIfPresent(String.self, forKey: .herself)
+        self.fiercely = try container.decodeIfPresent(Int.self, forKey: .fiercely)
+        self.knot = try container.decodeIfPresent(String.self, forKey: .knot)
+        self.points = try container.decodeIfPresent(String.self, forKey: .points)
+        self.went = try container.decodeIfPresent(String.self, forKey: .went)
+        self.remember = try container.decodeIfPresent(String.self, forKey: .remember)
+        if let intValue = try? container.decodeIfPresent(Int.self, forKey: .pitiful) {
+            self.pitiful = String(intValue)
+        } else if let stringValue = try? container.decodeIfPresent(String.self, forKey: .pitiful) {
+            self.pitiful = stringValue
+        } else {
+            self.pitiful = ""
+        }
+        self.hadn = try container.decodeIfPresent(String.self, forKey: .hadn)
+        self.helped = try container.decodeIfPresent(String.self, forKey: .helped)
+        self.liz = try container.decodeIfPresent(String.self, forKey: .liz)
+        self.settle = try container.decodeIfPresent(String.self, forKey: .settle)
+        self.northwest = try container.decodeIfPresent([glaredModel].self, forKey: .northwest)
+        self.glared = try container.decodeIfPresent([glaredModel].self, forKey: .glared)
+        self.bang = try container.decodeIfPresent([bangModel].self, forKey: .bang)
+    }
 }
 
-struct glaredModel: Codable {
+class glaredModel: Codable {
     var hadn: String?
-    var pitiful: Int
+    var pitiful: String
+    var mention: String?
+    enum CodingKeys: String, CodingKey {
+        case hadn = "hadn"
+        case pitiful = "pitiful"
+        case mention = "mention"
+    }
+    required init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.hadn = try container.decodeIfPresent(String.self, forKey: .hadn)
+        self.mention = try container.decodeIfPresent(String.self, forKey: .mention)
+        if let intValue = try? container.decodeIfPresent(Int.self, forKey: .pitiful) {
+            self.pitiful = String(intValue)
+        } else if let stringValue = try? container.decodeIfPresent(String.self, forKey: .pitiful) {
+            self.pitiful = stringValue
+        } else {
+            self.pitiful = ""
+        }
+    }
+}
+
+class pieceModel: Codable {
+    var instantly: [bangModel]?
+}
+
+struct summonedModel: Codable {
+    var orderID: String?
+    enum CodingKeys: String, CodingKey {
+        case orderID = "tauren"
+    }
 }

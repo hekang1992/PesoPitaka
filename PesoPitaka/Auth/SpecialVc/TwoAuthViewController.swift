@@ -1,5 +1,5 @@
 //
-//  TwoAuthViewController.swift
+//  MonsterViewController.swift
 //  PesoPitaka
 //
 //  Created by 何康 on 2025/1/24.
@@ -8,11 +8,19 @@
 import UIKit
 import RxRelay
 
-class TwoAuthViewController: BaseViewController {
+class MonsterViewController: BaseViewController {
     
     var week = BehaviorRelay<String>(value: "")
     
     var model = BehaviorRelay<BaseModel?>(value: nil)
+    
+    var onePageUrl = ""
+    
+    var twoPageUrl = ""
+    
+    var titleStr: String = ""
+    
+    var imageStr = ""
     
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
@@ -23,13 +31,13 @@ class TwoAuthViewController: BaseViewController {
     
     lazy var headView: HeadView = {
         let headView = HeadView()
-        headView.namelabel.text = "Identity Information"
+        headView.namelabel.text = titleStr
         return headView
     }()
     
     lazy var poImageView: UIImageView = {
         let poImageView = UIImageView()
-        poImageView.image = UIImage(named: "swconeimage")
+        poImageView.image = UIImage(named: imageStr)
         return poImageView
     }()
     
@@ -101,26 +109,49 @@ class TwoAuthViewController: BaseViewController {
         
         getgidInfo()
         
-        nextBtn.rx.tap.subscribe(onNext: { [weak self] in
+        nextBtn.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                let processedData = self.model.value?.henceforth.bang?
+                    .compactMap { model -> (String, String)? in
+                        guard let key = model.herself else { return nil }
+                        let value = (model.went == "familiark") ? model.pitiful ?? "" : model.remember ?? ""
+                        return (key, value)
+                    }
+                    .reduce(into: ["week": week.value]) { dict, tuple in
+                        dict[tuple.0] = tuple.1
+                    }
+                blackPink(from: processedData ?? [:])
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func blackPink(from dict: [String: String]) {
+        let man = NetworkConfigManager()
+        LoadingConfing.shared.showLoading()
+        let result = man.requsetData(url: onePageUrl, parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+            LoadingConfing.shared.hideLoading()
+        }, receiveValue: { [weak self] data in
             guard let self = self else { return }
-            var emptyDict: [String: Any] = [:]
-            let modelArray = self.model.value?.henceforth.bang ?? []
-            modelArray.forEach { model in
-                guard let herself = model.herself else { return }
-                let value = (model.went == "familiark")
-                ? model.pitiful
-                : model.remember
-                emptyDict[herself] = value
+            do {
+                let model = try JSONDecoder().decode(BaseModel.self, from: data)
+                let herself = model.herself
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
+                    productDetailInfo(from: week.value)
+                }else {
+                    ToastConfig.showMessage(form: view, message: model.washed)
+                }
+            } catch  {
+                print("JSON: \(error)")
             }
-            emptyDict["week"] = week.value
-            print("=============\(emptyDict)")
-        }).disposed(by: disposeBag)
-        
+        })
+        result.store(in: &cancellables)
     }
     
 }
 
-extension TwoAuthViewController: UITableViewDelegate, UITableViewDataSource {
+extension MonsterViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
@@ -198,19 +229,18 @@ extension TwoAuthViewController: UITableViewDelegate, UITableViewDataSource {
             }
             return cell
         }
-        
     }
     
 }
 
-extension TwoAuthViewController {
+extension MonsterViewController {
     
     func getgidInfo() {
         LoadingConfing.shared.showLoading()
         let dict = ["week": week.value,
                     "gid": "0"]
         let man = NetworkConfigManager()
-        let result = man.requsetData(url: "/entertain/wanted", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+        let result = man.requsetData(url: twoPageUrl, parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
             guard let self = self else { return }

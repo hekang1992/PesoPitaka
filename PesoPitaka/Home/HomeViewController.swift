@@ -53,8 +53,7 @@ extension HomeViewController {
         let man = NetworkConfigManager()
         let result = man.getRequest(url: "/entertain/thought", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
             
-        }, receiveValue: { [weak self] data in
-            guard let self = self else { return }
+        }, receiveValue: { data in
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
@@ -125,14 +124,16 @@ extension HomeViewController {
                     let components = query.components(separatedBy: "=")
                     if components.count > 1 {
                         let valueAfterEquals = components[1]
-                        self.productDetailInfo(from: valueAfterEquals)
+                        self.productDetailInfoo(from: valueAfterEquals)
                     }
                 }
             }
+        }else {
+            self.pushWebVc(from: pageUrl)
         }
     }
     
-    private func productDetailInfo(from weak: String) {
+    private func productDetailInfoo(from weak: String) {
         let dict = ["curiosity": "0",
                     "week": weak,
                     "creature": "maga"]
@@ -150,7 +151,8 @@ extension HomeViewController {
                     if let authModel = model.henceforth.indicating, let help = authModel.help, !help.isEmpty {
                         self.toOneGuideVc(from: help, week: weak)
                     }else {
-                        
+                        let orderID = model.henceforth.summoned?.orderID ?? ""
+                        self.orderIDToVc(for: orderID)
                     }
                 }
             } catch  {

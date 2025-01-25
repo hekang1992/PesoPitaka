@@ -17,11 +17,11 @@ class CenterView: BaseView {
         return headView
     }()
 
-    lazy var ctImageView: UIImageView = {
-        let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "centerimgebg")
-        ctImageView.isUserInteractionEnabled = true
-        return ctImageView
+    lazy var mustImageView: UIImageView = {
+        let mustImageView = UIImageView()
+        mustImageView.image = UIImage(named: "centerimgebg")
+        mustImageView.isUserInteractionEnabled = true
+        return mustImageView
     }()
     
     lazy var scrollView: UIScrollView = {
@@ -119,9 +119,9 @@ class CenterView: BaseView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(ctImageView)
-        ctImageView.addSubview(headView)
-        ctImageView.addSubview(scrollView)
+        addSubview(mustImageView)
+        mustImageView.addSubview(headView)
+        mustImageView.addSubview(scrollView)
         scrollView.addSubview(iconImageView)
         scrollView.addSubview(phonelabel)
         scrollView.addSubview(desclabel)
@@ -139,7 +139,7 @@ class CenterView: BaseView {
         threeImageView.addSubview(termsBtn)
         threeImageView.addSubview(settingBtn)
         
-        ctImageView.snp.makeConstraints { make in
+        mustImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         headView.snp.makeConstraints { make in
