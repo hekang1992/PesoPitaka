@@ -9,14 +9,19 @@ import UIKit
 import RxSwift
 
 class BaseView: UIView {
-
+    
     let disposeBag = DisposeBag()
-
+    
 }
 
 class BaseViewCell: UITableViewCell {
-
-    let disposeBag = DisposeBag()
-
+    
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+    
 }
 

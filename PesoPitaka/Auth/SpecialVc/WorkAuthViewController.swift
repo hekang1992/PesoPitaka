@@ -8,7 +8,7 @@
 import UIKit
 import RxRelay
 
-class TwoAuthViewController: BaseViewController {
+class WorkAuthViewController: BaseViewController {
     
     var week = BehaviorRelay<String>(value: "")
     
@@ -57,10 +57,10 @@ class TwoAuthViewController: BaseViewController {
         tableView.dataSource = self
         return tableView
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
         view.addSubview(bgImageView)
         view.addSubview(headView)
@@ -101,26 +101,11 @@ class TwoAuthViewController: BaseViewController {
         
         getgidInfo()
         
-        nextBtn.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self = self else { return }
-            var emptyDict: [String: Any] = [:]
-            let modelArray = self.model.value?.henceforth.bang ?? []
-            modelArray.forEach { model in
-                guard let herself = model.herself else { return }
-                let value = (model.went == "familiark")
-                ? model.pitiful
-                : model.remember
-                emptyDict[herself] = value
-            }
-            emptyDict["week"] = week.value
-            print("=============\(emptyDict)")
-        }).disposed(by: disposeBag)
-        
     }
-    
+
 }
 
-extension TwoAuthViewController: UITableViewDelegate, UITableViewDataSource {
+extension WorkAuthViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
@@ -147,14 +132,6 @@ extension TwoAuthViewController: UITableViewDelegate, UITableViewDataSource {
             cell.nameTx.attributedPlaceholder = attrString
             cell.backgroundColor = .clear
             cell.selectionStyle = .none
-            cell.nameTx
-                .rx
-                .controlEvent(.editingChanged)
-                .withLatestFrom(cell.nameTx.rx.text.orEmpty)
-                .subscribe(onNext: { text in
-                    cell.nameTx.text = String(text)
-                    model?.remember = text
-            }).disposed(by: cell.disposeBag)
             if model?.fiercely == 1 {
                 cell.nameTx.keyboardType = .numberPad
             }else {
@@ -163,39 +140,9 @@ extension TwoAuthViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TwoAuthViewCell", for: indexPath) as! TwoAuthViewCell
+            cell.descLabel.text = model?.knot ?? ""
             cell.backgroundColor = .clear
             cell.selectionStyle = .none
-            let remember = model?.remember ?? ""
-            if remember.isEmpty {
-                cell.descLabel.text = model?.knot ?? ""
-            }else {
-                cell.descLabel.text = remember
-            }
-            if type == "familiark" {
-                cell.bgView
-                    .rx
-                    .tapGesture()
-                    .when(.recognized)
-                    .subscribe(onNext: { _ in
-                        let modelArray = model?.glared ?? []
-                        let oneArray = PrimaryDataProcessor.processPrimaryData(dataSource: modelArray)
-                        if let model = model {
-                            ShowEnumConfig.showAddressPicker(from: model, targetLabel: cell.descLabel, dataSource: oneArray, pickerMode: .province)
-                        }
-                    }).disposed(by: cell.disposeBag)
-            }else {
-                cell.bgView
-                    .rx
-                    .tapGesture()
-                    .when(.recognized)
-                    .subscribe(onNext: {  _ in
-                        let modelArray = ServerDataManager.shared.getData()
-                        let oneArray = TertiaryDataProcessor.processTertiaryData(dataSource: modelArray)
-                        if let model = model {
-                            ShowEnumConfig.showAddressPicker(from: model, targetLabel: cell.descLabel, dataSource: oneArray, pickerMode: .area)
-                        }
-                    }).disposed(by: cell.disposeBag)
-            }
             return cell
         }
         
@@ -203,7 +150,7 @@ extension TwoAuthViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension TwoAuthViewController {
+extension WorkAuthViewController {
     
     func getgidInfo() {
         LoadingConfing.shared.showLoading()

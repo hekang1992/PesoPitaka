@@ -42,6 +42,9 @@
 		73D1D0282D43B8430065AD80 /* TwoAuthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0272D43B8430065AD80 /* TwoAuthViewCell.swift */; };
 		73D1D02A2D43B8A70065AD80 /* OneAuthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0292D43B8A70065AD80 /* OneAuthViewCell.swift */; };
 		73D1D02C2D43B8D40065AD80 /* TwoAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D02B2D43B8D40065AD80 /* TwoAuthViewController.swift */; };
+		73D1D02E2D4476ED0065AD80 /* WorkAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D02D2D4476ED0065AD80 /* WorkAuthViewController.swift */; };
+		73D1D0302D44785B0065AD80 /* WorkAuthClickManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D02F2D44785B0065AD80 /* WorkAuthClickManager.swift */; };
+		73D1D0322D447E050065AD80 /* ServerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0312D447E050065AD80 /* ServerDataManager.swift */; };
 		73D9DECE2D3FED3B00AD810A /* LoadingConfing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */; };
 		73D9DED02D3FEEE200AD810A /* LoginSuccessConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */; };
 		73D9DED62D3FF83200AD810A /* UserCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */; };
@@ -91,6 +94,9 @@
 		73D1D0272D43B8430065AD80 /* TwoAuthViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoAuthViewCell.swift; sourceTree = "<group>"; };
 		73D1D0292D43B8A70065AD80 /* OneAuthViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneAuthViewCell.swift; sourceTree = "<group>"; };
 		73D1D02B2D43B8D40065AD80 /* TwoAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoAuthViewController.swift; sourceTree = "<group>"; };
+		73D1D02D2D4476ED0065AD80 /* WorkAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkAuthViewController.swift; sourceTree = "<group>"; };
+		73D1D02F2D44785B0065AD80 /* WorkAuthClickManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkAuthClickManager.swift; sourceTree = "<group>"; };
+		73D1D0312D447E050065AD80 /* ServerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerDataManager.swift; sourceTree = "<group>"; };
 		73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingConfing.swift; sourceTree = "<group>"; };
 		73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessConfig.swift; sourceTree = "<group>"; };
 		73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +225,8 @@
 				73D9DEDF2D40AF8E00AD810A /* HeadView.swift */,
 				73D1CFFB2D42525B0065AD80 /* AlertImageView.swift */,
 				73D1D01A2D4352290065AD80 /* CameraPhotoManager.swift */,
+				73D1D02F2D44785B0065AD80 /* WorkAuthClickManager.swift */,
+				73D1D0312D447E050065AD80 /* ServerDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -288,6 +296,7 @@
 				73D1D0292D43B8A70065AD80 /* OneAuthViewCell.swift */,
 				73D1D0272D43B8430065AD80 /* TwoAuthViewCell.swift */,
 				73D1D02B2D43B8D40065AD80 /* TwoAuthViewController.swift */,
+				73D1D02D2D4476ED0065AD80 /* WorkAuthViewController.swift */,
 			);
 			path = SpecialVc;
 			sourceTree = "<group>";
@@ -429,11 +438,13 @@
 				73807D2F2D32BA8000F8B90D /* AppDelegate.swift in Sources */,
 				738D45452D3F763A00EE9E66 /* NetworkManager.swift in Sources */,
 				73D9DEE02D40AF8E00AD810A /* HeadView.swift in Sources */,
+				73D1D0302D44785B0065AD80 /* WorkAuthClickManager.swift in Sources */,
 				73D1D02A2D43B8A70065AD80 /* OneAuthViewCell.swift in Sources */,
 				73D1D0052D4263CF0065AD80 /* GuideListView.swift in Sources */,
 				73D1D01B2D4352290065AD80 /* CameraPhotoManager.swift in Sources */,
 				73D1D0072D4269920065AD80 /* GuideOneViewController.swift in Sources */,
 				73D9DEDE2D40AD6A00AD810A /* CenterView.swift in Sources */,
+				73D1D02E2D4476ED0065AD80 /* WorkAuthViewController.swift in Sources */,
 				73D1CFFF2D4257780065AD80 /* GuideViewController.swift in Sources */,
 				73807D412D32C09300F8B90D /* LaunchViewController.swift in Sources */,
 				73807D3F2D32C07700F8B90D /* BaseViewController.swift in Sources */,
@@ -441,6 +452,7 @@
 				73D1D0282D43B8430065AD80 /* TwoAuthViewCell.swift in Sources */,
 				73D9DED82D3FF85600AD810A /* OrdersViewController.swift in Sources */,
 				73D9DECE2D3FED3B00AD810A /* LoadingConfing.swift in Sources */,
+				73D1D0322D447E050065AD80 /* ServerDataManager.swift in Sources */,
 				73D1D02C2D43B8D40065AD80 /* TwoAuthViewController.swift in Sources */,
 				73D1CFFA2D424C2D0065AD80 /* SettingViewController.swift in Sources */,
 				738D454E2D3F78F000EE9E66 /* LoginViewController.swift in Sources */,
@@ -481,6 +493,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PesoPitaka/AppDelegate/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Peso Pitaka";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -521,6 +536,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PesoPitaka/AppDelegate/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Peso Pitaka";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

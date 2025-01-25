@@ -34,6 +34,8 @@ class HomeViewController: BaseViewController {
                 self.applyInfo(from: String(weak))
             }).disposed(by: disposeBag)
         
+        getAddressInfo()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +47,28 @@ class HomeViewController: BaseViewController {
 }
 
 extension HomeViewController {
+    
+    private func getAddressInfo() {
+        let dict = ["address": "1", "php": "1"]
+        let man = NetworkConfigManager()
+        let result = man.getRequest(url: "/entertain/thought", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] data in
+            guard let self = self else { return }
+            do {
+                let model = try JSONDecoder().decode(BaseModel.self, from: data)
+                let herself = model.herself
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
+                    let addressModelArray = model.henceforth.instantly ?? []
+                    ServerDataManager.shared.saveData(addressModelArray)
+                }
+            } catch  {
+                print("JSON: \(error)")
+            }
+        })
+        result.store(in: &cancellables)
+    }
     
     //get home data
     private func getHomeInfo() {

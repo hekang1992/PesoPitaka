@@ -29,6 +29,7 @@ struct henceforthModel: Codable {
     var secretly: String?
     var came: cameModel?
     var standing: Int?
+    var bang: [bangModel]?
     enum CodingKeys: String, CodingKey {
         case phone = "differently"
         case token = "gently"
@@ -43,6 +44,7 @@ struct henceforthModel: Codable {
         case secretly = "secretly"
         case came = "came"
         case standing = "standing"
+        case bang = "bang"
     }
     
 }
@@ -67,8 +69,9 @@ struct alienateModel: Codable {
 struct instantlyModel: Codable {
     var hadn: String?
     var probably: String?
+    var aware: Int?
+    var instantly: [instantlyModel]?
 }
-
 
 struct thirdModel: Codable {
     var coincidentally: String?
@@ -81,4 +84,20 @@ struct cameModel: Codable {
     var built: Int?
     var residing: String?
     var since: String?
+}
+
+class bangModel: Codable {
+    var herself: String?
+    var fiercely: Int?
+    var knot: String?
+    var points: String?
+    var went: String?
+    var remember: String?
+    var pitiful: String?
+    var glared: [glaredModel]?
+}
+
+struct glaredModel: Codable {
+    var hadn: String?
+    var pitiful: Int
 }

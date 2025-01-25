@@ -372,14 +372,14 @@ extension GuideOneViewController {
         let man = NetworkConfigManager()
         LoadingConfing.shared.showLoading()
         let result = man.requsetData(url: "/entertain/revolution", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
-            LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
+            LoadingConfing.shared.hideLoading()
             guard let self = self else { return }
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
                 let herself = model.herself
                 let invalidValues: Set<String> = ["0", "00"]
-                if invalidValues.contains(herself) {2
+                if invalidValues.contains(herself) {
                     if let authModel = model.henceforth.indicating, let help = authModel.help, !help.isEmpty {
                         self.toGuideVc(from: help, week: week.value)
                     }else {
@@ -424,7 +424,7 @@ extension GuideOneViewController {
             guard let self = self, let selectedValue = selectedValue else { return }
             updateTextField(label, with: selectedValue)
         }
-        datePickerView.pickerStyle = DatePickerColorConfig.configureStyle()
+        datePickerView.pickerStyle = DatePickerColorConfig.defaultStyle()
         datePickerView.show()
     }
     
@@ -517,7 +517,7 @@ extension Data {
 }
 
 class DatePickerColorConfig {
-    static func configureStyle() -> BRPickerStyle {
+    static func defaultStyle() -> BRPickerStyle {
         let customStyle = BRPickerStyle()
         customStyle.pickerColor = .white
         customStyle.pickerTextFont = .regularFontOfSize(size: 16)

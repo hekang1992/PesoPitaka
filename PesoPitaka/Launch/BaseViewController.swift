@@ -35,6 +35,10 @@ extension BaseViewController {
             let twoVc = TwoAuthViewController()
             twoVc.week.accept(week)
             self.navigationController?.pushViewController(twoVc, animated: true)
+        }else if type == "familiarh" {
+            let workVc = WorkAuthViewController()
+            workVc.week.accept(week)
+            self.navigationController?.pushViewController(workVc, animated: true)
         }
     }
     
