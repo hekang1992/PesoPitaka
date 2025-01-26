@@ -51,7 +51,7 @@ class HomeViewController: BaseViewController {
         self.model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             let count = model.henceforth.original?.own?.count ?? 0
-            if count < 0 {
+            if count > 0 {
                 mustView.alpha = 1
                 oneView.alpha = 0
                 mustView.model.accept(model)

@@ -212,4 +212,5 @@ struct secretModel: Codable {
     var although: String?
     var liar: String?
     var good: Int?
+    var rest: String?
 }

@@ -62,6 +62,7 @@ class OtpPeoViewCell: BaseViewCell {
         let applyBtn = UIUtils.createLabel(font: .regularFontOfSize(size: 14), textColor: .init(colorHexStr: "#FFFFFF")!, textAlignment: .center)
         applyBtn.backgroundColor = .init(colorHexStr: "#6DDEE2")
         applyBtn.layer.cornerRadius = 5
+        applyBtn.layer.masksToBounds = true
         return applyBtn
     }()
     
@@ -71,7 +72,13 @@ class OtpPeoViewCell: BaseViewCell {
         return titlabel
     }()
     
-    
+    lazy var appBtn: UIButton = {
+        let appBtn = UIButton(type: .custom)
+        appBtn.setBackgroundImage(UIImage(named: "greenccongimage"), for: .normal)
+        appBtn.setTitleColor(.init(colorHexStr: "#6D4400"), for: .normal)
+        appBtn.titleLabel?.font = .regularFontOfSize(size: 12)
+        return appBtn
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -84,6 +91,7 @@ class OtpPeoViewCell: BaseViewCell {
         contentView.addSubview(ttlabel)
         contentView.addSubview(blueView)
         contentView.addSubview(applyBtn)
+        contentView.addSubview(appBtn)
         blueView.addSubview(titlabel)
         
         bgView.snp.makeConstraints { make in
@@ -143,6 +151,11 @@ class OtpPeoViewCell: BaseViewCell {
             make.left.equalToSuperview().offset(12)
             make.centerX.equalToSuperview()
         }
+        appBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(namelabel.snp.centerY)
+            make.right.equalToSuperview().offset(-30)
+            make.height.equalTo(22)
+        }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             iconImageView.kf.setImage(with: URL(string: model.blinked ?? ""))
@@ -153,6 +166,17 @@ class OtpPeoViewCell: BaseViewCell {
             ttlabel.text = model.dateText ?? ""
             applyBtn.text = model.secret?.although ?? ""
             titlabel.text = model.secret?.liar ?? ""
+            let good = model.secret?.good ?? 0
+            appBtn.setTitle(model.secret?.rest, for: .normal)
+            if good == 1 {
+                appBtn.setBackgroundImage(UIImage(named: "redimgeim"), for: .normal)
+            }else if good == 2 || good == 3 {
+                appBtn.setBackgroundImage(UIImage(named: "origimagepice"), for: .normal)
+            }else if good == 4 {
+                appBtn.setBackgroundImage(UIImage(named: "blueimageif"), for: .normal)
+            }else {
+                appBtn.setBackgroundImage(UIImage(named: "greenccongimage"), for: .normal)
+            }
         }).disposed(by: disposeBag)
     }
     
