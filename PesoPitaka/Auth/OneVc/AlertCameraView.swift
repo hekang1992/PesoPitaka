@@ -38,7 +38,6 @@ class AlertCameraView: BaseView {
     
     lazy var iconImageView: UIImageView = {
         let iconImageView = UIImageView()
-        iconImageView.backgroundColor = .systemBlue
         return iconImageView
     }()
     

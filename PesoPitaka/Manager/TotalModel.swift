@@ -32,6 +32,8 @@ struct henceforthModel: Codable {
     var bang: [bangModel]?
     var piece: pieceModel?
     var summoned: summonedModel?
+    var original: originalModel?
+    var forced: forcedModel?
     enum CodingKeys: String, CodingKey {
         case phone = "differently"
         case token = "gently"
@@ -49,6 +51,8 @@ struct henceforthModel: Codable {
         case bang = "bang"
         case piece = "piece"
         case summoned = "summoned"
+        case original = "original"
+        case forced = "forced"
     }
     
 }
@@ -60,6 +64,15 @@ struct wakingModel: Codable {
 
 struct ownModel: Codable {
     var aware: Int?
+    var amountMax: String?
+    var blinked: String?
+    var bright: String?
+    var getting: String?
+    var host: String?
+    var residing: String?
+    var yawned: String?
+    var sound: String?
+    var loanTermText: String?
 }
 
 struct indicatingModel: Codable {
@@ -74,6 +87,13 @@ struct instantlyModel: Codable {
     var hadn: String?
     var probably: String?
     var aware: Int?
+    var blinked: String?
+    var getting: String?
+    var orderAmount: String?
+    var moneyText: String?
+    var dateValue: String?
+    var dateText: String?
+    var secret: secretModel?
     var instantly: [instantlyModel]?
 }
 
@@ -178,4 +198,18 @@ struct summonedModel: Codable {
     enum CodingKeys: String, CodingKey {
         case orderID = "tauren"
     }
+}
+
+struct originalModel: Codable {
+    var own: [ownModel]?
+}
+
+struct forcedModel: Codable {
+    var own: [ownModel]?
+}
+
+struct secretModel: Codable {
+    var although: String?
+    var liar: String?
+    var good: Int?
 }

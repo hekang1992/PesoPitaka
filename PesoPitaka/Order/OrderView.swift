@@ -10,6 +10,8 @@ import RxSwift
 
 class OrderView: BaseView {
     
+    var block: ((String) -> Void)?
+    
     lazy var headView: HeadView = {
         let headView = HeadView()
         headView.namelabel.text = "Orders"
@@ -71,6 +73,18 @@ class OrderView: BaseView {
         return fourBtn
     }()
     
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.register(OtpPeoViewCell.self, forCellReuseIdentifier: "OtpPeoViewCell")
+        tableView.estimatedRowHeight = 80
+        tableView.showsVerticalScrollIndicator = false
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.rowHeight = UITableView.automaticDimension
+        return tableView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(mustImageView)
@@ -80,6 +94,8 @@ class OrderView: BaseView {
         scrollView.addSubview(twoBtn)
         scrollView.addSubview(threeBtn)
         scrollView.addSubview(fourBtn)
+        
+        addSubview(tableView)
         
         mustImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -116,6 +132,11 @@ class OrderView: BaseView {
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-20)
         }
+        tableView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(scrollView.snp.bottom).offset(5)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
+        }
         bindButtonActions()
     }
     
@@ -142,13 +163,13 @@ extension OrderView {
                 selectedButton.setTitleColor(.black, for: .normal)
                 switch selectedButton {
                 case self.oneBtn:
-                    print("All button tapped")
+                    self.block?("4")
                 case self.twoBtn:
-                    print("Processing button tapped")
+                    self.block?("7")
                 case self.threeBtn:
-                    print("Repayment pending button tapped")
+                    self.block?("6")
                 case self.fourBtn:
-                    print("Complete button tapped")
+                    self.block?("5")
                 default:
                     break
                 }

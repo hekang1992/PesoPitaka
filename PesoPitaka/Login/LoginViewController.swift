@@ -72,7 +72,7 @@ extension LoginViewController {
         let code = self.loginView.codeTx.text ?? ""
         let dict = ["differently": phone,
                     "them": code,
-                    "address": "php"]
+                    "location": "php_manina"]
        let result = man.requsetData(url: "/entertain/himselfhe", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
            LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in

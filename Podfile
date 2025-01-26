@@ -30,4 +30,8 @@ target 'PesoPitaka' do
   
   pod 'BRPickerView', '~> 2.9.1'
   
+  pod 'TYCyclePagerView', '~> 1.2.0'
+  
+  pod 'MJRefresh', '~> 3.7.9'
+  
 end

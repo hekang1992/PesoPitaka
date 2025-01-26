@@ -163,7 +163,6 @@ class GuideOneViewController: BaseViewController {
             oneView.mustImageView.kf.setImage(with: URL(string: model.probably ?? ""))
         }).disposed(by: disposeBag)
         
-        
         leftView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
             if self.since.isEmpty {
@@ -271,6 +270,7 @@ extension GuideOneViewController {
     private func popCamera() {
         let authView = AlertCameraView(frame: self.view.bounds)
         let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
+        authView.iconImageView.kf.setImage(with: URL(string: self.authModel.value?.probably ?? ""))
         self.present(alertVc, animated: true)
         
         //photo
@@ -458,7 +458,7 @@ extension GuideOneViewController {
                         self.getServiceInfo {}
                     }
                 }
-                ToastConfig.showMessage(form: view, message: model.washed)
+                ToastConfig.showMessage(form: authView, message: model.washed)
             } catch  {
                 print("JSON: \(error)")
             }

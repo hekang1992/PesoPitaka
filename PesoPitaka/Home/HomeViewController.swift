@@ -7,12 +7,20 @@
 
 import UIKit
 import RxRelay
+import MJRefresh
 
 class HomeViewController: BaseViewController {
     
     lazy var oneView: HomeZeroView = {
         let oneView = HomeZeroView()
+        oneView.alpha = 0
         return oneView
+    }()
+    
+    lazy var mustView: HiveMustView = {
+        let mustView = HiveMustView()
+        mustView.alpha = 0
+        return mustView
     }()
     
     var model = BehaviorRelay<BaseModel?>(value: nil)
@@ -22,7 +30,11 @@ class HomeViewController: BaseViewController {
         
         // Do any additional setup after loading the view.
         view.addSubview(oneView)
+        view.addSubview(mustView)
         oneView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        mustView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
@@ -35,6 +47,27 @@ class HomeViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         getAddressInfo()
+        
+        self.model.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            let count = model.henceforth.original?.own?.count ?? 0
+            if count < 0 {
+                mustView.alpha = 1
+                oneView.alpha = 0
+                mustView.model.accept(model)
+                self.mustView.tableView.reloadData()
+                self.mustView.importView.reloadData()
+                self.mustView.notimpView.reloadData()
+            }else {
+                oneView.alpha = 1
+                mustView.alpha = 0
+            }
+        }).disposed(by: disposeBag)
+        
+        self.mustView.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            getHomeInfo()
+        })
         
     }
     
@@ -88,6 +121,7 @@ extension HomeViewController {
             } catch  {
                 print("JSON: \(error)")
             }
+            self.mustView.tableView.mj_header?.endRefreshing()
         })
         result.store(in: &cancellables)
     }

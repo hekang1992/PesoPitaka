@@ -41,7 +41,7 @@
 		73D1D0212D4372410065AD80 /* TwoCommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0202D4372410065AD80 /* TwoCommonView.swift */; };
 		73D1D0282D43B8430065AD80 /* TwoAuthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0272D43B8430065AD80 /* TwoAuthViewCell.swift */; };
 		73D1D02A2D43B8A70065AD80 /* OneAuthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0292D43B8A70065AD80 /* OneAuthViewCell.swift */; };
-		73D1D02C2D43B8D40065AD80 /* TwoAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D02B2D43B8D40065AD80 /* TwoAuthViewController.swift */; };
+		73D1D02C2D43B8D40065AD80 /* MonsterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D02B2D43B8D40065AD80 /* MonsterViewController.swift */; };
 		73D1D0302D44785B0065AD80 /* WorkAuthClickManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D02F2D44785B0065AD80 /* WorkAuthClickManager.swift */; };
 		73D1D0322D447E050065AD80 /* ServerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0312D447E050065AD80 /* ServerDataManager.swift */; };
 		73D1D0342D44A5780065AD80 /* ServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0332D44A5780065AD80 /* ServerViewController.swift */; };
@@ -50,6 +50,10 @@
 		73D1D03A2D44DD130065AD80 /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0392D44DD130065AD80 /* PayViewController.swift */; };
 		73D1D03C2D452C3A0065AD80 /* PayPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D03B2D452C3A0065AD80 /* PayPopView.swift */; };
 		73D1D03E2D45347A0065AD80 /* HiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D03D2D45347A0065AD80 /* HiveViewController.swift */; };
+		73D1D0402D4611280065AD80 /* HiveMustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D03F2D4611280065AD80 /* HiveMustView.swift */; };
+		73D1D0422D4671BB0065AD80 /* HiveMustViewCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0412D4671BB0065AD80 /* HiveMustViewCellCollectionViewCell.swift */; };
+		73D1D0442D4677E40065AD80 /* HivePeoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0432D4677E40065AD80 /* HivePeoViewCell.swift */; };
+		73D1D0462D4680E50065AD80 /* OtpPeoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0452D4680E50065AD80 /* OtpPeoViewCell.swift */; };
 		73D9DECE2D3FED3B00AD810A /* LoadingConfing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */; };
 		73D9DED02D3FEEE200AD810A /* LoginSuccessConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */; };
 		73D9DED62D3FF83200AD810A /* UserCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */; };
@@ -98,7 +102,7 @@
 		73D1D0202D4372410065AD80 /* TwoCommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCommonView.swift; sourceTree = "<group>"; };
 		73D1D0272D43B8430065AD80 /* TwoAuthViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoAuthViewCell.swift; sourceTree = "<group>"; };
 		73D1D0292D43B8A70065AD80 /* OneAuthViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneAuthViewCell.swift; sourceTree = "<group>"; };
-		73D1D02B2D43B8D40065AD80 /* TwoAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoAuthViewController.swift; sourceTree = "<group>"; };
+		73D1D02B2D43B8D40065AD80 /* MonsterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterViewController.swift; sourceTree = "<group>"; };
 		73D1D02F2D44785B0065AD80 /* WorkAuthClickManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkAuthClickManager.swift; sourceTree = "<group>"; };
 		73D1D0312D447E050065AD80 /* ServerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerDataManager.swift; sourceTree = "<group>"; };
 		73D1D0332D44A5780065AD80 /* ServerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +111,10 @@
 		73D1D0392D44DD130065AD80 /* PayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayViewController.swift; sourceTree = "<group>"; };
 		73D1D03B2D452C3A0065AD80 /* PayPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPopView.swift; sourceTree = "<group>"; };
 		73D1D03D2D45347A0065AD80 /* HiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveViewController.swift; sourceTree = "<group>"; };
+		73D1D03F2D4611280065AD80 /* HiveMustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveMustView.swift; sourceTree = "<group>"; };
+		73D1D0412D4671BB0065AD80 /* HiveMustViewCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveMustViewCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		73D1D0432D4677E40065AD80 /* HivePeoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HivePeoViewCell.swift; sourceTree = "<group>"; };
+		73D1D0452D4680E50065AD80 /* OtpPeoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpPeoViewCell.swift; sourceTree = "<group>"; };
 		73D9DECD2D3FED3B00AD810A /* LoadingConfing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingConfing.swift; sourceTree = "<group>"; };
 		73D9DECF2D3FEEE200AD810A /* LoginSuccessConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessConfig.swift; sourceTree = "<group>"; };
 		73D9DED52D3FF83200AD810A /* UserCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterViewController.swift; sourceTree = "<group>"; };
@@ -199,7 +207,10 @@
 			isa = PBXGroup;
 			children = (
 				73D9DEDB2D40A75800AD810A /* HomeZeroView.swift */,
+				73D1D03F2D4611280065AD80 /* HiveMustView.swift */,
 				73D9DED92D3FF86700AD810A /* HomeViewController.swift */,
+				73D1D0412D4671BB0065AD80 /* HiveMustViewCellCollectionViewCell.swift */,
+				73D1D0432D4677E40065AD80 /* HivePeoViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -208,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				73D9DEE12D40B33E00AD810A /* OrderView.swift */,
+				73D1D0452D4680E50065AD80 /* OtpPeoViewCell.swift */,
 				73D9DED72D3FF85600AD810A /* OrdersViewController.swift */,
 			);
 			path = Order;
@@ -306,7 +318,7 @@
 			children = (
 				73D1D0292D43B8A70065AD80 /* OneAuthViewCell.swift */,
 				73D1D0272D43B8430065AD80 /* TwoAuthViewCell.swift */,
-				73D1D02B2D43B8D40065AD80 /* TwoAuthViewController.swift */,
+				73D1D02B2D43B8D40065AD80 /* MonsterViewController.swift */,
 				73D1D0332D44A5780065AD80 /* ServerViewController.swift */,
 				73D1D0352D44A8440065AD80 /* ServerTableViewCell.swift */,
 				73D1D0392D44DD130065AD80 /* PayViewController.swift */,
@@ -441,6 +453,7 @@
 				73D1D0342D44A5780065AD80 /* ServerViewController.swift in Sources */,
 				73D9DEDA2D3FF86700AD810A /* HomeViewController.swift in Sources */,
 				738D454B2D3F77BB00EE9E66 /* BaseTabBarController.swift in Sources */,
+				73D1D0462D4680E50065AD80 /* OtpPeoViewCell.swift in Sources */,
 				73D1D01D2D4371CD0065AD80 /* AlertSuccessNameView.swift in Sources */,
 				73D1D0172D43349E0065AD80 /* AlertAuthIDViewCell.swift in Sources */,
 				73D1D0032D42578F0065AD80 /* GuideView.swift in Sources */,
@@ -451,6 +464,7 @@
 				73D9DEDC2D40A75800AD810A /* HomeZeroView.swift in Sources */,
 				73807D432D32C5C800F8B90D /* TotalModel.swift in Sources */,
 				73D9DED02D3FEEE200AD810A /* LoginSuccessConfig.swift in Sources */,
+				73D1D0402D4611280065AD80 /* HiveMustView.swift in Sources */,
 				73807D2F2D32BA8000F8B90D /* AppDelegate.swift in Sources */,
 				738D45452D3F763A00EE9E66 /* NetworkManager.swift in Sources */,
 				73D9DEE02D40AF8E00AD810A /* HeadView.swift in Sources */,
@@ -463,6 +477,7 @@
 				73D1D0072D4269920065AD80 /* GuideOneViewController.swift in Sources */,
 				73D9DEDE2D40AD6A00AD810A /* CenterView.swift in Sources */,
 				73D1CFFF2D4257780065AD80 /* GuideViewController.swift in Sources */,
+				73D1D0422D4671BB0065AD80 /* HiveMustViewCellCollectionViewCell.swift in Sources */,
 				73807D412D32C09300F8B90D /* LaunchViewController.swift in Sources */,
 				73807D3F2D32C07700F8B90D /* BaseViewController.swift in Sources */,
 				738D45502D3F798900EE9E66 /* LoginView.swift in Sources */,
@@ -471,7 +486,8 @@
 				73D1D0362D44A8440065AD80 /* ServerTableViewCell.swift in Sources */,
 				73D9DECE2D3FED3B00AD810A /* LoadingConfing.swift in Sources */,
 				73D1D0322D447E050065AD80 /* ServerDataManager.swift in Sources */,
-				73D1D02C2D43B8D40065AD80 /* TwoAuthViewController.swift in Sources */,
+				73D1D0442D4677E40065AD80 /* HivePeoViewCell.swift in Sources */,
+				73D1D02C2D43B8D40065AD80 /* MonsterViewController.swift in Sources */,
 				73D1CFFA2D424C2D0065AD80 /* SettingViewController.swift in Sources */,
 				738D454E2D3F78F000EE9E66 /* LoginViewController.swift in Sources */,
 				73D9DEE22D40B33E00AD810A /* OrderView.swift in Sources */,

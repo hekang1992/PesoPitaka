@@ -34,6 +34,7 @@ PODS:
   - FBSDKCoreKit_Basics (17.4.0)
   - IQKeyboardManagerSwift (6.5.16)
   - Kingfisher (7.11.0)
+  - MJRefresh (3.7.9)
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
@@ -51,12 +52,14 @@ PODS:
   - SnapKit (5.7.1)
   - Toast-Swift (5.1.1)
   - TYAlertController (1.2.0)
+  - TYCyclePagerView (1.2.0)
 
 DEPENDENCIES:
   - BRPickerView (~> 2.9.1)
   - FBSDKCoreKit (~> 17.4.0)
   - IQKeyboardManagerSwift (~> 6.5.16)
   - Kingfisher (~> 7.11.0)
+  - MJRefresh (~> 3.7.9)
   - Moya (~> 15.0.0)
   - RxCocoa (~> 6.6.0)
   - RxGesture (~> 4.0.4)
@@ -65,6 +68,7 @@ DEPENDENCIES:
   - SnapKit (~> 5.7.1)
   - Toast-Swift (~> 5.1.1)
   - TYAlertController (~> 1.2.0)
+  - TYCyclePagerView (~> 1.2.0)
 
 SPEC REPOS:
   trunk:
@@ -75,6 +79,7 @@ SPEC REPOS:
     - FBSDKCoreKit_Basics
     - IQKeyboardManagerSwift
     - Kingfisher
+    - MJRefresh
     - Moya
     - RxCocoa
     - RxGesture
@@ -84,6 +89,7 @@ SPEC REPOS:
     - SnapKit
     - Toast-Swift
     - TYAlertController
+    - TYCyclePagerView
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
@@ -93,6 +99,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit_Basics: 151b43db8b834d3f0e02f95d36a44ffd36265e45
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
+  MJRefresh: ff9e531227924c84ce459338414550a05d2aea78
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
@@ -102,7 +109,8 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   Toast-Swift: 7a03a532afe3a560d4044bc7c237e2864d295173
   TYAlertController: c121090edb0bea7426f987da94cdddd81eef4231
+  TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
 
-PODFILE CHECKSUM: ae82d4b987fb44c41c3e59959e65f958e5f42712
+PODFILE CHECKSUM: 454e774c4880017a22a024898daa9efd868089c3
 
 COCOAPODS: 1.16.2
