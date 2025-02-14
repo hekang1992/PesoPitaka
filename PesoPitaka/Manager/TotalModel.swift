@@ -34,7 +34,9 @@ struct henceforthModel: Codable {
     var summoned: summonedModel?
     var original: originalModel?
     var forced: forcedModel?
+    var choose: Int?
     enum CodingKeys: String, CodingKey {
+        case choose = "choose"
         case phone = "differently"
         case token = "gently"
         case waking = "waking"

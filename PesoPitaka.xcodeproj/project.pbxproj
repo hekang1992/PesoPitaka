@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		72B2E0E5D74259C63F96D2AB /* Pods_PesoPitaka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF9A3389285CF591AF5DBC9A /* Pods_PesoPitaka.framework */; };
+		731BB3832D58A232003E54DB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 731BB3822D58A232003E54DB /* Launch Screen.storyboard */; };
+		731BB3852D58A44E003E54DB /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731BB3842D58A44E003E54DB /* LocationService.swift */; };
 		73807D2F2D32BA8000F8B90D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D252D32BA8000F8B90D /* AppDelegate.swift */; };
 		73807D322D32BA8000F8B90D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73807D262D32BA8000F8B90D /* Assets.xcassets */; };
-		73807D342D32BA8000F8B90D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73807D292D32BA8000F8B90D /* LaunchScreen.storyboard */; };
 		73807D3F2D32C07700F8B90D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D3E2D32C07700F8B90D /* BaseViewController.swift */; };
 		73807D412D32C09300F8B90D /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D402D32C09300F8B90D /* LaunchViewController.swift */; };
 		73807D432D32C5C800F8B90D /* TotalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D422D32C5BD00F8B90D /* TotalModel.swift */; };
@@ -66,11 +67,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		731BB3822D58A232003E54DB /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		731BB3842D58A44E003E54DB /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		73807CFD2D32B8AC00F8B90D /* PesoPitaka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PesoPitaka.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73807D252D32BA8000F8B90D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		73807D262D32BA8000F8B90D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		73807D272D32BA8000F8B90D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		73807D282D32BA8000F8B90D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		73807D362D32BCBB00F8B90D /* PesoPitaka.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PesoPitaka.entitlements; sourceTree = "<group>"; };
 		73807D3E2D32C07700F8B90D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		73807D402D32C09300F8B90D /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
@@ -179,7 +181,12 @@
 		73807D2E2D32BA8000F8B90D /* PesoPitaka */ = {
 			isa = PBXGroup;
 			children = (
-				73807D3D2D32BF6F00F8B90D /* AppDelegate */,
+				738D45532D3F7E4100EE9E66 /* MontserratRegular.ttf */,
+				73807D272D32BA8000F8B90D /* Info.plist */,
+				73807D262D32BA8000F8B90D /* Assets.xcassets */,
+				73807D362D32BCBB00F8B90D /* PesoPitaka.entitlements */,
+				731BB3822D58A232003E54DB /* Launch Screen.storyboard */,
+				73807D252D32BA8000F8B90D /* AppDelegate.swift */,
 				73807D3B2D32BF4400F8B90D /* Manager */,
 				73807D3A2D32BF4100F8B90D /* Center */,
 				73807D392D32BF3D00F8B90D /* Order */,
@@ -250,21 +257,9 @@
 				73D1D02F2D44785B0065AD80 /* WorkAuthClickManager.swift */,
 				73D1D0312D447E050065AD80 /* ServerDataManager.swift */,
 				73D1D0372D44BA5D0065AD80 /* ContactManager.swift */,
+				731BB3842D58A44E003E54DB /* LocationService.swift */,
 			);
 			path = Manager;
-			sourceTree = "<group>";
-		};
-		73807D3D2D32BF6F00F8B90D /* AppDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				738D45532D3F7E4100EE9E66 /* MontserratRegular.ttf */,
-				73807D272D32BA8000F8B90D /* Info.plist */,
-				73807D262D32BA8000F8B90D /* Assets.xcassets */,
-				73807D362D32BCBB00F8B90D /* PesoPitaka.entitlements */,
-				73807D252D32BA8000F8B90D /* AppDelegate.swift */,
-				73807D292D32BA8000F8B90D /* LaunchScreen.storyboard */,
-			);
-			path = AppDelegate;
 			sourceTree = "<group>";
 		};
 		738D454C2D3F789000EE9E66 /* Login */ = {
@@ -280,8 +275,8 @@
 		73D1CFFD2D4257540065AD80 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				73D1D0242D43B8110065AD80 /* SpecialVc */,
 				73D1D0092D4269DC0065AD80 /* OneVc */,
+				73D1D0242D43B8110065AD80 /* SpecialVc */,
 				73D1D0082D4269CC0065AD80 /* GuideVc */,
 			);
 			path = Auth;
@@ -389,9 +384,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				731BB3832D58A232003E54DB /* Launch Screen.storyboard in Resources */,
 				738D45542D3F7E4200EE9E66 /* MontserratRegular.ttf in Resources */,
 				73807D322D32BA8000F8B90D /* Assets.xcassets in Resources */,
-				73807D342D32BA8000F8B90D /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +457,7 @@
 				73D1D0192D434E930065AD80 /* AlertCameraView.swift in Sources */,
 				73D1D00F2D432DB50065AD80 /* GuideOneView.swift in Sources */,
 				73D9DEDC2D40A75800AD810A /* HomeZeroView.swift in Sources */,
+				731BB3852D58A44E003E54DB /* LocationService.swift in Sources */,
 				73807D432D32C5C800F8B90D /* TotalModel.swift in Sources */,
 				73D9DED02D3FEEE200AD810A /* LoginSuccessConfig.swift in Sources */,
 				73D1D0402D4611280065AD80 /* HiveMustView.swift in Sources */,
@@ -501,17 +497,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		73807D292D32BA8000F8B90D /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				73807D282D32BA8000F8B90D /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		73807D112D32B8AD00F8B90D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -519,7 +504,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = PesoPitaka/PesoPitaka.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -527,15 +512,18 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PesoPitaka/AppDelegate/Info.plist;
+				INFOPLIST_FILE = PesoPitaka/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Peso Pitaka";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSContactsUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "法定收入全额发";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "放大放大";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -562,7 +550,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = PesoPitaka/PesoPitaka.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -570,15 +558,18 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PesoPitaka/AppDelegate/Info.plist;
+				INFOPLIST_FILE = PesoPitaka/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Peso Pitaka";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSContactsUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "法定收入全额发";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "放大放大";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

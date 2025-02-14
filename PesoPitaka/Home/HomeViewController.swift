@@ -8,6 +8,10 @@
 import UIKit
 import RxRelay
 import MJRefresh
+import RxSwift
+import CoreLocation
+
+let TNT_ONE_INFO = "TNT_ONE_INFO"
 
 class HomeViewController: BaseViewController {
     
@@ -25,6 +29,8 @@ class HomeViewController: BaseViewController {
     
     var model = BehaviorRelay<BaseModel?>(value: nil)
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,9 +47,8 @@ class HomeViewController: BaseViewController {
         oneView.threeImageView.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                let weak = self.model.value?.henceforth.waking?.own?.first?.aware ?? 0
-                self.applyInfo(from: String(weak))
+                guard let self = self, let model = self.model.value else { return }
+                self.applyInfo(from: model)
             }).disposed(by: disposeBag)
         
         getAddressInfo()
@@ -51,7 +56,7 @@ class HomeViewController: BaseViewController {
         self.model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             let count = model.henceforth.original?.own?.count ?? 0
-            if count > 0 {
+            if count < 0 {
                 mustView.alpha = 1
                 oneView.alpha = 0
                 mustView.model.accept(model)
@@ -74,8 +79,11 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getHomeInfo()
+        let location = LocationManager()
+        location.getLocationInfo { geoModel in
+            
+        }
     }
-    
     
 }
 
@@ -126,9 +134,31 @@ extension HomeViewController {
         result.store(in: &cancellables)
     }
     
-    private func applyInfo(from week: String) {
+    private func applyInfo(from model: BaseModel) {
+        let choose = model.henceforth.choose ?? 0
+        if choose == 1 {
+            appInfo(from: model)
+        }else {
+            let status: CLAuthorizationStatus
+            if #available(iOS 14.0, *) {
+                status = CLLocationManager().authorizationStatus
+            } else {
+                status = CLLocationManager.authorizationStatus()
+            }
+            switch status {
+            case .restricted, .denied:
+                showAlert()
+            default:
+                appInfo(from: model)
+            }
+        }
+    }
+    
+    private func appInfo(from model: BaseModel) {
+        self.upLoadInfo()
+        let weak = String(model.henceforth.waking?.own?.first?.aware ?? 0)
         LoadingConfing.shared.showLoading()
-        let dict = ["week": week,
+        let dict = ["week": weak,
                     "services": "1",
                     "pay": "0"]
         let man = NetworkConfigManager()
@@ -149,6 +179,23 @@ extension HomeViewController {
             }
         })
         result.store(in: &cancellables)
+    }
+    
+    private func showAlert() {
+        let alert = UIAlertController(title: "Location Permission", message: "Location Permission Location Permission Location Permission", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Go", style: .default) { (action) in
+            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                if UIApplication.shared.canOpenURL(settingsURL) {
+                    UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+                }
+            }
+        }
+        alert.addAction(okAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            
+        }
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     private func accordingUrl(from pageUrl: String) {
@@ -186,7 +233,7 @@ extension HomeViewController {
                         self.toOneGuideVc(from: help, week: weak)
                     }else {
                         let orderID = model.henceforth.summoned?.orderID ?? ""
-                        self.orderIDToVc(for: orderID)
+                        self.orderIDToVc(for: orderID, week: weak)
                     }
                 }
             } catch  {
@@ -201,6 +248,76 @@ extension HomeViewController {
         let dict = ["type": type, "week": week]
         guideVc.dict.accept(dict)
         self.navigationController?.pushViewController(guideVc, animated: true)
+    }
+    
+}
+
+
+extension HomeViewController {
+    
+    private func upLoadInfo() {
+        let grand = UserDefaults.standard.object(forKey: TNT_ONE_INFO) as? String ?? ""
+        if grand != "1" {
+            self.oneInfo()
+        }
+        self.locaionInfo()
+    }
+    
+    private func locaionInfo() {
+        let location = LocationManager()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["watched": model.watched,
+                        "blame": model.blame,
+                        "improve": model.improve,
+                        "seemed": model.seemed,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "expression": model.expression,
+                        "flustered": model.flustered,
+                        "seeing": model.seeing]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/dramatic", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
+        }
+    }
+    
+    private func oneInfo() {
+        let weak = String(self.model.value?.henceforth.waking?.own?.first?.aware ?? 0)
+        let onetime = UserDefaults.standard.object(forKey: ONETIME)
+        let twotime = UserDefaults.standard.object(forKey: TWOTIME)
+        let location = LocationManager()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": weak,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "1",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": onetime,
+                        "gritted": twotime]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: { [weak self] data in
+                guard let self = self else { return }
+                do {
+                    let model = try JSONDecoder().decode(BaseModel.self, from: data)
+                    let herself = model.herself
+                    let invalidValues: Set<String> = ["0", "00"]
+                    if invalidValues.contains(herself) {
+                        UserDefaults.standard.set("1", forKey: TNT_ONE_INFO)
+                        UserDefaults.standard.synchronize()
+                    }
+                } catch  {
+                    print("JSON: \(error)")
+                }
+            })
+            result.store(in: &cancellables)
+        }
     }
     
 }

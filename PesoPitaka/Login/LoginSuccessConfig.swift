@@ -21,6 +21,9 @@ class LoginSuccessConfig {
     static func removeLoginInfo() {
         UserDefaults.standard.setValue("", forKey: LOGIN_PHONE)
         UserDefaults.standard.setValue("", forKey: LOGIN_TOKEN)
+        UserDefaults.standard.setValue("", forKey: TNT_ONE_INFO)
+        UserDefaults.standard.setValue("", forKey: ONETIME)
+        UserDefaults.standard.setValue("", forKey: TWOTIME)
         UserDefaults.standard.synchronize()
     }
     

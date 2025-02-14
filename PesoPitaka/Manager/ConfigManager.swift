@@ -147,3 +147,12 @@ class DeviceMetrics {
         return defaultTabBarHeight + bottomSafeAreaHeight
     }
 }
+
+
+class DateUtils {
+
+    static func getCurrentTimestampInMilliseconds() -> String {
+        return String(Int(Date().timeIntervalSince1970 * 1000))
+    }
+
+}

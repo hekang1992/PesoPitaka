@@ -22,6 +22,14 @@ class GuideOneViewController: BaseViewController {
     
     var built: Int = 0
     
+    //3
+    var photoonetime = ""
+    var phototwitime = ""
+    
+    //4
+    var faceonetime = ""
+    var facetwitime = ""
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "loginbgimage")
@@ -165,6 +173,7 @@ class GuideOneViewController: BaseViewController {
         
         leftView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
+            photoonetime = DateUtils.getCurrentTimestampInMilliseconds()
             if self.since.isEmpty {
                 ToastConfig.showMessage(form: view, message: "Please select an authentication method.")
             }else {
@@ -174,6 +183,7 @@ class GuideOneViewController: BaseViewController {
         
         rightView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
+            faceonetime = DateUtils.getCurrentTimestampInMilliseconds()
             if self.built == 1 {
                 CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera) { [weak self] image in
                     if let image = image {
@@ -251,6 +261,7 @@ class GuideOneViewController: BaseViewController {
 extension GuideOneViewController {
     
     private func authID() {
+        let onetime = DateUtils.getCurrentTimestampInMilliseconds()
         let authView = AlertAuthIDView(frame: self.view.bounds)
         if let model = self.model.value {
             authView.model.accept(model)
@@ -260,10 +271,33 @@ extension GuideOneViewController {
         self.present(alertVc, animated: true)
         authView.nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
-            self.dismiss(animated: true)
+            self.dismiss(animated: true) {
+                self.twoInfo(from: onetime, twotime: DateUtils.getCurrentTimestampInMilliseconds())
+            }
         }).disposed(by: disposeBag)
         authView.block = { [weak self] model in
             self?.authModel.accept(model)
+        }
+    }
+    
+    private func twoInfo(from onetime: String, twotime: String) {
+        let location = LocationManager()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": week.value,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "2",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": onetime,
+                        "gritted": twotime]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
         }
     }
     
@@ -336,8 +370,8 @@ extension GuideOneViewController {
                     "hear": "1"] as [String : String]
         let imageData = Data.compressImage(image: image)!
         let result = man.uploadImage(url: "/entertain/cheerfully", imageData: imageData, parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
-        }, receiveValue: { [weak self] data in
             LoadingConfing.shared.hideLoading()
+        }, receiveValue: { [weak self] data in
             guard let self = self else { return }
             do {
                 let model = try JSONDecoder().decode(BaseModel.self, from: data)
@@ -347,11 +381,11 @@ extension GuideOneViewController {
                     if pitiful == "11" {
                         self.popModel(from: model.henceforth)
                     }else {
+                        self.fourInfo()
                         self.getServiceInfo { [weak self] in
                             guard let self = self else { return }
                             productDetailInfo(from: week.value)
                         }
-                        
                     }
                 }
             } catch  {
@@ -456,6 +490,8 @@ extension GuideOneViewController {
                 if invalidValues.contains(herself) {
                     self.dismiss(animated: true) {
                         self.getServiceInfo {}
+                        //mai === 3
+                        self.threeInfo()
                     }
                 }
                 ToastConfig.showMessage(form: authView, message: model.washed)
@@ -464,6 +500,54 @@ extension GuideOneViewController {
             }
         })
         result.store(in: &cancellables)
+    }
+    
+}
+
+extension GuideOneViewController {
+    
+    private func threeInfo() {
+        let location = LocationManager()
+        var time = DateUtils.getCurrentTimestampInMilliseconds()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": week.value,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "3",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": photoonetime,
+                        "gritted": time]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
+        }
+    }
+    
+    private func fourInfo() {
+        let location = LocationManager()
+        var time = DateUtils.getCurrentTimestampInMilliseconds()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": week.value,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "4",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": faceonetime,
+                        "gritted": time]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
+        }
     }
     
 }

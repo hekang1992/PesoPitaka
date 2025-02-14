@@ -40,6 +40,12 @@ class OrdersViewController: BaseViewController {
         
         self.orView.tableView.rx.setDelegate(self).disposed(by: disposeBag)
         self.orView.tableView.rx.setDataSource(self).disposed(by: disposeBag)
+        
+        
+        
+        
+        
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {

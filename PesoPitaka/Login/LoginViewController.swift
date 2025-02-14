@@ -8,6 +8,9 @@
 import UIKit
 import Combine
 
+let ONETIME = "ONETIME"
+let TWOTIME = "TWOTIME"
+
 class LoginViewController: BaseViewController {
     
     lazy var loginView: LoginView = {
@@ -32,7 +35,9 @@ class LoginViewController: BaseViewController {
             self?.getLoginInfo()
         }).disposed(by: disposeBag)
         
-        
+        let onetime = DateUtils.getCurrentTimestampInMilliseconds()
+        UserDefaults.standard.set(onetime, forKey: ONETIME)
+        UserDefaults.standard.synchronize()
     }
     
 }
@@ -84,6 +89,9 @@ extension LoginViewController {
                 if invalidValues.contains(herself) {
                     let phone = model.henceforth.phone ?? ""
                     let token = model.henceforth.token ?? ""
+                    let twotime = DateUtils.getCurrentTimestampInMilliseconds()
+                    UserDefaults.standard.set(twotime, forKey: TWOTIME)
+                    UserDefaults.standard.synchronize()
                     LoginSuccessConfig.saveLoginInfo(phone: phone, token: token)
                     loginSuccessPush.toRootVc()
                 }

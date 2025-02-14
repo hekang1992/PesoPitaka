@@ -9,6 +9,9 @@ import UIKit
 
 class ServerTableViewCell: BaseViewCell {
     
+    var oneBlock: (() -> Void)?
+    var twoBlock: (() -> Void)?
+    
     lazy var miLabel: UILabel = {
         let miLabel = UIUtils.createLabel(font: .regularFontOfSize(size: 14), textColor: .init(colorHexStr: "#C9C9C9")!, textAlignment: .left)
          return miLabel
@@ -104,6 +107,23 @@ class ServerTableViewCell: BaseViewCell {
             make.right.equalToSuperview().offset(-5)
             make.size.equalTo(CGSize(width: 15, height: 15))
         }
+        
+        obgView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                self?.oneBlock?()
+        }).disposed(by: disposeBag)
+        
+        owbgView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                self?.twoBlock?()
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

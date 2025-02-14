@@ -15,6 +15,10 @@ class BaseViewController: UIViewController {
     
     var cancellables = Set<AnyCancellable>()
     
+    var priid: String = ""
+    
+    var ninetime: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,8 +48,9 @@ extension BaseViewController {
                     if let authModel = model.henceforth.indicating, let help = authModel.help, !help.isEmpty {
                         self.toGuideVc(from: help, week: weak)
                     }else {
+                        ninetime = DateUtils.getCurrentTimestampInMilliseconds()
                         let orderID = model.henceforth.summoned?.orderID ?? ""
-                        self.orderIDToVc(for: orderID)
+                        self.orderIDToVc(for: orderID, week: weak)
                     }
                 }else {
                     ToastConfig.showMessage(form: view, message: model.washed)
@@ -89,7 +94,7 @@ extension BaseViewController {
         }
     }
     
-    func orderIDToVc(for orderID: String) {
+    func orderIDToVc(for orderID: String, week: String) {
         LoadingConfing.shared.showLoading()
         let dict = ["seriously": "1",
                     "maybe": "2",
@@ -106,6 +111,7 @@ extension BaseViewController {
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
                     let pageUrl = model.henceforth.residing ?? ""
+                    nineInfo(from: week)
                     self.pushWebVc(from: pageUrl)
                 }else {
                     ToastConfig.showMessage(form: view, message: model.washed)
@@ -124,6 +130,33 @@ extension BaseViewController {
         let pageUrl = URLQueryAppender.appendQueryParameters(to: url, parameters: dictionary)!.replacingOccurrences(of: " ", with: "%20")
         hiveVc.pageUrl = pageUrl
         self.navigationController?.pushViewController(hiveVc, animated: true)
+    }
+    
+}
+
+
+extension BaseViewController {
+    
+    private func nineInfo(from week: String) {
+        let location = LocationManager()
+        let time = DateUtils.getCurrentTimestampInMilliseconds()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": week,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "9",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": ninetime,
+                        "gritted": time]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
+        }
     }
     
 }

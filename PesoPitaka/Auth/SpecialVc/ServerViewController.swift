@@ -21,6 +21,8 @@ class ServerViewController: BaseViewController {
     
     var grandCore: Bool = false
     
+    var emeronetime: String = ""
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "loginbgimage")
@@ -79,7 +81,7 @@ class ServerViewController: BaseViewController {
         view.addSubview(poImageView)
         view.addSubview(nextBtn)
         view.addSubview(tableView)
-        
+        emeronetime = DateUtils.getCurrentTimestampInMilliseconds()
         bgImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -151,7 +153,10 @@ class ServerViewController: BaseViewController {
                 let herself = model.herself
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
+                    sevenInfo()
                     self.productDetailInfo(from: week.value)
+                }else {
+                    ToastConfig.showMessage(form: self.view, message: model.washed)
                 }
             } catch  {
                 print("JSON: \(error)")
@@ -179,54 +184,43 @@ extension ServerViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ServerTableViewCell", for: indexPath) as! ServerTableViewCell
         let model = self.model.value?.henceforth.piece?.instantly?[indexPath.row]
-        self.index = indexPath.row
         cell.miLabel.text = model?.liz ?? ""
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        cell.obgView
-            .rx
-            .tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { _ in
-                let modelArray = model?.northwest ?? []
-                let oneArray = PrimaryDataProcessor.processPrimaryData(dataSource: modelArray)
-                if let model = model {
-                    ShowEnumConfig.showAddressPicker(from: model, targetLabel: cell.descLabel, dataSource: oneArray, pickerMode: .province)
-                }
-            }).disposed(by: cell.disposeBag)
+        cell.oneBlock = {
+            let modelArray = model?.northwest ?? []
+            let oneArray = PrimaryDataProcessor.processPrimaryData(dataSource: modelArray)
+            if let model = model {
+                ShowEnumConfig.showAddressPicker(from: model, targetLabel: cell.descLabel, dataSource: oneArray, pickerMode: .province)
+            }
+        }
         
-        cell.owbgView
-            .rx
-            .tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [weak self] _ in
-                self?.selectCell = cell
-                ContactManager.fetchContacts { [weak self] contacts, error in
-                    guard let self = self else { return }
-                    if let error = error {
-                        print("Failed to fetch contacts: \(error.localizedDescription)")
-                        return
-                    }
-                    guard let contacts = contacts else {
-                        print("No contacts found")
-                        return
-                    }
-//                    if let model = model {
-//                        self.selectModel = model
-//                    }
-                    var phoneArray: [[String: Any]] = []
-                    self.present(contactPicker, animated: true, completion: nil)
-                    for contact in contacts {
-                        let fullName = "\(contact.givenName) \(contact.familyName)"
-                        let phoneNumbers = contact.phoneNumbers.first?.value.stringValue ?? ""
-                        let phone = ["officially": phoneNumbers, "hadn": fullName]
-                        phoneArray.append(phone as [String : Any])
-                    }
-                    if self.grandCore == false {
-                        updateFocusIfNeededInfo(from: phoneArray)
-                    }
+        cell.twoBlock = { [weak self] in
+            self?.selectCell = cell
+            self?.index = indexPath.row
+            ContactManager.fetchContacts { [weak self] contacts, error in
+                guard let self = self else { return }
+                if let error = error {
+                    print("Failed to fetch contacts: \(error.localizedDescription)")
+                    return
                 }
-            }).disposed(by: cell.disposeBag)
+                guard let contacts = contacts else {
+                    print("No contacts found")
+                    return
+                }
+                var phoneArray: [[String: Any]] = []
+                self.present(contactPicker, animated: true, completion: nil)
+                for contact in contacts {
+                    let fullName = "\(contact.givenName) \(contact.familyName)"
+                    let phoneNumbers = contact.phoneNumbers.first?.value.stringValue ?? ""
+                    let phone = ["officially": phoneNumbers, "hadn": fullName]
+                    phoneArray.append(phone as [String : Any])
+                }
+                if self.grandCore == false {
+                    updateFocusIfNeededInfo(from: phoneArray)
+                }
+            }
+        }
         return cell
     }
     
@@ -316,6 +310,33 @@ extension ServerViewController: CNContactPickerDelegate {
     
     func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
         
+    }
+    
+}
+
+
+extension ServerViewController {
+    
+    private func sevenInfo() {
+        let location = LocationManager()
+        let time = DateUtils.getCurrentTimestampInMilliseconds()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": week.value,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "7",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": emeronetime,
+                        "gritted": time]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
+        }
     }
     
 }

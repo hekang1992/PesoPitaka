@@ -19,6 +19,8 @@ class PayViewController: BaseViewController {
     
     var authModel = BehaviorRelay<glaredModel?>(value: nil)
     
+    var payonetime: String = ""
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "loginbgimage")
@@ -88,7 +90,7 @@ class PayViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        payonetime = DateUtils.getCurrentTimestampInMilliseconds()
         // Do any additional setup after loading the view.
         view.addSubview(bgImageView)
         view.addSubview(headView)
@@ -200,6 +202,7 @@ class PayViewController: BaseViewController {
                 let herself = model.herself
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
+                    eightInfo()
                     self.productDetailInfo(from: week.value)
                 }
                 ToastConfig.showMessage(form: view, message: model.washed)
@@ -338,6 +341,33 @@ extension PayViewController: UITableViewDelegate, UITableViewDataSource {
         authView.block = { model in
             cell.descLabel.text = model.hadn ?? ""
             model1.first?.pitiful = model.pitiful
+        }
+    }
+    
+}
+
+
+extension PayViewController {
+    
+    private func eightInfo() {
+        let location = LocationManager()
+        var time = DateUtils.getCurrentTimestampInMilliseconds()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": week.value,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "8",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": payonetime,
+                        "gritted": time]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
         }
     }
     

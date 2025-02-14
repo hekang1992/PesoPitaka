@@ -15,7 +15,12 @@ class HiveViewController: BaseViewController {
     lazy var webView: WKWebView = {
         let configuration = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
-        let scriptNames = ["kiteGelat", "turnipIgY", "limeBellp", "airplaneT", "zucchiniL", "ravioliMa"]
+        let scriptNames = ["kiteGelat",
+                           "turnipIgY",
+                           "limeBellp",
+                           "airplaneT",
+                           "zucchiniL",
+                           "ravioliMa"]
         scriptNames.forEach { userContentController.add(self, name: $0) }
         configuration.userContentController = userContentController
         let webView = WKWebView(frame: .zero, configuration: configuration)
@@ -43,10 +48,10 @@ class HiveViewController: BaseViewController {
         headView.namelabel.text = "Order Information"
         return headView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(bgImageView)
         view.addSubview(headView)
@@ -86,7 +91,7 @@ class HiveViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
     }
-
+    
 }
 
 extension HiveViewController: WKScriptMessageHandler, WKNavigationDelegate {
@@ -110,10 +115,39 @@ extension HiveViewController: WKScriptMessageHandler, WKNavigationDelegate {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         let messageName = message.name
         print("message:\(message.name)")
+        if messageName == "turnipIgY" {
+            let body = message.body as? [String]
+            let week = body?.first ?? ""
+            tenInfo(from: week)
         }
+    }
+}
+
+extension HiveViewController {
     
+    private func tenInfo(from week: String) {
+        let location = LocationManager()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": week,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "10",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": time,
+                        "gritted": time]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
+        }
+    }
     
 }
+
 
 extension UIScrollView {
     func apply(_ configuration: (UIScrollView) -> Void) {

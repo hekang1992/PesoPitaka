@@ -22,6 +22,8 @@ class MonsterViewController: BaseViewController {
     
     var imageStr = ""
     
+    var monetime = ""
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "loginbgimage")
@@ -70,6 +72,7 @@ class MonsterViewController: BaseViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        monetime = DateUtils.getCurrentTimestampInMilliseconds()
         view.addSubview(bgImageView)
         view.addSubview(headView)
         view.addSubview(poImageView)
@@ -138,6 +141,11 @@ class MonsterViewController: BaseViewController {
                 let herself = model.herself
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
+                    if imageStr == "swconeimage" {
+                        fiveInfo()
+                    }else {
+                        sixInfo()
+                    }
                     productDetailInfo(from: week.value)
                 }else {
                     ToastConfig.showMessage(form: view, message: model.washed)
@@ -261,3 +269,51 @@ extension MonsterViewController {
     
 }
 
+
+extension MonsterViewController {
+    
+    private func fiveInfo() {
+        var time = DateUtils.getCurrentTimestampInMilliseconds()
+        let location = LocationManager()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": week.value,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "5",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": monetime,
+                        "gritted": time]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
+        }
+    }
+    
+    private func sixInfo() {
+        var time = DateUtils.getCurrentTimestampInMilliseconds()
+        let location = LocationManager()
+        location.getLocationInfo { [weak self] model in
+            guard let self = self else { return }
+            let dict = ["mom": week.value,
+                        "mood": model.mood,
+                        "reagar": model.reagar,
+                        "spread": "6",
+                        "saving": AwkwardManager.getIDFV(),
+                        "why": AwkwardManager.getIDFA(),
+                        "teeth": monetime,
+                        "gritted": time]
+            let man = NetworkConfigManager()
+            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            }, receiveValue: {  data in
+                
+            })
+            result.store(in: &cancellables)
+        }
+    }
+    
+}
