@@ -79,6 +79,8 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getHomeInfo()
+        let dict = MustLpNineSte.getAllDinfo()
+        
         let location = LocationManager()
         location.getLocationInfo { geoModel in
             

@@ -34,4 +34,6 @@ target 'PesoPitaka' do
   
   pod 'MJRefresh', '~> 3.7.9'
   
+  pod 'DeviceKit', '~> 5.2.3'
+  
 end

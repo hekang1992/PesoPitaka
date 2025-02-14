@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		72B2E0E5D74259C63F96D2AB /* Pods_PesoPitaka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF9A3389285CF591AF5DBC9A /* Pods_PesoPitaka.framework */; };
+		730384422D5F9B87008AA7C3 /* MustOneInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730384412D5F9B87008AA7C3 /* MustOneInfo.swift */; };
 		731BB3832D58A232003E54DB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 731BB3822D58A232003E54DB /* Launch Screen.storyboard */; };
 		731BB3852D58A44E003E54DB /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731BB3842D58A44E003E54DB /* LocationService.swift */; };
 		73807D2F2D32BA8000F8B90D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D252D32BA8000F8B90D /* AppDelegate.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		730384412D5F9B87008AA7C3 /* MustOneInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustOneInfo.swift; sourceTree = "<group>"; };
 		731BB3822D58A232003E54DB /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		731BB3842D58A44E003E54DB /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		73807CFD2D32B8AC00F8B90D /* PesoPitaka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PesoPitaka.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +162,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		730384402D5F9B55008AA7C3 /* MustBigSoul */ = {
+			isa = PBXGroup;
+			children = (
+				730384412D5F9B87008AA7C3 /* MustOneInfo.swift */,
+			);
+			path = MustBigSoul;
+			sourceTree = "<group>";
+		};
 		73807CF42D32B8AC00F8B90D = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +197,7 @@
 				73807D362D32BCBB00F8B90D /* PesoPitaka.entitlements */,
 				731BB3822D58A232003E54DB /* Launch Screen.storyboard */,
 				73807D252D32BA8000F8B90D /* AppDelegate.swift */,
+				730384402D5F9B55008AA7C3 /* MustBigSoul */,
 				73807D3B2D32BF4400F8B90D /* Manager */,
 				73807D3A2D32BF4100F8B90D /* Center */,
 				73807D392D32BF3D00F8B90D /* Order */,
@@ -452,6 +463,7 @@
 				73D1D01D2D4371CD0065AD80 /* AlertSuccessNameView.swift in Sources */,
 				73D1D0172D43349E0065AD80 /* AlertAuthIDViewCell.swift in Sources */,
 				73D1D0032D42578F0065AD80 /* GuideView.swift in Sources */,
+				730384422D5F9B87008AA7C3 /* MustOneInfo.swift in Sources */,
 				73D1D0152D4332240065AD80 /* AlertAuthIDView.swift in Sources */,
 				738D45522D3F799D00EE9E66 /* BaseView.swift in Sources */,
 				73D1D0192D434E930065AD80 /* AlertCameraView.swift in Sources */,
