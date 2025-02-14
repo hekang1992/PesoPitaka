@@ -271,13 +271,13 @@ extension HomeViewController {
                         "blame": model.blame,
                         "improve": model.improve,
                         "seemed": model.seemed,
-                        "mood": model.mood,
-                        "reagar": model.reagar,
+                        "mood": String(model.mood),
+                        "reagar": String(model.reagar),
                         "expression": model.expression,
                         "flustered": model.flustered,
                         "seeing": model.seeing]
             let man = NetworkConfigManager()
-            let result = man.postRequest(url: "/entertain/dramatic", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+            let result = man.requsetData(url: "/entertain/dramatic", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
             }, receiveValue: {  data in
                 
             })
@@ -287,21 +287,21 @@ extension HomeViewController {
     
     private func oneInfo() {
         let weak = String(self.model.value?.henceforth.waking?.own?.first?.aware ?? 0)
-        let onetime = UserDefaults.standard.object(forKey: ONETIME)
-        let twotime = UserDefaults.standard.object(forKey: TWOTIME)
+        let onetime = UserDefaults.standard.object(forKey: ONETIME) as? String ?? ""
+        let twotime = UserDefaults.standard.object(forKey: TWOTIME) as? String ?? ""
         let location = LocationManager()
         location.getLocationInfo { [weak self] model in
             guard let self = self else { return }
             let dict = ["mom": weak,
-                        "mood": model.mood,
-                        "reagar": model.reagar,
+                        "mood": String(model.mood),
+                        "reagar": String(model.reagar),
                         "spread": "1",
                         "saving": AwkwardManager.getIDFV(),
                         "why": AwkwardManager.getIDFA(),
                         "teeth": onetime,
                         "gritted": twotime]
             let man = NetworkConfigManager()
-            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            let result = man.requsetData(url: "/entertain/answered", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
             }, receiveValue: { [weak self] data in
                 guard let self = self else { return }
                 do {

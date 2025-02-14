@@ -273,20 +273,20 @@ extension MonsterViewController {
 extension MonsterViewController {
     
     private func fiveInfo() {
-        var time = DateUtils.getCurrentTimestampInMilliseconds()
+        let time = DateUtils.getCurrentTimestampInMilliseconds()
         let location = LocationManager()
         location.getLocationInfo { [weak self] model in
             guard let self = self else { return }
             let dict = ["mom": week.value,
-                        "mood": model.mood,
-                        "reagar": model.reagar,
+                        "mood": String(model.mood),
+                        "reagar": String(model.reagar),
                         "spread": "5",
                         "saving": AwkwardManager.getIDFV(),
                         "why": AwkwardManager.getIDFA(),
                         "teeth": monetime,
                         "gritted": time]
             let man = NetworkConfigManager()
-            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            let result = man.requsetData(url: "/entertain/answered", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
             }, receiveValue: {  data in
                 
             })
@@ -295,20 +295,20 @@ extension MonsterViewController {
     }
     
     private func sixInfo() {
-        var time = DateUtils.getCurrentTimestampInMilliseconds()
+        let time = DateUtils.getCurrentTimestampInMilliseconds()
         let location = LocationManager()
         location.getLocationInfo { [weak self] model in
             guard let self = self else { return }
             let dict = ["mom": week.value,
-                        "mood": model.mood,
-                        "reagar": model.reagar,
+                        "mood": String(model.mood),
+                        "reagar": String(model.reagar),
                         "spread": "6",
                         "saving": AwkwardManager.getIDFV(),
                         "why": AwkwardManager.getIDFA(),
                         "teeth": monetime,
                         "gritted": time]
             let man = NetworkConfigManager()
-            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            let result = man.requsetData(url: "/entertain/answered", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
             }, receiveValue: {  data in
                 
             })

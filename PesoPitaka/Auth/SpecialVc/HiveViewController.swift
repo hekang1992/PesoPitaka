@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StoreKit
 @preconcurrency import WebKit
 
 class HiveViewController: BaseViewController {
@@ -119,6 +120,37 @@ extension HiveViewController: WKScriptMessageHandler, WKNavigationDelegate {
             let body = message.body as? [String]
             let week = body?.first ?? ""
             tenInfo(from: week)
+        }else if messageName == "limeBellp" || messageName == "airplaneT" {
+            self.navigationController?.popToRootViewController(animated: true)
+        }else if messageName == "ravioliMa" {
+            DispatchQueue.main.async {
+                self.requestAppReview()
+            }
+        }else if messageName == "zucchiniL" {
+            handleMessageBody(message.body)
+        }else if messageName == "kiteGelat" {
+            
+        }
+    }
+    
+    func handleMessageBody(_ messageBody: Any) {
+        guard let url = messageBody as? String else { return }
+        if url.contains("email:"), let range = url.range(of: ":") {
+            let email = String(url[range.upperBound...])
+            let phoneStr = UserDefaults.standard.string(forKey: LOGIN_PHONE) ?? ""
+            let bodyContent = "Peso Pitaka: \(phoneStr)"
+            let mailtoURLString = "mailto:\(email)?body=\(bodyContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+            if let mailtoURL = URL(string: mailtoURLString), UIApplication.shared.canOpenURL(mailtoURL) {
+                UIApplication.shared.open(mailtoURL, options: [:], completionHandler: nil)
+            }
+        }
+    }
+    
+    func requestAppReview() {
+        if #available(iOS 14.0, *), let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            SKStoreReviewController.requestReview(in: windowScene)
+        } else {
+            SKStoreReviewController.requestReview()
         }
     }
 }
@@ -127,18 +159,19 @@ extension HiveViewController {
     
     private func tenInfo(from week: String) {
         let location = LocationManager()
+        let time = DateUtils.getCurrentTimestampInMilliseconds()
         location.getLocationInfo { [weak self] model in
             guard let self = self else { return }
             let dict = ["mom": week,
-                        "mood": model.mood,
-                        "reagar": model.reagar,
+                        "mood": String(model.mood),
+                        "reagar": String(model.reagar),
                         "spread": "10",
                         "saving": AwkwardManager.getIDFV(),
                         "why": AwkwardManager.getIDFA(),
                         "teeth": time,
                         "gritted": time]
             let man = NetworkConfigManager()
-            let result = man.postRequest(url: "/entertain/answered", parameters: dict as [String : Any], contentType: .json).sink(receiveCompletion: { _ in
+            let result = man.requsetData(url: "/entertain/answered", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
             }, receiveValue: {  data in
                 
             })
