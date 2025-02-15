@@ -2,7 +2,7 @@
 //  OrdersViewController.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/1/21.
+//  Created by Benjamin on 2025/1/21.
 //
 
 import UIKit
@@ -41,11 +41,6 @@ class OrdersViewController: BaseViewController {
         self.orView.tableView.rx.setDelegate(self).disposed(by: disposeBag)
         self.orView.tableView.rx.setDataSource(self).disposed(by: disposeBag)
         
-        
-        
-        
-        
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +69,14 @@ extension OrdersViewController {
                 if herself == "0" || herself == "00" {
                     self.instantlyModelArray.accept(model.henceforth.instantly ?? [])
                     self.orView.tableView.reloadData()
+                    if model.henceforth.instantly == nil {
+                        self.orView.tableView.addSubview(self.nodataView)
+                        self.nodataView.snp.makeConstraints { make in
+                            make.edges.equalToSuperview()
+                        }
+                    }else {
+                        self.nodataView.removeFromSuperview()
+                    }
                 }
             } catch  {
                 print("JSON: \(error)")
@@ -108,6 +111,23 @@ extension OrdersViewController: UITableViewDelegate, UITableViewDataSource {
             cell.model.accept(model)
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.instantlyModelArray.value?[indexPath.row]
+        let pageUrl = model?.grow ?? ""
+        if pageUrl.contains(SCHEME_URL) {
+            if pageUrl.contains("fennelCapers") {
+                //jie
+                if let url = URL(string: pageUrl) {
+                    if let week = weekUrlStr(url: url) {
+                        self.productDetailInfo(from: week)
+                    }
+                }
+            }
+        }else {
+            self.pushWebVc(from: pageUrl)
+        }
     }
     
 }

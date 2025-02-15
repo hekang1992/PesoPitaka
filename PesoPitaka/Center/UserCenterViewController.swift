@@ -2,7 +2,7 @@
 //  UserCenterViewController.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/1/21.
+//  Created by Benjamin on 2025/1/21.
 //
 
 import UIKit
@@ -46,13 +46,25 @@ extension UserCenterViewController {
                 guard let self = self else { return }
                 switch selectedButton {
                 case self.centerView.oneBtn:
-                    print("one button tapped")
+                    let orderVc = OrderListViewController()
+                    orderVc.headtitle = "All"
+                    orderVc.currentStr = "4"
+                    self.navigationController?.pushViewController(orderVc, animated: true)
                 case self.centerView.twoBtn:
-                    print("two button tapped")
+                    let orderVc = OrderListViewController()
+                    orderVc.headtitle = "Processing"
+                    orderVc.currentStr = "7"
+                    self.navigationController?.pushViewController(orderVc, animated: true)
                 case self.centerView.threeBtn:
-                    print("three button tapped")
+                    let orderVc = OrderListViewController()
+                    orderVc.headtitle = "Repayment pending"
+                    orderVc.currentStr = "6"
+                    self.navigationController?.pushViewController(orderVc, animated: true)
                 case self.centerView.fourBtn:
-                    print("four button tapped")
+                    let orderVc = OrderListViewController()
+                    orderVc.headtitle = "Complete"
+                    orderVc.currentStr = "5"
+                    self.navigationController?.pushViewController(orderVc, animated: true)
                 default:
                     break
                 }

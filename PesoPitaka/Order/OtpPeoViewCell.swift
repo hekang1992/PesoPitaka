@@ -2,7 +2,7 @@
 //  OtpPeoViewCell.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/1/26.
+//  Created by Benjamin on 2025/1/26.
 //
 
 import UIKit
@@ -46,9 +46,9 @@ class OtpPeoViewCell: BaseViewCell {
         return timelabel
     }()
     
-    lazy var ttlabel: UILabel = {
-        let ttlabel = UIUtils.createLabel(font: .regularFontOfSize(size: 12), textColor: .init(colorHexStr: "#C6C6C6")!, textAlignment: .left)
-        return ttlabel
+    lazy var defineBlueLabel: UILabel = {
+        let defineBlueLabel = UIUtils.createLabel(font: .regularFontOfSize(size: 12), textColor: .init(colorHexStr: "#C6C6C6")!, textAlignment: .left)
+        return defineBlueLabel
     }()
     
     lazy var blueView: UIView = {
@@ -88,7 +88,7 @@ class OtpPeoViewCell: BaseViewCell {
         contentView.addSubview(onelabel)
         contentView.addSubview(twolabel)
         contentView.addSubview(timelabel)
-        contentView.addSubview(ttlabel)
+        contentView.addSubview(defineBlueLabel)
         contentView.addSubview(blueView)
         contentView.addSubview(applyBtn)
         contentView.addSubview(appBtn)
@@ -131,7 +131,7 @@ class OtpPeoViewCell: BaseViewCell {
             make.height.equalTo(16)
         }
         
-        ttlabel.snp.makeConstraints { make in
+        defineBlueLabel.snp.makeConstraints { make in
             make.left.equalTo(timelabel.snp.left)
             make.top.equalTo(onelabel.snp.bottom).offset(10)
             make.height.equalTo(15.5)
@@ -139,7 +139,7 @@ class OtpPeoViewCell: BaseViewCell {
         blueView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 331, height: 60))
-            make.top.equalTo(ttlabel.snp.bottom).offset(23)
+            make.top.equalTo(defineBlueLabel.snp.bottom).offset(23)
         }
         applyBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -163,7 +163,7 @@ class OtpPeoViewCell: BaseViewCell {
             onelabel.text = model.orderAmount ?? ""
             twolabel.text = model.moneyText ?? ""
             timelabel.text = model.dateValue ?? ""
-            ttlabel.text = model.dateText ?? ""
+            defineBlueLabel.text = model.dateText ?? ""
             applyBtn.text = model.secret?.although ?? ""
             titlabel.text = model.secret?.liar ?? ""
             let good = model.secret?.good ?? 0

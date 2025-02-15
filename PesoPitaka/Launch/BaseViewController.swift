@@ -2,7 +2,7 @@
 //  BaseViewController.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/1/11.
+//  Created by Benjamin on 2025/1/11.
 //
 
 import UIKit
@@ -18,6 +18,11 @@ class BaseViewController: UIViewController {
     var priid: String = ""
     
     var ninetime: String = ""
+    
+    lazy var nodataView: NodataView = {
+        let nodataView = NodataView()
+        return nodataView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,6 +141,19 @@ extension BaseViewController {
 
 
 extension BaseViewController {
+    
+    func weekUrlStr(url: URL) -> String? {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+
+        let queryItems = components.queryItems ?? []
+        let lastQueryItem = queryItems.reduce(nil) { (result, item) -> URLQueryItem? in
+            return item
+        }
+
+        return lastQueryItem?.value
+    }
     
     private func nineInfo(from week: String) {
         let location = LocationManager()

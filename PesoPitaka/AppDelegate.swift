@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/1/11.
+//  Created by Benjamin on 2025/1/11.
 //
 
 import UIKit
@@ -36,7 +36,6 @@ extension AppDelegate {
         //rootvc
         NotificationCenter.default.addObserver(self, selector: #selector(getRootVc(_ :)), name: NSNotification.Name(ROOT_VC), object: nil)
     }
-    
     
     @objc private func getRootVc(_ noti: Notification) {
         let needLogin = UserDefaults.standard.object(forKey: LOGIN_TOKEN) as? String ?? ""

@@ -2,12 +2,12 @@
 //  TotalModel.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/1/11.
+//  Created by Benjamin on 2025/1/11.
 //
 
 let firstUrl = "app://"
-let middleUrl = "ios.pitaka."
-let lastURL = "peso"
+let middleUrl = "ios.pitaka"
+let lastURL = ".peso"
 
 struct BaseModel: Codable {
     var herself: String
@@ -95,6 +95,7 @@ struct instantlyModel: Codable {
     var moneyText: String?
     var dateValue: String?
     var dateText: String?
+    var grow: String?
     var secret: secretModel?
     var instantly: [instantlyModel]?
 }

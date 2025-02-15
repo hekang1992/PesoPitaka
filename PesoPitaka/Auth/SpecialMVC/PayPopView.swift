@@ -1,21 +1,20 @@
 //
-//  AlertAuthIDView.swift
+//  PayPopView.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/1/24.
+//  Created by Benjamin on 2025/1/25.
 //
 
 import UIKit
 import RxRelay
-import Kingfisher
 
-class AlertAuthIDView: BaseView {
-    
+class PayPopView: BaseView {
+
     private var selectedIndexPath: IndexPath?
     
-    var model = BehaviorRelay<BaseModel?>(value: nil)
+    var model = BehaviorRelay<[glaredModel]?>(value: nil)
     
-    var block: ((instantlyModel) -> Void)?
+    var block: ((glaredModel) -> Void)?
     
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
@@ -79,7 +78,7 @@ class AlertAuthIDView: BaseView {
     
 }
 
-extension AlertAuthIDView: UITableViewDelegate, UITableViewDataSource {
+extension PayPopView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -90,16 +89,16 @@ extension AlertAuthIDView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.model.value?.henceforth.instantly?.count ?? 0
+        return self.model.value?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlertAuthIDViewCell", for: indexPath) as! AlertAuthIDViewCell
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        let model = self.model.value?.henceforth.instantly?[indexPath.row]
+        let model = self.model.value?[indexPath.row]
         cell.nameLabel.text = model?.hadn ?? ""
-        cell.mustImageView.kf.setImage(with: URL(string: model?.probably ?? ""))
+        cell.mustImageView.kf.setImage(with: URL(string: model?.mention ?? ""))
         if indexPath == selectedIndexPath {
             cell.bgView.layer.borderWidth = 2
             cell.bgView.layer.borderColor = UIColor(colorHexStr: "#5FE979")?.withAlphaComponent(0.8).cgColor
@@ -122,9 +121,9 @@ extension AlertAuthIDView: UITableViewDelegate, UITableViewDataSource {
             cell.bgView.layer.borderColor = UIColor(colorHexStr: "#5FE979")?.withAlphaComponent(0.8).cgColor
         }
         selectedIndexPath = indexPath
-        if let model = self.model.value?.henceforth.instantly?[indexPath.row] {
+        if let model = self.model.value?[indexPath.row] {
             self.block?(model)
         }
     }
-    
+
 }

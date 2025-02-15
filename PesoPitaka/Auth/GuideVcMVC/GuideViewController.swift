@@ -2,7 +2,7 @@
 //  GuideViewController.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/1/23.
+//  Created by Benjamin on 2025/1/23.
 //
 
 import UIKit

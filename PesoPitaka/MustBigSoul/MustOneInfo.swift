@@ -2,7 +2,7 @@
 //  MustOneInfo.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/2/14.
+//  Created by Benjamin on 2025/2/14.
 //
 
 import UIKit
@@ -286,8 +286,8 @@ class MustSurgInfo: NSObject {
                let totalSpace = (systemAttributes[.systemSize] as? NSNumber)?.int64Value {
                 let freeSpaceKB = Double(freeSpace) / 1024.0
                 let totalSpaceKB = Double(totalSpace) / 1024.0
-                let freeSpaceString = String(format: "%.2f KB", freeSpaceKB)
-                let totalSpaceString = String(format: "%.2f KB", totalSpaceKB)
+                let freeSpaceString = String(format: "%.0f", freeSpaceKB)
+                let totalSpaceString = String(format: "%.0f", totalSpaceKB)
                 return (freeSpaceString, totalSpaceString)
             }
         } catch {
@@ -299,7 +299,7 @@ class MustSurgInfo: NSObject {
     static func getMemoryInfo() -> (freeMemory: String, totalMemory: String)? {
         let totalMemory = ProcessInfo.processInfo.physicalMemory
         let totalMemoryKB = Double(totalMemory) / 1024.0
-        let totalMemoryString = String(format: "%.2f KB", totalMemoryKB)
+        let totalMemoryString = String(format: "%.0f", totalMemoryKB)
         var freeMemory: UInt64 = 0
         var size = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size / MemoryLayout<integer_t>.size)
         let host = mach_host_self()
@@ -315,7 +315,7 @@ class MustSurgInfo: NSObject {
         if result == KERN_SUCCESS {
             freeMemory = UInt64(stats.free_count) * UInt64(vm_page_size)
             let freeMemoryKB = Double(freeMemory) / 1024.0
-            let freeMemoryString = String(format: "%.2f KB", freeMemoryKB)
+            let freeMemoryString = String(format: "%.0f", freeMemoryKB)
             return (freeMemoryString, totalMemoryString)
         } else {
             print("Failed to retrieve memory info.")

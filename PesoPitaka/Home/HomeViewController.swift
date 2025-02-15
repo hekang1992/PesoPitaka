@@ -2,7 +2,7 @@
 //  HomeViewController.swift
 //  PesoPitaka
 //
-//  Created by 何康 on 2025/1/21.
+//  Created by Benjamin on 2025/1/21.
 //
 
 import UIKit
@@ -43,6 +43,9 @@ class HomeViewController: BaseViewController {
         mustView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        mustView.block = { [weak self] model in
+            self?.appInfoweek(from: String(model.aware ?? 0))
+        }
         
         oneView.threeImageView.rx.tapGesture()
             .when(.recognized)
@@ -56,13 +59,13 @@ class HomeViewController: BaseViewController {
         self.model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             let count = model.henceforth.original?.own?.count ?? 0
-            if count < 0 {
+            if count > 0 {
                 mustView.alpha = 1
                 oneView.alpha = 0
                 mustView.model.accept(model)
                 self.mustView.tableView.reloadData()
-                self.mustView.importView.reloadData()
-                self.mustView.notimpView.reloadData()
+                self.mustView.cycleMustSignView.reloadData()
+                self.mustView.cycleMinSignView.reloadData()
             }else {
                 oneView.alpha = 1
                 mustView.alpha = 0
@@ -79,7 +82,6 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getHomeInfo()
-        let dict = MustLpNineSte.getAllDinfo()
         
         let location = LocationManager()
         location.getLocationInfo { geoModel in
@@ -138,7 +140,7 @@ extension HomeViewController {
     
     private func applyInfo(from model: BaseModel) {
         let choose = model.henceforth.choose ?? 0
-        if choose == 1 {
+        if choose == 0 {
             appInfo(from: model)
         }else {
             let status: CLAuthorizationStatus
@@ -161,6 +163,31 @@ extension HomeViewController {
         let weak = String(model.henceforth.waking?.own?.first?.aware ?? 0)
         LoadingConfing.shared.showLoading()
         let dict = ["week": weak,
+                    "services": "1",
+                    "pay": "0"]
+        let man = NetworkConfigManager()
+        let result = man.requsetData(url: "/entertain/father", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+        }, receiveValue: { [weak self] data in
+            LoadingConfing.shared.hideLoading()
+            guard let self = self else { return }
+            do {
+                let model = try JSONDecoder().decode(BaseModel.self, from: data)
+                let herself = model.herself
+                let invalidValues: Set<String> = ["0", "00"]
+                if invalidValues.contains(herself) {
+                    let pageUrl = model.henceforth.residing ?? ""
+                    self.accordingUrl(from: pageUrl)
+                }
+            } catch  {
+                print("JSON: \(error)")
+            }
+        })
+        result.store(in: &cancellables)
+    }
+    
+    private func appInfoweek(from week: String) {
+        LoadingConfing.shared.showLoading()
+        let dict = ["week": week,
                     "services": "1",
                     "pay": "0"]
         let man = NetworkConfigManager()
@@ -263,6 +290,21 @@ extension HomeViewController {
             self.oneInfo()
         }
         self.locaionInfo()
+        self.deveinof()
+    }
+    
+    //4
+    private func deveinof() {
+        let dict = MustLpNineSte.getAllDinfo()
+        let databyte = try? JSONSerialization.data(withJSONObject: dict)
+        let baseStr = databyte?.base64EncodedString() ?? ""
+        let man = NetworkConfigManager()
+        let adict = ["henceforth": baseStr]
+        let result = man.requsetData(url: "/entertain/eloquence", parameters: adict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+        }, receiveValue: {  data in
+            
+        })
+        result.store(in: &cancellables)
     }
     
     private func locaionInfo() {
