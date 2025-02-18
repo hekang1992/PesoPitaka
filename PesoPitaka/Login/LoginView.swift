@@ -13,7 +13,7 @@ import RxCocoa
 
 class LoginView: BaseView {
     
-    var isClickPri: String = ""
+    var isClickPri: String = "0"
 
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
@@ -254,9 +254,8 @@ extension LoginView {
         cyBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             cyBtn.isSelected.toggle()
-            isClickPri = cyBtn.isSelected ? "0" : "1"
+            isClickPri = cyBtn.isSelected ? "1" : "0"
         }).disposed(by: disposeBag)
-        
         
     }
     

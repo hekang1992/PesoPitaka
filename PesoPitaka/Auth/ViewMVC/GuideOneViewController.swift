@@ -30,6 +30,9 @@ class GuideOneViewController: BaseViewController {
     var faceonetime = ""
     var facetwitime = ""
     
+    var leftImage: UIImage?
+    var rightImage: UIImage?
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "loginbgimage")
@@ -151,8 +154,8 @@ class GuideOneViewController: BaseViewController {
             make.left.equalToSuperview().offset(20)
             make.centerX.equalToSuperview()
             make.height.equalTo(60)
-            make.top.equalTo(whiteView.snp.bottom)
-            make.bottom.equalToSuperview().offset(-20)
+            make.top.equalTo(whiteView.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().offset(-10)
         }
         
         headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
@@ -199,7 +202,11 @@ class GuideOneViewController: BaseViewController {
         
         nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
-            self.productDetailInfo(from: week.value)
+            if self.leftImage != nil && self.rightImage != nil {
+                self.productDetailInfo(from: week.value)
+            }else {
+                ToastConfig.showMessage(form: view, message: "Please complete the identity authentication process first")
+            }
         }).disposed(by: disposeBag)
         
         
@@ -218,7 +225,10 @@ class GuideOneViewController: BaseViewController {
         let dict = ["week": week.value,
                     "bloodshot": "0"]
         let man = NetworkConfigManager()
-        let result = man.getRequest(url: "/entertain/smile", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+        let result = man.getRequest(url: "/entertain/smile",
+                                    parameters: dict,
+                                    contentType: .json)
+            .sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
             guard let self = self else { return }
@@ -231,7 +241,7 @@ class GuideOneViewController: BaseViewController {
                     if let standing = model.henceforth.standing, standing == 1 {
                         self.rightView.isUserInteractionEnabled = false
                         self.rightView.placeImageView.isHidden = false
-                        self.rightView.placeImageView.kf.setImage(with: URL(string: model.henceforth.residing ?? ""))
+                        self.rightView.placeImageView.image = self.rightImage
                     }else {
                         self.rightView.isUserInteractionEnabled = true
                         self.rightView.placeImageView.isHidden = true
@@ -241,7 +251,7 @@ class GuideOneViewController: BaseViewController {
                             self.built = built
                             self.leftView.isUserInteractionEnabled = false
                             self.leftView.placeImageView.isHidden = false
-                            self.leftView.placeImageView.kf.setImage(with: URL(string: model.residing ?? ""))
+                            self.leftView.placeImageView.kf.setImage(with: URL(string: model.residing ?? ""), placeholder: self.leftImage)
                             self.oneView.nameLabel.text = model.since ?? ""
                         }else {
                             self.leftView.isUserInteractionEnabled = true
@@ -379,9 +389,11 @@ extension GuideOneViewController {
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
                     if pitiful == "11" {
+                        self.leftImage = image
                         self.popModel(from: model.henceforth)
                     }else {
                         self.fourInfo()
+                        self.rightImage = image
                         self.getServiceInfo { [weak self] in
                             guard let self = self else { return }
                             productDetailInfo(from: week.value)
@@ -530,7 +542,7 @@ extension GuideOneViewController {
     
     private func fourInfo() {
         let location = LocationManager()
-        var time = DateUtils.getCurrentTimestampInMilliseconds()
+        let time = DateUtils.getCurrentTimestampInMilliseconds()
         location.getLocationInfo { [weak self] model in
             guard let self = self else { return }
             let dict = ["mom": week.value,

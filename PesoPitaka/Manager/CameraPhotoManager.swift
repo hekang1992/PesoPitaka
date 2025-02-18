@@ -43,6 +43,9 @@ class CameraPhotoManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
         DispatchQueue.main.async {
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = sourceType
+            if sourceType == .camera {
+                imagePicker.cameraDevice = .front
+            }
             imagePicker.delegate = self
             viewController.present(imagePicker, animated: true, completion: nil)
         }

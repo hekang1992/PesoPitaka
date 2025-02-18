@@ -9,27 +9,21 @@ import UIKit
 import Toast_Swift
 
 final class LoadingConfing {
+    
     static let shared = LoadingConfing()
     
     private var activityIndicator: UIActivityIndicatorView?
     private var backgroundView: UIView?
     
     private init() {}
-
+    
     func showLoading() {
         guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
             return
         }
         if activityIndicator != nil { return }
-        backgroundView = UIView(frame: window.bounds)
-        backgroundView?.backgroundColor = UIColor.black.withAlphaComponent(0.35)
-        activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator?.color = .black
-        activityIndicator?.center = window.center
-        if let backgroundView = backgroundView, let activityIndicator = activityIndicator {
-            window.addSubview(backgroundView)
-            window.addSubview(activityIndicator)
-        }
+        setupBackgroundView(in: window)
+        setupActivityIndicator(in: window)
         activityIndicator?.startAnimating()
     }
     
@@ -39,6 +33,23 @@ final class LoadingConfing {
         backgroundView?.removeFromSuperview()
         activityIndicator = nil
         backgroundView = nil
+    }
+    
+    private func setupBackgroundView(in window: UIWindow) {
+        backgroundView = UIView(frame: window.bounds)
+        backgroundView?.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        if let backgroundView = backgroundView {
+            window.addSubview(backgroundView)
+        }
+    }
+    
+    private func setupActivityIndicator(in window: UIWindow) {
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator?.color = .black
+        activityIndicator?.center = window.center
+        if let activityIndicator = activityIndicator {
+            window.addSubview(activityIndicator)
+        }
     }
 }
 

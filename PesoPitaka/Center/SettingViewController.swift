@@ -228,7 +228,7 @@ class SettingViewController: BaseViewController {
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
                     self.dismiss(animated: true) {
-                        LoginSuccessConfig.removeLoginInfo()
+                        LoginManager.shared.removeLoginInfo()
                         loginSuccessPush.toRootVc()
                     }
                 }
@@ -254,7 +254,7 @@ class SettingViewController: BaseViewController {
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
                     self.dismiss(animated: true) {
-                        LoginSuccessConfig.removeLoginInfo()
+                        LoginManager.shared.removeLoginInfo()
                         loginSuccessPush.toRootVc()
                     }
                 }

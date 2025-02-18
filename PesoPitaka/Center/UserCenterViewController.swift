@@ -85,9 +85,11 @@ extension UserCenterViewController {
                 guard let self = self else { return }
                 switch selectedButton {
                 case self.centerView.aboutBtn:
-                    print("about button tapped")
+                    let pageUrl = API_H5_URL
+                    self.pushWebVc(from: pageUrl)
                 case self.centerView.connectBtn:
-                    print("connect button tapped")
+                    let pageUrl = API_H5_URL
+                    self.pushWebVc(from: pageUrl)
                 case self.centerView.termsBtn:
                     let termsVc = TermsViewController()
                     self.navigationController?.pushViewController(termsVc, animated: true)

@@ -54,7 +54,7 @@ extension CommonModel {
         model.awkward = AwkwardManager.getIDFV()
         model.atmosphere = UIDevice.current.systemVersion
         model.silently = "vpesoapi"
-        model.gently = UserDefaults.standard.object(forKey: LOGIN_TOKEN) as? String ?? ""
+        model.gently = UserDefaultsManager.getValue(forKey: .loginToken) as? String ?? ""
         model.blew = AwkwardManager.getIDFV()
         return model
     }

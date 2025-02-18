@@ -26,6 +26,7 @@ class TermsViewController: BaseViewController {
         let oneView = UIView()
         oneView.backgroundColor = .white
         oneView.layer.cornerRadius = 6
+        oneView.isUserInteractionEnabled = true
         return oneView
     }()
     
@@ -33,6 +34,7 @@ class TermsViewController: BaseViewController {
         let twoView = UIView()
         twoView.backgroundColor = .white
         twoView.layer.cornerRadius = 6
+        twoView.isUserInteractionEnabled = true
         return twoView
     }()
     
@@ -124,6 +126,25 @@ class TermsViewController: BaseViewController {
         }).disposed(by: disposeBag)
         
         
+        oneView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let pageUrl = API_H5_URL + "/parsnipWall"
+                self.pushWebVc(from: pageUrl)
+        }).disposed(by: disposeBag)
+        
+        twoView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let pageUrl = API_H5_URL + "/mouseLavend"
+                self.pushWebVc(from: pageUrl)
+        }).disposed(by: disposeBag)
     }
     
 }

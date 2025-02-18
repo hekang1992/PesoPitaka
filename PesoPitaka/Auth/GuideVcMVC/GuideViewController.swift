@@ -48,6 +48,16 @@ class GuideViewController: BaseViewController {
             self?.productDetailInfo(from: week, type: "1")
         }).disposed(by: disposeBag)
         
+        guideView.opImageView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let pageUrl = API_H5_URL + "/mouseLavend"
+                self.pushWebVc(from: pageUrl)
+        }).disposed(by: disposeBag)
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +76,10 @@ extension GuideViewController {
                     "creature": "maga"]
         let man = NetworkConfigManager()
         LoadingConfing.shared.showLoading()
-        let result = man.requsetData(url: "/entertain/revolution", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+        let result = man.requsetData(url: "/entertain/revolution",
+                                     parameters: dict,
+                                     contentType: .multipartFormData)
+            .sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
             guard let self = self else { return }

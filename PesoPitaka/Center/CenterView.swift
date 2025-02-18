@@ -42,7 +42,7 @@ class CenterView: BaseView {
         phonelabel.textColor = UIColor.init(colorHexStr: "#000000")
         phonelabel.textAlignment = .left
         phonelabel.font = .regularFontOfSize(size: 20)
-        let phone = UserDefaults.standard.object(forKey: LOGIN_PHONE) as? String ?? ""
+        let phone = UserDefaultsManager.getValue(forKey: .loginPhone) as? String ?? ""
         phonelabel.text = "Hi~ \(phone)"
         return phonelabel
     }()
@@ -177,7 +177,7 @@ class CenterView: BaseView {
             make.top.equalTo(oneImageView.snp.bottom).offset(10)
         }
         threeImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(12)
+            make.centerX.equalTo(twoImageView.snp.centerX)
             make.size.equalTo(CGSize(width: 351, height: 148))
             make.top.equalTo(twoImageView.snp.bottom).offset(28)
             make.bottom.equalToSuperview().offset(-DeviceMetrics.tabBarHeight)

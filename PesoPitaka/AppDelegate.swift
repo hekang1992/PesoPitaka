@@ -38,7 +38,7 @@ extension AppDelegate {
     }
     
     @objc private func getRootVc(_ noti: Notification) {
-        let needLogin = UserDefaults.standard.object(forKey: LOGIN_TOKEN) as? String ?? ""
+        let needLogin = UserDefaultsManager.getValue(forKey: .loginToken) as? String ?? ""
         window?.rootViewController = needLogin.isEmpty ? BaseNavigationController(rootViewController: LoginViewController()) : BaseNavigationController(rootViewController: BaseTabBarController())
     }
     

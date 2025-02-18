@@ -14,8 +14,8 @@ class HiveViewController: BaseViewController {
     var pageUrl: String = ""
     
     lazy var webView: WKWebView = {
-        let configuration = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
+        let configuration = WKWebViewConfiguration()
         let scriptNames = ["kiteGelat",
                            "turnipIgY",
                            "limeBellp",
@@ -26,12 +26,12 @@ class HiveViewController: BaseViewController {
         configuration.userContentController = userContentController
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.scrollView.apply {
-            $0.bounces = false
-            $0.alwaysBounceVertical = false
+        webView.scrollView.scrollViewInfoApple {
             $0.showsVerticalScrollIndicator = false
             $0.showsHorizontalScrollIndicator = false
             $0.contentInsetAdjustmentBehavior = .never
+            $0.bounces = false
+            $0.alwaysBounceVertical = false
         }
         webView.navigationDelegate = self
         return webView
@@ -71,7 +71,10 @@ class HiveViewController: BaseViewController {
             make.left.right.bottom.equalToSuperview()
         }
         
-        self.headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+        self.headView.backBtn
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             if self.webView.canGoBack {
                 self.webView.goBack()
@@ -95,7 +98,8 @@ class HiveViewController: BaseViewController {
     
 }
 
-extension HiveViewController: WKScriptMessageHandler, WKNavigationDelegate {
+extension HiveViewController: WKScriptMessageHandler,
+                                WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
@@ -137,7 +141,7 @@ extension HiveViewController: WKScriptMessageHandler, WKNavigationDelegate {
         guard let url = messageBody as? String else { return }
         if url.contains("email:"), let range = url.range(of: ":") {
             let email = String(url[range.upperBound...])
-            let phoneStr = UserDefaults.standard.string(forKey: LOGIN_PHONE) ?? ""
+            let phoneStr = UserDefaultsManager.getValue(forKey: .loginPhone) as? String ?? ""
             let bodyContent = "Peso Pitaka: \(phoneStr)"
             let mailtoURLString = "mailto:\(email)?body=\(bodyContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
             if let mailtoURL = URL(string: mailtoURLString), UIApplication.shared.canOpenURL(mailtoURL) {
@@ -149,8 +153,6 @@ extension HiveViewController: WKScriptMessageHandler, WKNavigationDelegate {
     func requestAppReview() {
         if #available(iOS 14.0, *), let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             SKStoreReviewController.requestReview(in: windowScene)
-        } else {
-            SKStoreReviewController.requestReview()
         }
     }
 }
@@ -171,7 +173,10 @@ extension HiveViewController {
                         "teeth": time,
                         "gritted": time]
             let man = NetworkConfigManager()
-            let result = man.requsetData(url: "/entertain/answered", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+            let result = man.requsetData(url: "/entertain/answered",
+                                         parameters: dict,
+                                         contentType: .multipartFormData)
+                .sink(receiveCompletion: { _ in
             }, receiveValue: {  data in
                 
             })
@@ -183,7 +188,7 @@ extension HiveViewController {
 
 
 extension UIScrollView {
-    func apply(_ configuration: (UIScrollView) -> Void) {
+    func scrollViewInfoApple(_ configuration: (UIScrollView) -> Void) {
         configuration(self)
     }
 }

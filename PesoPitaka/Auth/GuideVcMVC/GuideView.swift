@@ -61,6 +61,7 @@ class GuideView: BaseView {
     
     lazy var opImageView: UIImageView = {
         let opImageView = UIImageView()
+        opImageView.isUserInteractionEnabled = true
         opImageView.image = UIImage(named: "priimagdemo.")
         return opImageView
     }()

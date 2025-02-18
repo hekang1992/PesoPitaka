@@ -97,6 +97,9 @@ final class NetworkConfigManager {
                 }
             }, to: apiUrl, headers: headers)
             .validate()
+            .uploadProgress { progress in
+                print("Upload Progress: \(progress.fractionCompleted)")
+            }
             .responseData { response in
                 switch response.result {
                 case .success(let data):
