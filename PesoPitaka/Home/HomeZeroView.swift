@@ -34,6 +34,11 @@ class HomeZeroView: BaseView {
         return threeImageView
     }()
     
+    lazy var priBtn: UIButton = {
+        let priBtn = UIButton(type: .custom)
+        return priBtn
+    }()
+    
     lazy var fourImageView: UIImageView = {
         let fourImageView = UIImageView()
         fourImageView.image = UIImage(named: "homefour")
@@ -47,6 +52,7 @@ class HomeZeroView: BaseView {
         scrollView.addSubview(twoImageView)
         scrollView.addSubview(threeImageView)
         scrollView.addSubview(fourImageView)
+        threeImageView.addSubview(priBtn)
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -71,6 +77,12 @@ class HomeZeroView: BaseView {
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: 175))
             make.bottom.equalToSuperview().offset(-DeviceMetrics.tabBarHeight)
+        }
+        priBtn.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview()
+            make.height.equalTo(50)
+            make.bottom.equalToSuperview().offset(-95)
         }
     }
     

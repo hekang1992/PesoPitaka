@@ -47,6 +47,12 @@ class HomeViewController: BaseViewController {
             self?.appInfoweek(from: String(model.aware ?? 0))
         }
         
+        oneView.priBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let pageUrl = API_H5_URL + "/mouseLavend"
+            self.pushWebVc(from: pageUrl)
+        }).disposed(by: disposeBag)
+        
         oneView.threeImageView.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
@@ -73,6 +79,11 @@ class HomeViewController: BaseViewController {
         }).disposed(by: disposeBag)
         
         self.mustView.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            getHomeInfo()
+        })
+        
+        self.oneView.scrollView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             getHomeInfo()
         })
@@ -133,6 +144,7 @@ extension HomeViewController {
             } catch  {
                 print("JSON: \(error)")
             }
+            self.oneView.scrollView.mj_header?.endRefreshing()
             self.mustView.tableView.mj_header?.endRefreshing()
         })
         result.store(in: &cancellables)

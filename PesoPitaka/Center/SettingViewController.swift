@@ -76,6 +76,8 @@ class SettingViewController: BaseViewController {
         return deleteBtn
     }()
     
+    var logView: AlertImageView?
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -180,6 +182,7 @@ class SettingViewController: BaseViewController {
     
     private func logoutInfo() {
         let logView = AlertImageView(frame: self.view.bounds)
+        self.logView = logView
         logView.bgImageView.image = UIImage(named: "logoutifad")
         let alertVc = TYAlertController(alert: logView, preferredStyle: .alert)!
         self.present(alertVc, animated: true)
@@ -193,6 +196,7 @@ class SettingViewController: BaseViewController {
     
     private func deleteInfo() {
         let logView = AlertImageView(frame: self.view.bounds)
+        self.logView = logView
         logView.threeBtn.isHidden = false
         logView.threeBtn.rx.tap.subscribe(onNext: {
             logView.threeBtn.isSelected.toggle()
@@ -232,7 +236,9 @@ class SettingViewController: BaseViewController {
                         loginSuccessPush.toRootVc()
                     }
                 }
-                ToastConfig.showMessage(form: view, message: model.washed)
+                if let logView = self.logView {
+                    ToastConfig.showMessage(form: logView, message: model.washed)
+                }
             } catch  {
                 print("JSON: \(error)")
             }
@@ -258,7 +264,9 @@ class SettingViewController: BaseViewController {
                         loginSuccessPush.toRootVc()
                     }
                 }
-                ToastConfig.showMessage(form: view, message: model.washed)
+                if let logView = self.logView {
+                    ToastConfig.showMessage(form: logView, message: model.washed)
+                }
             } catch  {
                 print("JSON: \(error)")
             }
@@ -268,3 +276,13 @@ class SettingViewController: BaseViewController {
     
 }
 
+
+class JudgePushVc: NSObject {
+    static func popVc<T: BaseViewController>(ofClass: T.Type, in navigationController: UINavigationController) {
+        if let targetViewController = navigationController.viewControllers.first(where: { $0 is T }) {
+            navigationController.popToViewController(targetViewController, animated: true)
+        } else {
+            navigationController.popToRootViewController(animated: true)
+        }
+    }
+}

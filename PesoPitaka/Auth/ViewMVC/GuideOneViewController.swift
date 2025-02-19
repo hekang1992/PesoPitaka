@@ -335,7 +335,7 @@ extension GuideOneViewController {
         authView.rightBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.dismiss(animated: true) {
-                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera) { [weak self] image in
+                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera, type: "11") { [weak self] image in
                     if let image = image {
                         self?.toServiceImage(from: "11", image: image)
                     } else {

@@ -79,7 +79,10 @@ class HiveViewController: BaseViewController {
             if self.webView.canGoBack {
                 self.webView.goBack()
             }else {
-                self.navigationController?.popToRootViewController(animated: true)
+                if let navigationController = self.navigationController {
+                    JudgePushVc.popVc(ofClass: GuideViewController.self, in: navigationController)
+                }
+//                self.navigationController?.popToRootViewController(animated: true)
             }
         }).disposed(by: disposeBag)
         

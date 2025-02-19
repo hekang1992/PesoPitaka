@@ -13,14 +13,14 @@ class CameraPhotoManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
     static let shared = CameraPhotoManager()
     private var completion: ((UIImage?) -> Void)?
     
-    func showImagePicker(in viewController: UIViewController, sourceType: UIImagePickerController.SourceType, completion: @escaping (UIImage?) -> Void) {
+    func showImagePicker(in viewController: UIViewController, sourceType: UIImagePickerController.SourceType, type: String? = "10",completion: @escaping (UIImage?) -> Void) {
         self.completion = completion
         
         if sourceType == .camera {
             checkCameraPermission { [weak self] granted in
                 DispatchQueue.main.async {
                     if granted {
-                        self?.openImagePicker(in: viewController, sourceType: sourceType)
+                        self?.openImagePicker(in: viewController, sourceType: sourceType, type: type)
                     } else {
                         self?.showPermissionAlert(in: viewController, for: .camera)
                     }
@@ -30,7 +30,7 @@ class CameraPhotoManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
             checkPhotoLibraryPermission { [weak self] granted in
                 DispatchQueue.main.async {
                     if granted {
-                        self?.openImagePicker(in: viewController, sourceType: sourceType)
+                        self?.openImagePicker(in: viewController, sourceType: sourceType, type: type)
                     } else {
                         self?.showPermissionAlert(in: viewController, for: .photoLibrary)
                     }
@@ -39,12 +39,16 @@ class CameraPhotoManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
         }
     }
     
-    private func openImagePicker(in viewController: UIViewController, sourceType: UIImagePickerController.SourceType) {
+    private func openImagePicker(in viewController: UIViewController, sourceType: UIImagePickerController.SourceType, type: String? = "10") {
         DispatchQueue.main.async {
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = sourceType
             if sourceType == .camera {
-                imagePicker.cameraDevice = .front
+                if type == "11" {
+                    imagePicker.cameraDevice = .rear
+                }else {
+                    imagePicker.cameraDevice = .front
+                }
             }
             imagePicker.delegate = self
             viewController.present(imagePicker, animated: true, completion: nil)

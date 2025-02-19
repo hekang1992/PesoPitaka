@@ -43,7 +43,8 @@ class CenterView: BaseView {
         phonelabel.textAlignment = .left
         phonelabel.font = .regularFontOfSize(size: 20)
         let phone = UserDefaultsManager.getValue(forKey: .loginPhone) as? String ?? ""
-        phonelabel.text = "Hi~ \(phone)"
+        let phoneStr = hideMiddleDigits(of: phone)
+        phonelabel.text = "Hi~ \(phoneStr)"
         return phonelabel
     }()
     
@@ -248,6 +249,15 @@ class CenterView: BaseView {
 
 extension CenterView {
     
-    
+    func hideMiddleDigits(of phoneNumber: String) -> String {
+        guard phoneNumber.count >= 8 else {
+            return phoneNumber
+        }
+        var phoneNumberArray = Array(phoneNumber)
+        for i in (phoneNumberArray.count / 2 - 2)..<(phoneNumberArray.count / 2 + 2) {
+            phoneNumberArray[i] = "*"
+        }
+        return String(phoneNumberArray)
+    }
     
 }
