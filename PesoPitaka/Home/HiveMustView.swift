@@ -15,6 +15,10 @@ class HiveMustView: BaseView {
     var model = BehaviorRelay<BaseModel?>(value: nil)
     
     var block: ((ownModel) -> Void)?
+    
+    var block1: ((ownModel) -> Void)?
+    
+    var block2: ((ownModel) -> Void)?
 
     lazy var cycleMustSignView: TYCyclePagerView = {
         let cycleMustSignView = TYCyclePagerView()
@@ -91,18 +95,23 @@ extension HiveMustView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headView = UIView()
         headView.addSubview(cycleMustSignView)
-        headView.addSubview(cycleMinSignView)
+        if let model = self.model.value?.henceforth.woke, let count = model.own?.count, count > 0 {
+            headView.addSubview(cycleMinSignView)
+            cycleMinSignView.snp.makeConstraints { make in
+                make.top.equalTo(cycleMustSignView.snp.bottom)
+                make.centerX.equalToSuperview()
+                make.left.equalToSuperview().offset(12)
+                make.height.equalTo(60)
+            }
+        }else {
+            headView.removeFromSuperview()
+        }
         headView.addSubview(productBtn)
         cycleMustSignView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(238)
         }
-        cycleMinSignView.snp.makeConstraints { make in
-            make.top.equalTo(cycleMustSignView.snp.bottom)
-            make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(12)
-            make.height.equalTo(60)
-        }
+        
         productBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
@@ -112,7 +121,12 @@ extension HiveMustView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 380
+        if let model = self.model.value?.henceforth.woke, let count = model.own?.count, count > 0 {
+            return 380
+        }else {
+            return 320
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -143,13 +157,23 @@ extension HiveMustView: TYCyclePagerViewDelegate, TYCyclePagerViewDataSource {
             return cell
         }else {
             guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "HiveMiniViewCellCollectionViewCell", for: index) as? HiveMiniViewCellCollectionViewCell else { return UICollectionViewCell() }
+            let model = self.model.value?.henceforth.woke?.own?[index]
+            cell.mlabel.text = model?.washed ?? ""
             return cell
         }
         
     }
     
     func pagerView(_ pageView: TYCyclePagerView, didSelectedItemCell cell: UICollectionViewCell, at index: Int) {
-        
+        if pageView == cycleMustSignView {
+            if let model = self.model.value?.henceforth.forced?.own?[index] {
+                self.block1?(model)
+            }
+        }else {
+            if let model = self.model.value?.henceforth.woke?.own?[index] {
+                self.block2?(model)
+            }
+        }
     }
     
     func layout(for pagerView: TYCyclePagerView) -> TYCyclePagerViewLayout {

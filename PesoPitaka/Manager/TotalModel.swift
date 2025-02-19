@@ -34,8 +34,10 @@ struct henceforthModel: Codable {
     var summoned: summonedModel?
     var original: originalModel?
     var forced: forcedModel?
+    var woke: wokeModel?
     var choose: Int?
     enum CodingKeys: String, CodingKey {
+        case woke = "woke"
         case choose = "choose"
         case phone = "differently"
         case token = "gently"
@@ -56,7 +58,10 @@ struct henceforthModel: Codable {
         case original = "original"
         case forced = "forced"
     }
-    
+}
+
+struct wokeModel: Codable {
+    var own: [ownModel]?
 }
 
 struct wakingModel: Codable {
@@ -75,6 +80,7 @@ struct ownModel: Codable {
     var yawned: String?
     var sound: String?
     var loanTermText: String?
+    var washed: String?
 }
 
 struct indicatingModel: Codable {
