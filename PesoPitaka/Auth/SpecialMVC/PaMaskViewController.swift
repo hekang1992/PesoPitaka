@@ -1,5 +1,5 @@
 //
-//  HiveViewController.swift
+//  PaMaskViewController.swift
 //  PesoPitaka
 //
 //  Created by Benjamin on 2025/1/25.
@@ -8,10 +8,13 @@
 import UIKit
 import StoreKit
 @preconcurrency import WebKit
+import RxRelay
 
-class HiveViewController: BaseViewController {
+class PaMaskViewController: BaseViewController {
     
     var pageUrl: String = ""
+    
+    var type = BehaviorRelay<String?>(value: nil)
     
     lazy var webView: WKWebView = {
         let userContentController = WKUserContentController()
@@ -79,10 +82,15 @@ class HiveViewController: BaseViewController {
             if self.webView.canGoBack {
                 self.webView.goBack()
             }else {
-                if let navigationController = self.navigationController {
-                    JudgePushVc.popVc(ofClass: GuideViewController.self, in: navigationController)
+                if let type = self.type.value {
+                    if type == "pay" {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }else {
+                        if let navigationController = self.navigationController {
+                            JudgePushVc.popVc(ofClass: GuideViewController.self, in: navigationController)
+                        }
+                    }
                 }
-//                self.navigationController?.popToRootViewController(animated: true)
             }
         }).disposed(by: disposeBag)
         
@@ -101,7 +109,7 @@ class HiveViewController: BaseViewController {
     
 }
 
-extension HiveViewController: WKScriptMessageHandler,
+extension PaMaskViewController: WKScriptMessageHandler,
                                 WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
@@ -160,7 +168,7 @@ extension HiveViewController: WKScriptMessageHandler,
     }
 }
 
-extension HiveViewController {
+extension PaMaskViewController {
     
     private func tenInfo(from week: String) {
         let location = LocationManager()

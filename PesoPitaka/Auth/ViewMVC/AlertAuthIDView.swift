@@ -17,6 +17,12 @@ class AlertAuthIDView: BaseView {
     
     var block: ((instantlyModel) -> Void)?
     
+    lazy var cancelBtn: UIButton = {
+        let cancelBtn = UIButton(type: .custom)
+        cancelBtn.setImage(UIImage(named: "camcebtimage"), for: .normal)
+        return cancelBtn
+    }()
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "poseimage")
@@ -48,9 +54,17 @@ class AlertAuthIDView: BaseView {
         return tableView
     }()
     
+    lazy var nameLabel: UILabel = {
+        let nameLabel = UIUtils.createLabel(font: UIFont.regularFontOfSize(size: 19), textColor: .init(colorHexStr: "#FFFFFF")!, textAlignment: .center)
+        nameLabel.text = "Select ID"
+        return nameLabel
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(bgImageView)
+        addSubview(cancelBtn)
+        bgImageView.addSubview(nameLabel)
         bgImageView.addSubview(tableView)
         bgImageView.addSubview(nextBtn)
         bgImageView.snp.makeConstraints { make in
@@ -70,7 +84,16 @@ class AlertAuthIDView: BaseView {
             make.height.equalTo(60)
             make.top.equalTo(tableView.snp.bottom).offset(15)
         }
-        
+        cancelBtn.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 30, height: 30))
+            make.right.equalToSuperview().offset(-10)
+            make.bottom.equalTo(bgImageView.snp.top)
+        }
+        nameLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(9)
+            make.height.equalTo(23)
+        }
     }
     
     @MainActor required init?(coder: NSCoder) {

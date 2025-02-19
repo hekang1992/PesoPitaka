@@ -188,13 +188,24 @@ class GuideOneViewController: BaseViewController {
             guard let self = self else { return }
             faceonetime = DateUtils.getCurrentTimestampInMilliseconds()
             if self.built == 1 {
-                CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera) { [weak self] image in
-                    if let image = image {
-                        self?.toServiceImage(from: "10", image: image)
-                    } else {
-                        print("User canceled camera.")
+                let authView = FaceAlertInfo(frame: self.view.bounds)
+                let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
+                self.present(alertVc, animated: true)
+                authView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+                    self?.dismiss(animated: true)
+                }).disposed(by: disposeBag)
+                authView.goBtn.rx.tap.subscribe(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    self.dismiss(animated: true) {
+                        CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera) { [weak self] image in
+                            if let image = image {
+                                self?.toServiceImage(from: "10", image: image)
+                            } else {
+                                print("User canceled camera.")
+                            }
+                        }
                     }
-                }
+                }).disposed(by: disposeBag)
             }else {
                 ToastConfig.showMessage(form: view, message: "Please complete the previous process first.")
             }
@@ -279,6 +290,9 @@ extension GuideOneViewController {
         }
         let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
         self.present(alertVc, animated: true)
+        authView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
         authView.nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.dismiss(animated: true) {
@@ -316,6 +330,10 @@ extension GuideOneViewController {
         let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
         authView.iconImageView.kf.setImage(with: URL(string: self.authModel.value?.probably ?? ""))
         self.present(alertVc, animated: true)
+        
+        authView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
         
         //photo
         authView.leftBtn.rx.tap.subscribe(onNext: { [weak self] in
@@ -419,6 +437,9 @@ extension GuideOneViewController {
         authView.threeView.nameLabel.textColor = .black
         let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
         self.present(alertVc, animated: true)
+        authView.cancelBtn.rx.tap.subscribe(onNext: { [weak self]  in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
         authView
             .threeView
             .rx

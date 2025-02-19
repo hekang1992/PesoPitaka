@@ -35,7 +35,7 @@ class BaseViewController: UIViewController {
 
 extension BaseViewController {
     
-    func productDetailInfo(from weak: String) {
+    func productDetailInfo(from weak: String, type: String? = "") {
         let dict = ["curiosity": "0",
                     "week": weak,
                     "creature": "maga"]
@@ -55,7 +55,7 @@ extension BaseViewController {
                     }else {
                         ninetime = DateUtils.getCurrentTimestampInMilliseconds()
                         let orderID = model.henceforth.summoned?.orderID ?? ""
-                        self.orderIDToVc(for: orderID, week: weak)
+                        self.orderIDToVc(for: orderID, week: weak, type: type)
                     }
                 }else {
                     ToastConfig.showMessage(form: view, message: model.washed)
@@ -99,7 +99,7 @@ extension BaseViewController {
         }
     }
     
-    func orderIDToVc(for orderID: String, week: String) {
+    func orderIDToVc(for orderID: String, week: String, type: String? = "") {
         LoadingConfing.shared.showLoading()
         let dict = ["seriously": "1",
                     "maybe": "2",
@@ -117,7 +117,7 @@ extension BaseViewController {
                 if invalidValues.contains(herself) {
                     let pageUrl = model.henceforth.residing ?? ""
                     nineInfo(from: week)
-                    self.pushWebVc(from: pageUrl)
+                    self.pushWebVc(from: pageUrl, type: type)
                 }else {
                     ToastConfig.showMessage(form: view, message: model.washed)
                 }
@@ -128,12 +128,13 @@ extension BaseViewController {
         result.store(in: &cancellables)
     }
     
-    func pushWebVc(from url: String) {
+    func pushWebVc(from url: String, type: String? = "") {
         let commonModel = CommonModel.getCommonPera()
         let dictionary = commonModel.toDictionary()
-        let hiveVc = HiveViewController()
+        let hiveVc = PaMaskViewController()
         let pageUrl = URLQueryAppender.appendQueryParameters(to: url, parameters: dictionary)!.replacingOccurrences(of: " ", with: "%20")
         hiveVc.pageUrl = pageUrl
+        hiveVc.type.accept(type ?? "")
         self.navigationController?.pushViewController(hiveVc, animated: true)
     }
     

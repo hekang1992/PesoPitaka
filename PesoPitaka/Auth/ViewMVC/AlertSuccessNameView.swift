@@ -44,9 +44,23 @@ class AlertSuccessNameView: BaseView {
         return nextBtn
     }()
     
+    lazy var cancelBtn: UIButton = {
+        let cancelBtn = UIButton(type: .custom)
+        cancelBtn.setImage(UIImage(named: "camcebtimage"), for: .normal)
+        return cancelBtn
+    }()
+    
+    lazy var nameLabel: UILabel = {
+        let nameLabel = UIUtils.createLabel(font: .regularFontOfSize(size: 19), textColor: .init(colorHexStr: "#FFFFFF")!, textAlignment: .center)
+        nameLabel.text = "Confirm Information"
+        return nameLabel
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addSubview(cancelBtn)
         addSubview(bgImageView)
+        bgImageView.addSubview(nameLabel)
         bgImageView.addSubview(oneView)
         bgImageView.addSubview(twoView)
         bgImageView.addSubview(threeView)
@@ -56,7 +70,11 @@ class AlertSuccessNameView: BaseView {
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 375, height: 574))
         }
-        
+        cancelBtn.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 30, height: 30))
+            make.right.equalToSuperview().offset(-10)
+            make.bottom.equalTo(bgImageView.snp.top)
+        }
         oneView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(15)
@@ -83,7 +101,11 @@ class AlertSuccessNameView: BaseView {
             make.height.equalTo(60)
             make.top.equalTo(threeView.snp.bottom).offset(220)
         }
-        
+        nameLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(9)
+            make.height.equalTo(23)
+        }
     }
     
     @MainActor required init?(coder: NSCoder) {

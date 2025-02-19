@@ -203,7 +203,7 @@ class PayViewController: BaseViewController {
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
                     eightInfo()
-                    self.productDetailInfo(from: week.value)
+                    self.productDetailInfo(from: week.value, type: "pay")
                 }
                 ToastConfig.showMessage(form: view, message: model.washed)
             } catch  {
@@ -334,6 +334,9 @@ extension PayViewController: UITableViewDelegate, UITableViewDataSource {
         authView.tableView.reloadData()
         let alertVc = TYAlertController(alert: authView, preferredStyle: .actionSheet)!
         self.present(alertVc, animated: true)
+        authView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
         authView.nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.dismiss(animated: true)

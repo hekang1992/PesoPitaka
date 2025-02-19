@@ -10,7 +10,6 @@
 		72B2E0E5D74259C63F96D2AB /* Pods_PesoPitaka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF9A3389285CF591AF5DBC9A /* Pods_PesoPitaka.framework */; };
 		730384422D5F9B87008AA7C3 /* MustOneInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730384412D5F9B87008AA7C3 /* MustOneInfo.swift */; };
 		730384462D605C81008AA7C3 /* OrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730384452D605C81008AA7C3 /* OrderListViewController.swift */; };
-		731BB3832D58A232003E54DB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 731BB3822D58A232003E54DB /* Launch Screen.storyboard */; };
 		731BB3852D58A44E003E54DB /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731BB3842D58A44E003E54DB /* LocationService.swift */; };
 		73807D2F2D32BA8000F8B90D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D252D32BA8000F8B90D /* AppDelegate.swift */; };
 		73807D322D32BA8000F8B90D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73807D262D32BA8000F8B90D /* Assets.xcassets */; };
@@ -29,6 +28,7 @@
 		73A9650F2D64CD37005CCDE1 /* MaskRocketInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A9650E2D64CD37005CCDE1 /* MaskRocketInfo.swift */; };
 		73A965112D64CEE0005CCDE1 /* MaskMilkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A965102D64CEE0005CCDE1 /* MaskMilkInfo.swift */; };
 		73A965132D64CFCF005CCDE1 /* MustMaskEhonInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A965122D64CFCF005CCDE1 /* MustMaskEhonInfo.swift */; };
+		73B967802D65E31000CAB5C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73B9677F2D65E31000CAB5C1 /* LaunchScreen.storyboard */; };
 		73D1CFF82D41FCD00065AD80 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1CFF72D41FCD00065AD80 /* TermsViewController.swift */; };
 		73D1CFFA2D424C2D0065AD80 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1CFF92D424C2D0065AD80 /* SettingViewController.swift */; };
 		73D1CFFC2D42525B0065AD80 /* AlertImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1CFFB2D42525B0065AD80 /* AlertImageView.swift */; };
@@ -55,7 +55,7 @@
 		73D1D0382D44BA5D0065AD80 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0372D44BA5D0065AD80 /* ContactManager.swift */; };
 		73D1D03A2D44DD130065AD80 /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0392D44DD130065AD80 /* PayViewController.swift */; };
 		73D1D03C2D452C3A0065AD80 /* PayPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D03B2D452C3A0065AD80 /* PayPopView.swift */; };
-		73D1D03E2D45347A0065AD80 /* HiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D03D2D45347A0065AD80 /* HiveViewController.swift */; };
+		73D1D03E2D45347A0065AD80 /* PaMaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D03D2D45347A0065AD80 /* PaMaskViewController.swift */; };
 		73D1D0402D4611280065AD80 /* HiveMustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D03F2D4611280065AD80 /* HiveMustView.swift */; };
 		73D1D0422D4671BB0065AD80 /* HiveMustViewCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0412D4671BB0065AD80 /* HiveMustViewCellCollectionViewCell.swift */; };
 		73D1D0442D4677E40065AD80 /* HivePeoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D1D0432D4677E40065AD80 /* HivePeoViewCell.swift */; };
@@ -74,7 +74,6 @@
 /* Begin PBXFileReference section */
 		730384412D5F9B87008AA7C3 /* MustOneInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustOneInfo.swift; sourceTree = "<group>"; };
 		730384452D605C81008AA7C3 /* OrderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewController.swift; sourceTree = "<group>"; };
-		731BB3822D58A232003E54DB /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		731BB3842D58A44E003E54DB /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		73807CFD2D32B8AC00F8B90D /* PesoPitaka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PesoPitaka.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73807D252D32BA8000F8B90D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +95,7 @@
 		73A9650E2D64CD37005CCDE1 /* MaskRocketInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskRocketInfo.swift; sourceTree = "<group>"; };
 		73A965102D64CEE0005CCDE1 /* MaskMilkInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskMilkInfo.swift; sourceTree = "<group>"; };
 		73A965122D64CFCF005CCDE1 /* MustMaskEhonInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustMaskEhonInfo.swift; sourceTree = "<group>"; };
+		73B9677F2D65E31000CAB5C1 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		73D1CFF72D41FCD00065AD80 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		73D1CFF92D424C2D0065AD80 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73D1CFFB2D42525B0065AD80 /* AlertImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertImageView.swift; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 		73D1D0372D44BA5D0065AD80 /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		73D1D0392D44DD130065AD80 /* PayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayViewController.swift; sourceTree = "<group>"; };
 		73D1D03B2D452C3A0065AD80 /* PayPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPopView.swift; sourceTree = "<group>"; };
-		73D1D03D2D45347A0065AD80 /* HiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveViewController.swift; sourceTree = "<group>"; };
+		73D1D03D2D45347A0065AD80 /* PaMaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaMaskViewController.swift; sourceTree = "<group>"; };
 		73D1D03F2D4611280065AD80 /* HiveMustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveMustView.swift; sourceTree = "<group>"; };
 		73D1D0412D4671BB0065AD80 /* HiveMustViewCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveMustViewCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		73D1D0432D4677E40065AD80 /* HivePeoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HivePeoViewCell.swift; sourceTree = "<group>"; };
@@ -184,6 +184,7 @@
 		73807CF42D32B8AC00F8B90D = {
 			isa = PBXGroup;
 			children = (
+				73B9677F2D65E31000CAB5C1 /* LaunchScreen.storyboard */,
 				73807D2E2D32BA8000F8B90D /* PesoPitaka */,
 				73807CFE2D32B8AC00F8B90D /* Products */,
 				3804088AFBAD453BABC74C74 /* Pods */,
@@ -206,7 +207,6 @@
 				73807D272D32BA8000F8B90D /* Info.plist */,
 				73807D262D32BA8000F8B90D /* Assets.xcassets */,
 				73807D362D32BCBB00F8B90D /* PesoPitaka.entitlements */,
-				731BB3822D58A232003E54DB /* Launch Screen.storyboard */,
 				73807D252D32BA8000F8B90D /* AppDelegate.swift */,
 				730384402D5F9B55008AA7C3 /* MustBigSoul */,
 				73807D3B2D32BF4400F8B90D /* Manager */,
@@ -341,7 +341,7 @@
 				73D1D0352D44A8440065AD80 /* ServerTableViewCell.swift */,
 				73D1D0392D44DD130065AD80 /* PayViewController.swift */,
 				73D1D03B2D452C3A0065AD80 /* PayPopView.swift */,
-				73D1D03D2D45347A0065AD80 /* HiveViewController.swift */,
+				73D1D03D2D45347A0065AD80 /* PaMaskViewController.swift */,
 			);
 			path = SpecialMVC;
 			sourceTree = "<group>";
@@ -407,7 +407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				731BB3832D58A232003E54DB /* Launch Screen.storyboard in Resources */,
+				73B967802D65E31000CAB5C1 /* LaunchScreen.storyboard in Resources */,
 				738D45542D3F7E4200EE9E66 /* MontserratRegular.ttf in Resources */,
 				73807D322D32BA8000F8B90D /* Assets.xcassets in Resources */,
 			);
@@ -517,7 +517,7 @@
 				73D1D03C2D452C3A0065AD80 /* PayPopView.swift in Sources */,
 				73D1CFFC2D42525B0065AD80 /* AlertImageView.swift in Sources */,
 				738D45432D3F6FAB00EE9E66 /* ConfigManager.swift in Sources */,
-				73D1D03E2D45347A0065AD80 /* HiveViewController.swift in Sources */,
+				73D1D03E2D45347A0065AD80 /* PaMaskViewController.swift in Sources */,
 				73D9DED62D3FF83200AD810A /* UserCenterViewController.swift in Sources */,
 				73A965112D64CEE0005CCDE1 /* MaskMilkInfo.swift in Sources */,
 			);
@@ -549,7 +549,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -595,7 +595,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

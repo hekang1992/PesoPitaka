@@ -25,6 +25,9 @@ final class LoadingConfing {
         setupBackgroundView(in: window)
         setupActivityIndicator(in: window)
         activityIndicator?.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
+            self.hideLoading()
+        }
     }
     
     func hideLoading() {

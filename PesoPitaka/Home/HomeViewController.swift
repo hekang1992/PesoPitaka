@@ -88,16 +88,16 @@ class HomeViewController: BaseViewController {
             getHomeInfo()
         })
         
+        let location = LocationManager()
+        location.getLocationInfo { geoModel in
+            
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getHomeInfo()
-        
-        let location = LocationManager()
-        location.getLocationInfo { geoModel in
-            
-        }
     }
     
 }
