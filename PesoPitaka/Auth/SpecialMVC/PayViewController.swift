@@ -53,15 +53,15 @@ class PayViewController: BaseViewController {
     lazy var leftBtn: UIButton = {
         let leftBtn = UIButton(type: .custom)
         leftBtn.isSelected = true
-        leftBtn.setImage(UIImage(named: "ewalletimge_nor"), for: .normal)
-        leftBtn.setImage(UIImage(named: "ewalletimge_sel"), for: .selected)
+        leftBtn.setBackgroundImage(UIImage(named: "ewalletimge_nor"), for: .normal)
+        leftBtn.setBackgroundImage(UIImage(named: "ewalletimge_sel"), for: .selected)
         return leftBtn
     }()
     
     lazy var rightBtn: UIButton = {
         let rightBtn = UIButton(type: .custom)
-        rightBtn.setImage(UIImage(named: "banknoriamge"), for: .normal)
-        rightBtn.setImage(UIImage(named: "bankselimge"), for: .selected)
+        rightBtn.setBackgroundImage(UIImage(named: "banknoriamge"), for: .normal)
+        rightBtn.setBackgroundImage(UIImage(named: "bankselimge"), for: .selected)
         return rightBtn
     }()
     
@@ -117,13 +117,13 @@ class PayViewController: BaseViewController {
         }
         leftBtn.snp.makeConstraints { make in
             make.top.equalTo(poImageView.snp.bottom).offset(36)
-            make.left.equalToSuperview().offset(20)
-            make.size.equalTo(CGSize(width: 143, height: 18))
+            make.left.equalToSuperview().offset(15)
+            make.size.equalTo(CGSize(width: (SCREEN_WIDTH - 30) * 0.5, height: 40))
         }
         rightBtn.snp.makeConstraints { make in
             make.top.equalTo(poImageView.snp.bottom).offset(36)
-            make.right.equalToSuperview().offset(-20)
-            make.size.equalTo(CGSize(width: 143, height: 18))
+            make.right.equalToSuperview().offset(-15)
+            make.size.equalTo(CGSize(width: (SCREEN_WIDTH - 30) * 0.5, height: 40))
         }
         tableView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -151,8 +151,8 @@ class PayViewController: BaseViewController {
         leftBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.since = "1"
-            leftBtn.isSelected.toggle()
-            rightBtn.isSelected = !leftBtn.isSelected
+            leftBtn.isSelected = true
+            rightBtn.isSelected = false
             self.modelArray.accept(self.model.value?.henceforth.bang?.first?.bang ?? [])
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
@@ -160,8 +160,8 @@ class PayViewController: BaseViewController {
         rightBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.since = "2"
-            rightBtn.isSelected.toggle()
-            leftBtn.isSelected = !rightBtn.isSelected
+            rightBtn.isSelected = true
+            leftBtn.isSelected = false
             self.modelArray.accept(self.model.value?.henceforth.bang?.last?.bang ?? [])
             self.tableView.reloadData()
         }).disposed(by: disposeBag)

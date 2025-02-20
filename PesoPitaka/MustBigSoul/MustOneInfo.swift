@@ -63,47 +63,38 @@ class MustMaskInfo: NSObject {
 
 class MustSurgInfo: NSObject {
     
-    static func getStorageInfo() -> (freeSpace: String, totalSpace: String)? {
-        let fileManager = FileManager.default
+    static func getStorageUsage() -> (used: UInt64, free: UInt64, total: UInt64)? {
+        let fileURL = URL(fileURLWithPath: NSHomeDirectory() as String)
         do {
-            let systemAttributes = try fileManager.attributesOfFileSystem(forPath: NSHomeDirectory() as String)
-            if let freeSpace = (systemAttributes[.systemFreeSize] as? NSNumber)?.int64Value,
-               let totalSpace = (systemAttributes[.systemSize] as? NSNumber)?.int64Value {
-                let freeSpaceKB = Double(freeSpace) / 1024.0
-                let totalSpaceKB = Double(totalSpace) / 1024.0
-                let freeSpaceString = String(format: "%.0f", freeSpaceKB)
-                let totalSpaceString = String(format: "%.0f", totalSpaceKB)
-                return (freeSpaceString, totalSpaceString)
+            let values = try fileURL.resourceValues(forKeys: [.volumeAvailableCapacityKey, .volumeTotalCapacityKey])
+            if let free = values.volumeAvailableCapacity, let total = values.volumeTotalCapacity {
+                let used = total - free
+                return (used: UInt64(used), free: UInt64(free), total: UInt64(total))
             }
         } catch {
-            print("Error retrieving storage info: \(error)")
+            print("Error: Failed to get storage usage - \(error)")
         }
         return nil
     }
     
-    static func getMemoryInfo() -> (freeMemory: String, totalMemory: String)? {
-        let totalMemory = ProcessInfo.processInfo.physicalMemory
-        let totalMemoryKB = Double(totalMemory) / 1024.0
-        let totalMemoryString = String(format: "%.0f", totalMemoryKB)
-        var freeMemory: UInt64 = 0
-        var size = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size / MemoryLayout<integer_t>.size)
-        let host = mach_host_self()
-        var stats = vm_statistics64()
-        var count = mach_msg_type_number_t(MemoryLayout<vm_statistics64>.size / MemoryLayout<integer_t>.size)
-        
-        let result = withUnsafeMutablePointer(to: &stats) {
-            $0.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
-                host_statistics64(host, HOST_VM_INFO64, $0, &count)
+    static func getMemoryUsage() -> (used: UInt64, free: UInt64, total: UInt64)? {
+        let HOST_VM_INFO_COUNT = mach_msg_type_number_t(MemoryLayout<vm_statistics_data_t>.size / MemoryLayout<integer_t>.size)
+        var size = mach_msg_type_number_t(MemoryLayout<vm_statistics_data_t>.size)
+        var hostInfo = vm_statistics_data_t()
+
+        let result = withUnsafeMutablePointer(to: &hostInfo) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: Int(size)) {
+                host_statistics(mach_host_self(), HOST_VM_INFO, $0, &size)
             }
         }
-        
+
         if result == KERN_SUCCESS {
-            freeMemory = UInt64(stats.free_count) * UInt64(vm_page_size)
-            let freeMemoryKB = Double(freeMemory) / 1024.0
-            let freeMemoryString = String(format: "%.0f", freeMemoryKB)
-            return (freeMemoryString, totalMemoryString)
+            let totalMemory = ProcessInfo.processInfo.physicalMemory
+            let freeMemory = UInt64(hostInfo.free_count) * UInt64(vm_page_size)
+            let usedMemory = totalMemory - freeMemory
+            return (used: usedMemory, free: freeMemory, total: totalMemory)
         } else {
-            print("Failed to retrieve memory info.")
+            print("Error: Failed to get memory usage")
             return nil
         }
     }
@@ -111,20 +102,19 @@ class MustSurgInfo: NSObject {
     
     static func requDict() -> [String: Any] {
         var dict: [String: Any] = [:]
-        if let storageInfo = getStorageInfo() {
-            dict["familiar"] = storageInfo.freeSpace
-            dict["firstly"] = storageInfo.totalSpace
+        if let storageInfo = getStorageUsage() {
+            dict["familiar"] = storageInfo.free
+            dict["firstly"] = storageInfo.total
         } else {
             print("Failed to retrieve storage info.")
         }
         
-        if let memoryInfo = getMemoryInfo() {
-            dict["fence"] = memoryInfo.freeMemory
-            dict["politely"] = memoryInfo.totalMemory
+        if let memoryInfo = getMemoryUsage() {
+            dict["politely"] = memoryInfo.free
+            dict["fence"] = memoryInfo.total
         } else {
             print("Failed to retrieve memory info.")
         }
-        
         
         let adict = ["secondly": dict]
         

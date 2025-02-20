@@ -41,6 +41,7 @@ extension BaseViewController {
                     "creature": "maga"]
         let man = NetworkConfigManager()
         LoadingConfing.shared.showLoading()
+        ninetime = DateUtils.getCurrentTimestampInMilliseconds()
         let result = man.requsetData(url: "/entertain/revolution", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
@@ -53,7 +54,6 @@ extension BaseViewController {
                     if let authModel = model.henceforth.indicating, let help = authModel.help, !help.isEmpty {
                         self.toGuideVc(from: help, week: weak)
                     }else {
-                        ninetime = DateUtils.getCurrentTimestampInMilliseconds()
                         let orderID = model.henceforth.summoned?.orderID ?? ""
                         self.orderIDToVc(for: orderID, week: weak, type: type)
                     }
