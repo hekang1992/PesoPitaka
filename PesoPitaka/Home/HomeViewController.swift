@@ -29,8 +29,6 @@ class HomeViewController: BaseViewController {
     
     var model = BehaviorRelay<BaseModel?>(value: nil)
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,6 +43,26 @@ class HomeViewController: BaseViewController {
         }
         mustView.block = { [weak self] model in
             self?.appInfoweek(from: String(model.aware ?? 0))
+        }
+        
+        mustView.block1 = { [weak self] model in
+            guard let self = self else { return  }
+            let residing = model.residing ?? ""
+            if residing.isEmpty {
+                return
+            }else {
+                self.pushWebVc(from: residing)
+            }
+        }
+        
+        mustView.block2 = { [weak self] model in
+            guard let self = self else { return  }
+            let residing = model.residing ?? ""
+            if residing.isEmpty {
+                return
+            }else {
+                self.pushWebVc(from: residing)
+            }
         }
         
         oneView.priBtn.rx.tap.subscribe(onNext: { [weak self] in

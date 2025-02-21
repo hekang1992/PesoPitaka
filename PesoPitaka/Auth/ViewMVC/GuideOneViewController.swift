@@ -341,7 +341,7 @@ extension GuideOneViewController {
             self.dismiss(animated: true) {
                 CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .photoLibrary) { [weak self] image in
                     if let image = image {
-                        self?.toServiceImage(from: "11", image: image, since: self?.since)
+                        self?.toServiceImage(from: "11", image: image, since: self?.since ?? "")
                     } else {
                         print("User canceled photo library.")
                     }
@@ -355,7 +355,7 @@ extension GuideOneViewController {
             self.dismiss(animated: true) {
                 CameraPhotoManager.shared.showImagePicker(in: self, sourceType: .camera, type: "11") { [weak self] image in
                     if let image = image {
-                        self?.toServiceImage(from: "11", image: image)
+                        self?.toServiceImage(from: "11", image: image, since: self?.since ?? "")
                     } else {
                         print("User canceled camera.")
                     }
@@ -457,7 +457,7 @@ extension GuideOneViewController {
     }
     
     private func setUpTime(for label: UILabel) {
-        guard let dateComponents = extractDateComponents(from: label.text) else { return }
+        guard let dateComponents = extractDateComponents(from: label.text ?? "01-01-1900") else { return }
         let datePickerView = createDatePickerView(with: dateComponents)
         datePickerView.resultBlock = { [weak self] selectedDate, selectedValue in
             guard let self = self, let selectedValue = selectedValue else { return }

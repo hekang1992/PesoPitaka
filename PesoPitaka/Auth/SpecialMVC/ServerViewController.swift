@@ -297,9 +297,17 @@ extension ServerViewController: CNContactPickerDelegate {
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
         let fullName = "\(contact.givenName) \(contact.familyName)"
+        if fullName.isEmpty {
+            ToastConfig.showMessage(form: view, message: "Emergency contact name cannot be empty.")
+            return
+        }
         if let phoneNumber = contact.phoneNumbers.first?.value.stringValue {
             self.selectCell?.nameLabel.text = "\(fullName)-\(phoneNumber)"
             self.selectCell?.nameLabel.textColor = .black
+            if phoneNumber.isEmpty {
+                ToastConfig.showMessage(form: view, message: "Emergency contact phone number cannot be empty.")
+                return
+            }
             let model = self.model.value?.henceforth.piece?.instantly?[index]
             model?.hadn = "\(fullName)"
             model?.settle = "\(phoneNumber)"

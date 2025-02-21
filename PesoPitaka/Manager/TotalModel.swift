@@ -101,6 +101,7 @@ struct instantlyModel: Codable {
     var moneyText: String?
     var dateValue: String?
     var dateText: String?
+    var statusTextDescButton: String?
     var grow: String?
     var secret: secretModel?
     var instantly: [instantlyModel]?

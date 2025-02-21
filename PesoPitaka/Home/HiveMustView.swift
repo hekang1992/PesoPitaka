@@ -24,6 +24,8 @@ class HiveMustView: BaseView {
         let cycleMustSignView = TYCyclePagerView()
         cycleMustSignView.delegate = self
         cycleMustSignView.dataSource = self
+        cycleMustSignView.autoScrollInterval = 2
+        cycleMustSignView.isInfiniteLoop = true
         cycleMustSignView.register(HiveMustViewCellCollectionViewCell.self,
                             forCellWithReuseIdentifier: "HiveMustViewCellCollectionViewCell")
         return cycleMustSignView
@@ -33,6 +35,8 @@ class HiveMustView: BaseView {
         let cycleMinSignView = TYCyclePagerView()
         cycleMinSignView.delegate = self
         cycleMinSignView.dataSource = self
+        cycleMinSignView.autoScrollInterval = 2
+        cycleMinSignView.isInfiniteLoop = true
         cycleMinSignView.register(HiveMiniViewCellCollectionViewCell.self,
                             forCellWithReuseIdentifier: "HiveMiniViewCellCollectionViewCell")
         return cycleMinSignView
@@ -109,7 +113,7 @@ extension HiveMustView: UITableViewDelegate, UITableViewDataSource {
         headView.addSubview(productBtn)
         cycleMustSignView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
-            make.height.equalTo(238)
+            make.height.equalTo(198)
         }
         
         productBtn.snp.makeConstraints { make in
@@ -122,9 +126,9 @@ extension HiveMustView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let model = self.model.value?.henceforth.woke, let count = model.own?.count, count > 0 {
-            return 380
+            return 340
         }else {
-            return 320
+            return 280
         }
         
     }
@@ -153,7 +157,7 @@ extension HiveMustView: TYCyclePagerViewDelegate, TYCyclePagerViewDataSource {
         if pagerView == cycleMustSignView {
             guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "HiveMustViewCellCollectionViewCell", for: index) as? HiveMustViewCellCollectionViewCell else { return UICollectionViewCell() }
             let model = self.model.value?.henceforth.forced?.own?[index]
-            cell.mustImgaView.kf.setImage(with: URL(string: model?.host ?? ""))
+            cell.mustImgaView.kf.setImage(with: URL(string: model?.host ?? ""), placeholder: UIImage(named: "homeone"))
             return cell
         }else {
             guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "HiveMiniViewCellCollectionViewCell", for: index) as? HiveMiniViewCellCollectionViewCell else { return UICollectionViewCell() }
@@ -179,11 +183,11 @@ extension HiveMustView: TYCyclePagerViewDelegate, TYCyclePagerViewDataSource {
     func layout(for pagerView: TYCyclePagerView) -> TYCyclePagerViewLayout {
         let layout = TYCyclePagerViewLayout()
         if pagerView == cycleMustSignView {
-            layout.itemSize = CGSizeMake(375, 238)
+            layout.itemSize = CGSizeMake(375, 198)
             layout.itemSpacing = 2
             return layout
         }else {
-            layout.itemSize = CGSizeMake(315, 56)
+            layout.itemSize = CGSizeMake(375, 60)
             layout.itemSpacing = 2
             return layout
         }

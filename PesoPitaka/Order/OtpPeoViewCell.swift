@@ -167,7 +167,7 @@ class OtpPeoViewCell: BaseViewCell {
             applyBtn.text = model.secret?.although ?? ""
             titlabel.text = model.secret?.liar ?? ""
             let good = model.secret?.good ?? 0
-            appBtn.setTitle(model.secret?.rest, for: .normal)
+            appBtn.setTitle(model.statusTextDescButton ?? "", for: .normal)
             if good == 1 {
                 appBtn.setBackgroundImage(UIImage(named: "redimgeim"), for: .normal)
             }else if good == 2 || good == 3 {

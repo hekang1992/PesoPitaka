@@ -144,7 +144,11 @@ extension PaMaskViewController: WKScriptMessageHandler,
         }else if messageName == "zucchiniL" {
             handleMessageBody(message.body)
         }else if messageName == "kiteGelat" {
-            
+            let messageBody = message.body
+            guard let url = messageBody as? String else { return }
+            if url.contains("ugliMisoJack") {
+                loginSuccessPush.toRootVc()
+            }
         }
     }
     
