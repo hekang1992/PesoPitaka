@@ -156,28 +156,7 @@ class OtpPeoViewCell: BaseViewCell {
             make.right.equalToSuperview().offset(-30)
             make.height.equalTo(22)
         }
-        model.asObservable().subscribe(onNext: { [weak self] model in
-            guard let self = self, let model = model else { return }
-            iconImageView.kf.setImage(with: URL(string: model.blinked ?? ""))
-            namelabel.text = model.getting ?? ""
-            onelabel.text = model.orderAmount ?? ""
-            twolabel.text = model.moneyText ?? ""
-            timelabel.text = model.dateValue ?? ""
-            defineBlueLabel.text = model.dateText ?? ""
-            applyBtn.text = model.secret?.although ?? ""
-            titlabel.text = model.secret?.liar ?? ""
-            let good = model.secret?.good ?? 0
-            appBtn.setTitle(model.statusTextDescButton ?? "", for: .normal)
-            if good == 1 {
-                appBtn.setBackgroundImage(UIImage(named: "redimgeim"), for: .normal)
-            }else if good == 2 || good == 3 {
-                appBtn.setBackgroundImage(UIImage(named: "origimagepice"), for: .normal)
-            }else if good == 4 {
-                appBtn.setBackgroundImage(UIImage(named: "blueimageif"), for: .normal)
-            }else {
-                appBtn.setBackgroundImage(UIImage(named: "greenccongimage"), for: .normal)
-            }
-        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

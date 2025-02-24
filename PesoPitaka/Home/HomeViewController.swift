@@ -79,18 +79,18 @@ class HomeViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         getAddressInfo()
-        
+
         self.model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            let count = model.henceforth.original?.own?.count ?? 0
-            if count > 0 {
+            let pitiful = model.henceforth.waking?.pitiful ?? ""
+            if pitiful == "familiara" {
                 mustView.alpha = 1
                 oneView.alpha = 0
                 mustView.model.accept(model)
                 self.mustView.tableView.reloadData()
                 self.mustView.cycleMustSignView.reloadData()
                 self.mustView.cycleMinSignView.reloadData()
-            }else {
+            }else if pitiful == "familiarb"  {
                 oneView.alpha = 1
                 mustView.alpha = 0
             }

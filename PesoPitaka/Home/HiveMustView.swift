@@ -157,7 +157,7 @@ extension HiveMustView: TYCyclePagerViewDelegate, TYCyclePagerViewDataSource {
         if pagerView == cycleMustSignView {
             guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "HiveMustViewCellCollectionViewCell", for: index) as? HiveMustViewCellCollectionViewCell else { return UICollectionViewCell() }
             let model = self.model.value?.henceforth.forced?.own?[index]
-            cell.mustImgaView.kf.setImage(with: URL(string: model?.host ?? ""), placeholder: UIImage(named: "homeone"))
+            cell.mustImgaView.kf.setImage(with: URL(string: model?.host ?? ""))
             return cell
         }else {
             guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "HiveMiniViewCellCollectionViewCell", for: index) as? HiveMiniViewCellCollectionViewCell else { return UICollectionViewCell() }

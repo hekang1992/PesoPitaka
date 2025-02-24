@@ -104,7 +104,25 @@ extension OrderListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         if let model = self.instantlyModelArray.value?[indexPath.row] {
-            cell.model.accept(model)
+            cell.iconImageView.kf.setImage(with: URL(string: model.blinked ?? ""))
+            cell.namelabel.text = model.getting ?? ""
+            cell.onelabel.text = model.orderAmount ?? ""
+            cell.twolabel.text = model.moneyText ?? ""
+            cell.timelabel.text = model.dateValue ?? ""
+            cell.defineBlueLabel.text = model.dateText ?? ""
+            cell.applyBtn.text = model.secret?.although ?? ""
+            cell.titlabel.text = model.secret?.liar ?? ""
+            let good = model.secret?.good ?? 0
+            cell.appBtn.setTitle(model.statusTextDescButton ?? "", for: .normal)
+            if good == 1 {
+                cell.appBtn.setBackgroundImage(UIImage(named: "redimgeim"), for: .normal)
+            }else if good == 2 || good == 3 {
+                cell.appBtn.setBackgroundImage(UIImage(named: "origimagepice"), for: .normal)
+            }else if good == 4 {
+                cell.appBtn.setBackgroundImage(UIImage(named: "blueimageif"), for: .normal)
+            }else {
+                cell.appBtn.setBackgroundImage(UIImage(named: "greenccongimage"), for: .normal)
+            }
         }
         return cell
     }
