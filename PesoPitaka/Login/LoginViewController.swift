@@ -91,8 +91,12 @@ extension LoginViewController {
         let phone = self.loginView.phoneTx.text ?? ""
         let dict = ["officially": phone,
                     "meeting": "1",
-                    "love": "0"]
-        let result = man.requsetData(url: "/entertain/although", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+                    "love": "0",
+                    "choices": "0"]
+        let result = man.requsetData(url: "/entertain/although",
+                                     parameters: dict,
+                                     contentType: .multipartFormData)
+            .sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
             guard let self = self else { return }
@@ -127,7 +131,7 @@ extension LoginViewController {
         LoadingConfing.shared.showLoading()
         let dict = ["differently": phone,
                     "them": code,
-                    "location": "php_manina"]
+                    "location": "php_manina_ios_app"]
         let result = man.requsetData(url: "/entertain/himselfhe",
                                      parameters: dict,
                                      contentType: .multipartFormData)

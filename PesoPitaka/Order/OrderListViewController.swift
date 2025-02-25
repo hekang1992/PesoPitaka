@@ -155,7 +155,10 @@ extension OrderListViewController {
                     "straight": straight,
                     "weak": "1",
                     "rich": "1"]
-        let result = man.requsetData(url: "/entertain/opposing", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+        let result = man.requsetData(url: "/entertain/opposing",
+                                     parameters: dict,
+                                     contentType: .json)
+            .sink(receiveCompletion: { _ in
         }, receiveValue: { [weak self] data in
             LoadingConfing.shared.hideLoading()
             guard let self = self else { return }

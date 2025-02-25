@@ -162,7 +162,10 @@ class SettingViewController: BaseViewController {
         LoadingConfing.shared.showLoading()
         let man = NetworkConfigManager()
         let dict = ["opportunities": "1", "mother": "0"]
-        let result = man.getRequest(url: "/entertain/afterwardsto", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+        let result = man.getRequest(url: "/entertain/afterwardsto",
+                                    parameters: dict,
+                                    contentType: .json)
+            .sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
             guard let self = self else { return }
@@ -222,7 +225,10 @@ class SettingViewController: BaseViewController {
         LoadingConfing.shared.showLoading()
         let man = NetworkConfigManager()
         let dict = [String: Any]()
-        let result = man.getRequest(url: "/entertain/handkerchief", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+        let result = man.getRequest(url: "/entertain/handkerchief",
+                                    parameters: dict,
+                                    contentType: .json)
+            .sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
             guard let self = self else { return }
@@ -250,7 +256,10 @@ class SettingViewController: BaseViewController {
         LoadingConfing.shared.showLoading()
         let man = NetworkConfigManager()
         let dict = [String: Any]()
-        let result = man.getRequest(url: "/entertain/something", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+        let result = man.getRequest(url: "/entertain/something",
+                                    parameters: dict,
+                                    contentType: .json)
+            .sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
             guard let self = self else { return }

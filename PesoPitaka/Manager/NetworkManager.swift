@@ -67,8 +67,9 @@ class NetworkManager {
         let dict = ["than": AwkwardManager.getIDFV(),
                     "speechless": "1","better":
                         AwkwardManager.getIDFA()]
-        let result = man.requsetData(url: "/entertain/illustration", parameters: dict, contentType: .json).sink(receiveCompletion: {_ in 
-            
+        let result = man.requsetData(url: "/entertain/illustration",
+                                     parameters: dict,
+                                     contentType: .json).sink(receiveCompletion: {_ in
         }, receiveValue: { [weak self] data in
             guard let self = self else { return }
             do {

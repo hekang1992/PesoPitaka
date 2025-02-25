@@ -318,7 +318,10 @@ extension GuideOneViewController {
                         "teeth": onetime,
                         "gritted": twotime]
             let man = NetworkConfigManager()
-            let result = man.requsetData(url: "/entertain/answered", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+            let result = man.requsetData(url: "/entertain/answered",
+                                         parameters: dict,
+                                         contentType: .multipartFormData)
+                .sink(receiveCompletion: { _ in
             }, receiveValue: {  data in
                 
             })
@@ -367,7 +370,9 @@ extension GuideOneViewController {
     
     private func getIDAuthPidInfo() {
         LoadingConfing.shared.showLoading()
-        let dict = ["weak": week, "up": "1", "load": "0"] as [String : Any]
+        let dict = ["weak": week,
+                    "up": "1",
+                    "load": "0"] as [String : Any]
         let man = NetworkConfigManager()
         let result = man.getRequest(url: "/entertain/little", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()

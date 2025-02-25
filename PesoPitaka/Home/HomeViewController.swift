@@ -125,7 +125,10 @@ extension HomeViewController {
     private func getAddressInfo() {
         let dict = ["address": "1", "php": "1"]
         let man = NetworkConfigManager()
-        let result = man.getRequest(url: "/entertain/thought", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+        let result = man.getRequest(url: "/entertain/thought",
+                                    parameters: dict,
+                                    contentType: .json)
+            .sink(receiveCompletion: { _ in
             
         }, receiveValue: { data in
             do {
@@ -147,8 +150,13 @@ extension HomeViewController {
     private func getHomeInfo() {
         LoadingConfing.shared.showLoading()
         let man = NetworkConfigManager()
-        let dict = ["society": "1", "modern": "2"]
-        let result = man.getRequest(url: "/entertain/hewould", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
+        let dict = ["society": "1",
+                    "modern": "2",
+                    "Apple": "1"]
+        let result = man.getRequest(url: "/entertain/hewould",
+                                    parameters: dict,
+                                    contentType: .json)
+            .sink(receiveCompletion: { _ in
             LoadingConfing.shared.hideLoading()
         }, receiveValue: { [weak self] data in
             guard let self = self else { return }
@@ -196,7 +204,8 @@ extension HomeViewController {
         LoadingConfing.shared.showLoading()
         let dict = ["week": weak,
                     "services": "1",
-                    "pay": "0"]
+                    "pay": "0",
+                    "login": "google"]
         let man = NetworkConfigManager()
         let result = man.requsetData(url: "/entertain/father", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
         }, receiveValue: { [weak self] data in
@@ -221,7 +230,8 @@ extension HomeViewController {
         LoadingConfing.shared.showLoading()
         let dict = ["week": week,
                     "services": "1",
-                    "pay": "0"]
+                    "pay": "0",
+                    "auto": "1"]
         let man = NetworkConfigManager()
         let result = man.requsetData(url: "/entertain/father", parameters: dict, contentType: .json).sink(receiveCompletion: { _ in
         }, receiveValue: { [weak self] data in
@@ -278,7 +288,8 @@ extension HomeViewController {
     private func productDetailInfoo(from weak: String) {
         let dict = ["curiosity": "0",
                     "week": weak,
-                    "creature": "maga"]
+                    "creature": "image",
+                    "stage": "project"]
         let man = NetworkConfigManager()
         LoadingConfing.shared.showLoading()
         let result = man.requsetData(url: "/entertain/revolution", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
@@ -332,7 +343,10 @@ extension HomeViewController {
         let baseStr = databyte?.base64EncodedString() ?? ""
         let man = NetworkConfigManager()
         let adict = ["henceforth": baseStr]
-        let result = man.requsetData(url: "/entertain/eloquence", parameters: adict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+        let result = man.requsetData(url: "/entertain/eloquence",
+                                     parameters: adict,
+                                     contentType: .multipartFormData)
+            .sink(receiveCompletion: { _ in
         }, receiveValue: {  data in
             
         })
@@ -353,7 +367,10 @@ extension HomeViewController {
                         "flustered": model.flustered,
                         "seeing": model.seeing]
             let man = NetworkConfigManager()
-            let result = man.requsetData(url: "/entertain/dramatic", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+            let result = man.requsetData(url: "/entertain/dramatic",
+                                         parameters: dict,
+                                         contentType: .multipartFormData)
+                .sink(receiveCompletion: { _ in
             }, receiveValue: {  data in
                 
             })
@@ -372,12 +389,17 @@ extension HomeViewController {
                         "mood": String(model.mood),
                         "reagar": String(model.reagar),
                         "spread": "1",
+                        "tid": "999",
+                        "token": "aes_res_php_ios",
                         "saving": AwkwardManager.getIDFV(),
                         "why": AwkwardManager.getIDFA(),
                         "teeth": onetime,
                         "gritted": twotime]
             let man = NetworkConfigManager()
-            let result = man.requsetData(url: "/entertain/answered", parameters: dict, contentType: .multipartFormData).sink(receiveCompletion: { _ in
+            let result = man.requsetData(url: "/entertain/answered",
+                                         parameters: dict,
+                                         contentType: .multipartFormData)
+                .sink(receiveCompletion: { _ in
             }, receiveValue: { [weak self] data in
                 guard let self = self else { return }
                 do {
