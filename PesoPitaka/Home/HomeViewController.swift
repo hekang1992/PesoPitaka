@@ -182,29 +182,15 @@ extension HomeViewController {
             switch status {
             case .restricted, .denied:
                 showAlert()
-            default:
+            case .authorizedWhenInUse, .authorizedAlways:
                 appInfo(from: model)
+            default:
+                break
             }
         }
     }
     
     private func appInfo(from model: BaseModel) {
-        let choose = model.henceforth.choose ?? 0
-        if choose == 1 {
-            let status: CLAuthorizationStatus
-            if #available(iOS 14.0, *) {
-                status = CLLocationManager().authorizationStatus
-            } else {
-                status = CLLocationManager.authorizationStatus()
-            }
-            switch status {
-            case .restricted, .denied:
-                showAlert()
-            default:
-                appInfo(from: model)
-            }
-            return
-        }
         self.upLoadInfo()
         let weak = String(model.henceforth.waking?.own?.first?.aware ?? 0)
         LoadingConfing.shared.showLoading()

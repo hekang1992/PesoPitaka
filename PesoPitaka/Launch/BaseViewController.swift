@@ -197,7 +197,7 @@ extension BaseViewController {
         imageView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.dismiss(animated: true)
         }).disposed(by: disposeBag)
-        imageView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+        imageView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.dismiss(animated: true)
         }).disposed(by: disposeBag)
     }
