@@ -11,6 +11,7 @@
 #define BRPickerView_h
 
 #import "BRDatePickerView.h"
-#import "BRTextPickerView.h"
+#import "BRAddressPickerView.h"
+#import "BRStringPickerView.h"
 
 #endif /* BRPickerView_h */

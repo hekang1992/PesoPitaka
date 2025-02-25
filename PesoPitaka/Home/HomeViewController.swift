@@ -79,18 +79,18 @@ class HomeViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         getAddressInfo()
-
+        
         self.model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             let pitiful = model.henceforth.waking?.pitiful ?? ""
-            if pitiful == "familiara" {
+            if pitiful == "familiarc" {
                 mustView.alpha = 1
                 oneView.alpha = 0
                 mustView.model.accept(model)
                 self.mustView.tableView.reloadData()
                 self.mustView.cycleMustSignView.reloadData()
                 self.mustView.cycleMinSignView.reloadData()
-            }else if pitiful == "familiarb"  {
+            }else if pitiful == "familiarb" {
                 oneView.alpha = 1
                 mustView.alpha = 0
             }
@@ -189,6 +189,22 @@ extension HomeViewController {
     }
     
     private func appInfo(from model: BaseModel) {
+        let choose = model.henceforth.choose ?? 0
+        if choose == 1 {
+            let status: CLAuthorizationStatus
+            if #available(iOS 14.0, *) {
+                status = CLLocationManager().authorizationStatus
+            } else {
+                status = CLLocationManager.authorizationStatus()
+            }
+            switch status {
+            case .restricted, .denied:
+                showAlert()
+            default:
+                appInfo(from: model)
+            }
+            return
+        }
         self.upLoadInfo()
         let weak = String(model.henceforth.waking?.own?.first?.aware ?? 0)
         LoadingConfing.shared.showLoading()

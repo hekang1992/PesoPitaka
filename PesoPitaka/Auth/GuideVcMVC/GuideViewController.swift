@@ -39,7 +39,8 @@ class GuideViewController: BaseViewController {
         }
         
         headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
+            self?.popOutView()
+//            self?.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
         
         

@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import Combine
+import TYAlertController
 
 class BaseViewController: UIViewController {
     
@@ -176,6 +177,29 @@ extension BaseViewController {
             })
             result.store(in: &cancellables)
         }
+    }
+    
+}
+
+extension BaseViewController {
+    
+    func popOutView() {
+        let imageView = AlertImageView(frame: self.view.bounds)
+        imageView.cancelBtn.isHidden = false
+        imageView.bgImageView.image = UIImage(named: "dontpusolo")
+        let alertVc = TYAlertController(alert: imageView, preferredStyle: .alert)!
+        self.present(alertVc, animated: true)
+        imageView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true, completion: {
+                self?.navigationController?.popToRootViewController(animated: true)
+            })
+        }).disposed(by: disposeBag)
+        imageView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+        imageView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
     }
     
 }

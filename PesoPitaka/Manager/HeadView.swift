@@ -16,10 +16,7 @@ class HeadView: BaseView {
     }()
     
     lazy var namelabel: UILabel = {
-        let namelabel = UILabel()
-        namelabel.textColor = .black
-        namelabel.textAlignment = .center
-        namelabel.font = .regularFontOfSize(size: 18)
+        let namelabel = UIUtils.createLabel(font: .regularFontOfSize(size: 18), textColor: .black, textAlignment: .center)
         return namelabel
     }()
     

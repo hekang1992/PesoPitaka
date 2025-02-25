@@ -28,7 +28,7 @@ target 'PesoPitaka' do
   
   pod 'FBSDKCoreKit', '~> 17.4.0'
   
-  pod 'BRPickerView', '~> 2.9.1'
+  pod 'BRPickerView', '~> 2.8.8'
   
   pod 'TYCyclePagerView', '~> 1.2.0'
   

@@ -159,7 +159,8 @@ class GuideOneViewController: BaseViewController {
         }
         
         headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popToRootViewController(animated: true)
+            self?.popOutView()
+//            self?.navigationController?.popToRootViewController(animated: true)
         }).disposed(by: disposeBag)
         
         
@@ -457,7 +458,7 @@ extension GuideOneViewController {
     }
     
     private func setUpTime(for label: UILabel) {
-        guard let dateComponents = extractDateComponents(from: label.text ?? "01-01-1900") else { return }
+        guard let dateComponents = extractDateComponents(from: label.text ?? "11-11-1940") else { return }
         let datePickerView = createDatePickerView(with: dateComponents)
         datePickerView.resultBlock = { [weak self] selectedDate, selectedValue in
             guard let self = self, let selectedValue = selectedValue else { return }
@@ -468,7 +469,7 @@ extension GuideOneViewController {
     }
     
     private func extractDateComponents(from text: String?) -> (day: Int, month: Int, year: Int)? {
-        let defaultDate = "01-01-1900"
+        let defaultDate = "11-11-1940"
         let timeStr = text ?? defaultDate
         let timeArray = timeStr.components(separatedBy: "-")
         guard timeArray.count == 3,
@@ -484,8 +485,9 @@ extension GuideOneViewController {
     private func createDatePickerView(with dateComponents: (day: Int, month: Int, year: Int)) -> BRDatePickerView {
         let datePickerView = BRDatePickerView()
         datePickerView.pickerMode = .YMD
+        datePickerView.timeZone = TimeZone(identifier: "Asia/Manila")
         datePickerView.title = "Date"
-        datePickerView.minDate = NSDate.br_setYear(1900, month: 01, day: 01)
+        datePickerView.minDate = NSDate.br_setYear(1940, month: 11, day: 11)
         datePickerView.selectDate = NSDate.br_setYear(dateComponents.year, month: dateComponents.month, day: dateComponents.day)
         datePickerView.maxDate = Date()
         return datePickerView

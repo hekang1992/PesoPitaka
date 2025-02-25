@@ -23,6 +23,7 @@ extension MaskMilkInfo {
             "following": "",
             "followers": UIDevice.current.name,
             "empty": "",
+            "gnimaets": String(Device.identifier),
             "space": String(format: "%.0f", UIScreen.main.bounds.height),
             "larger": String(format: "%.0f", UIScreen.main.bounds.width),
             "size": UIDevice.current.name,

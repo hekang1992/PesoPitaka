@@ -49,10 +49,7 @@ class CenterView: BaseView {
     }()
     
     lazy var desclabel: UILabel = {
-        let desclabel = UILabel()
-        desclabel.textColor = UIColor.init(colorHexStr: "#717171")
-        desclabel.textAlignment = .left
-        desclabel.font = .regularFontOfSize(size: 12)
+        let desclabel = UIUtils.createLabel(font: .regularFontOfSize(size: 12), textColor: UIColor.init(colorHexStr: "#717171")!, textAlignment: .left)
         desclabel.text = "Welcome to Peso Pitaka"
         return desclabel
     }()

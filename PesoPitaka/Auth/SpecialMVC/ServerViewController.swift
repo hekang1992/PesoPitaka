@@ -103,7 +103,8 @@ class ServerViewController: BaseViewController {
         }
         
         headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popToRootViewController(animated: true)
+            self?.popOutView()
+//            self?.navigationController?.popToRootViewController(animated: true)
         }).disposed(by: disposeBag)
         
         nextBtn.snp.makeConstraints { make in
@@ -312,7 +313,7 @@ extension ServerViewController: CNContactPickerDelegate {
             model?.hadn = "\(fullName)"
             model?.settle = "\(phoneNumber)"
         } else {
-            
+            ToastConfig.showMessage(form: view, message: "Emergency contact phone number cannot be empty.")
         }
     }
     

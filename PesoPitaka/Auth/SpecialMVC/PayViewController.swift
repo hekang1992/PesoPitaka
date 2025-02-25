@@ -132,7 +132,8 @@ class PayViewController: BaseViewController {
         }
         
         headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popToRootViewController(animated: true)
+            self?.popOutView()
+//            self?.navigationController?.popToRootViewController(animated: true)
         }).disposed(by: disposeBag)
         
         descImageView.snp.makeConstraints { make in

@@ -32,10 +32,18 @@ class AlertImageView: BaseView {
         threeBtn.setImage(UIImage(named: "clicksel"), for: .selected)
         return threeBtn
     }()
+    
+    lazy var cancelBtn: UIButton = {
+        let cancelBtn = UIButton(type: .custom)
+        cancelBtn.isHidden = true
+        cancelBtn.setImage(UIImage(named: "camcebtimage"), for: .normal)
+        return cancelBtn
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(bgImageView)
+        addSubview(cancelBtn)
         bgImageView.addSubview(oneBtn)
         bgImageView.addSubview(twoBtn)
         bgImageView.addSubview(threeBtn)
@@ -57,6 +65,11 @@ class AlertImageView: BaseView {
             make.left.equalToSuperview().offset(23)
             make.bottom.equalToSuperview().offset(-94)
             make.size.equalTo(CGSize(width: 11, height: 11))
+        }
+        cancelBtn.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 30, height: 30))
+            make.bottom.equalTo(bgImageView.snp.top)
+            make.right.equalToSuperview().offset(-15)
         }
     }
     

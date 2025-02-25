@@ -126,7 +126,7 @@ class OtpPeoViewCell: BaseViewCell {
         }
         
         timelabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(147)
+            make.left.equalToSuperview().offset(160)
             make.top.equalTo(iconImageView.snp.bottom).offset(26)
             make.height.equalTo(16)
         }

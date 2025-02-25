@@ -1,5 +1,5 @@
 //
-//  BRTextPickerView.m
+//  BRStringPickerView.m
 //  BRPickerViewDemo
 //
 //  Created by renbo on 2017/8/11.
@@ -7,165 +7,236 @@
 //
 //  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
-#import "BRTextPickerView.h"
+#import "BRStringPickerView.h"
 
-@interface BRTextPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
+@interface BRStringPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
+{
+    BOOL _dataSourceException; // 数据源格式是否有误
+}
 /** 选择器 */
 @property (nonatomic, strong) UIPickerView *pickerView;
-/** 当前显示的数据源 */
-@property (nonatomic, copy) NSArray *dataList;
+/** 单列选择的值 */
+@property (nonatomic, copy) NSString *mSelectValue;
+/** 多列选择的值 */
+@property (nonatomic, copy) NSArray <NSString *>* mSelectValues;
 
 // 记录滚动中的位置
 @property(nonatomic, assign) NSInteger rollingComponent;
 @property(nonatomic, assign) NSInteger rollingRow;
 
+/** 数据源 */
+@property (nullable, nonatomic, copy) NSArray *mDataSourceArr;
+
 @end
 
-@implementation BRTextPickerView
+@implementation BRStringPickerView
 
 #pragma mark - 1.显示【单列】选择器
 + (void)showPickerWithTitle:(NSString *)title
               dataSourceArr:(NSArray *)dataSourceArr
                 selectIndex:(NSInteger)selectIndex
-                resultBlock:(BRSingleResultBlock)resultBlock {
+                resultBlock:(BRStringResultModelBlock)resultBlock {
+    [self showPickerWithTitle:title dataSourceArr:dataSourceArr selectIndex:selectIndex isAutoSelect:NO resultBlock:resultBlock];
+}
+
+#pragma mark - 2.显示【单列】选择器
++ (void)showPickerWithTitle:(NSString *)title
+              dataSourceArr:(NSArray *)dataSourceArr
+                selectIndex:(NSInteger)selectIndex
+               isAutoSelect:(BOOL)isAutoSelect
+                resultBlock:(BRStringResultModelBlock)resultBlock {
     // 创建选择器
-    BRTextPickerView *strPickerView = [[BRTextPickerView alloc]init];
-    strPickerView.pickerMode = BRTextPickerComponentSingle;
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]init];
+    strPickerView.pickerMode = BRStringPickerComponentSingle;
     strPickerView.title = title;
     strPickerView.dataSourceArr = dataSourceArr;
     strPickerView.selectIndex = selectIndex;
-    strPickerView.singleResultBlock = resultBlock;
+    strPickerView.isAutoSelect = isAutoSelect;
+    strPickerView.resultModelBlock = resultBlock;
     
     // 显示
     [strPickerView show];
 }
 
-#pragma mark - 2.显示【多列】选择器
+#pragma mark - 3.显示【多列】选择器
 + (void)showMultiPickerWithTitle:(NSString *)title
                    dataSourceArr:(NSArray *)dataSourceArr
                     selectIndexs:(NSArray <NSNumber *>*)selectIndexs
-                     resultBlock:(BRMultiResultBlock)resultBlock {
+                     resultBlock:(BRStringResultModelArrayBlock)resultBlock {
+    [self showMultiPickerWithTitle:title dataSourceArr:dataSourceArr selectIndexs:selectIndexs isAutoSelect:NO resultBlock:resultBlock];
+}
+
+#pragma mark - 4.显示【多列】选择器
++ (void)showMultiPickerWithTitle:(NSString *)title
+                   dataSourceArr:(NSArray *)dataSourceArr
+                    selectIndexs:(NSArray <NSNumber *>*)selectIndexs
+                    isAutoSelect:(BOOL)isAutoSelect
+                     resultBlock:(BRStringResultModelArrayBlock)resultBlock {
     // 创建选择器
-    BRTextPickerView *strPickerView = [[BRTextPickerView alloc]init];
-    strPickerView.pickerMode = BRTextPickerComponentMulti;
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]init];
+    strPickerView.pickerMode = BRStringPickerComponentMulti;
     strPickerView.title = title;
     strPickerView.dataSourceArr = dataSourceArr;
     strPickerView.selectIndexs = selectIndexs;
-    strPickerView.multiResultBlock = resultBlock;
+    strPickerView.isAutoSelect = isAutoSelect;
+    strPickerView.resultModelArrayBlock = resultBlock;
     
     // 显示
     [strPickerView show];
 }
 
-#pragma mark - 3.显示【联动】选择器
-+ (void)showCascadePickerWithTitle:(nullable NSString *)title
+#pragma mark - 5.显示【联动】选择器
++ (void)showLinkagePickerWithTitle:(nullable NSString *)title
                      dataSourceArr:(nullable NSArray *)dataSourceArr
                       selectIndexs:(nullable NSArray <NSNumber *> *)selectIndexs
-                       resultBlock:(nullable BRMultiResultBlock)resultBlock {
+                      isAutoSelect:(BOOL)isAutoSelect
+                       resultBlock:(nullable BRStringResultModelArrayBlock)resultBlock {
     // 创建选择器
-    BRTextPickerView *strPickerView = [[BRTextPickerView alloc]init];
-    strPickerView.pickerMode = BRTextPickerComponentCascade;
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]init];
+    strPickerView.pickerMode = BRStringPickerComponentLinkage;
     strPickerView.title = title;
     strPickerView.dataSourceArr = dataSourceArr;
     strPickerView.selectIndexs = selectIndexs;
-    strPickerView.multiResultBlock = resultBlock;
+    strPickerView.isAutoSelect = isAutoSelect;
+    strPickerView.resultModelArrayBlock = resultBlock;
     
     // 显示
     [strPickerView show];
 }
 
 #pragma mark - 初始化自定义选择器
-- (instancetype)initWithPickerMode:(BRTextPickerMode)pickerMode {
+- (instancetype)initWithPickerMode:(BRStringPickerMode)pickerMode {
     if (self = [super init]) {
         self.pickerMode = pickerMode;
     }
     return self;
 }
 
-#pragma mark - 处理选择器数据 和 默认选择状态
+#pragma mark - 处理选择器数据
 - (void)handlerPickerData {
-    // 1.检查数据源数据格式是否有误
-    BOOL dataSourceError = NO;
     if (self.dataSourceArr.count == 0) {
-        dataSourceError = YES;
+        _dataSourceException = YES;
     }
     id item = [self.dataSourceArr firstObject];
-    if (self.pickerMode == BRTextPickerComponentSingle) {
-        dataSourceError = !([item isKindOfClass:[NSString class]] || [item isKindOfClass:[BRTextModel class]]);
-    } else if (self.pickerMode == BRTextPickerComponentMulti) {
-        dataSourceError = ![item isKindOfClass:[NSArray class]];
-    } else if (self.pickerMode == BRTextPickerComponentCascade) {
-        dataSourceError = ![item isKindOfClass:[BRTextModel class]];
+    if (self.pickerMode == BRStringPickerComponentSingle) {
+        _dataSourceException = [item isKindOfClass:[NSArray class]];
+    } else if (self.pickerMode == BRStringPickerComponentMulti) {
+        _dataSourceException = [item isKindOfClass:[NSString class]];
+    } else if (self.pickerMode == BRStringPickerComponentLinkage) {
+        _dataSourceException = ![item isKindOfClass:[BRResultModel class]];
     }
-    if (dataSourceError) {
+    if (_dataSourceException) {
         BRErrorLog(@"数据源异常！请检查选择器数据源的格式");
         return;
     }
     
-    // 2.处理默认选择状态
-    if (self.pickerMode == BRTextPickerComponentSingle) {
-        self.dataList = self.dataSourceArr;
-        if (self.selectIndex < 0 || self.selectIndex >= self.dataList.count) {
-            self.selectIndex = 0;
+    // 处理选择器当前选择的值
+    if (self.pickerMode == BRStringPickerComponentSingle) {
+        self.mDataSourceArr = self.dataSourceArr;
+        NSInteger selectIndex = 0;
+        if (self.selectIndex > 0 && self.selectIndex < self.mDataSourceArr.count) {
+            selectIndex = self.selectIndex;
+        } else {
+            if (self.mSelectValue) {
+                id item = [self.mDataSourceArr firstObject];
+                if ([item isKindOfClass:[BRResultModel class]]) {
+                    for (NSInteger i = 0; i < self.mDataSourceArr.count; i++) {
+                        BRResultModel *model = self.mDataSourceArr[i];
+                        if ([model.value isEqualToString:self.mSelectValue]) {
+                            selectIndex = i;
+                            break;
+                        }
+                    }
+                } else {
+                    if ([self.mDataSourceArr containsObject:self.mSelectValue]) {
+                        selectIndex = [self.mDataSourceArr indexOfObject:self.mSelectValue];
+                    }
+                }
+            }
         }
-    } else if (self.pickerMode == BRTextPickerComponentMulti) {
-        self.dataList = self.dataSourceArr;
+        self.selectIndex = selectIndex;
+        
+    } else if (self.pickerMode == BRStringPickerComponentMulti) {
+        self.mDataSourceArr = self.dataSourceArr;
         NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
-        for (NSInteger component = 0; component < self.dataList.count; component++) {
-            NSArray *itemArr = self.dataList[component];
+        for (NSInteger i = 0; i < self.mDataSourceArr.count; i++) {
+            NSArray *itemArr = self.mDataSourceArr[i];
             NSInteger row = 0;
-            if (self.selectIndexs.count > 0 && component < self.selectIndexs.count) {
-                NSInteger index = [self.selectIndexs[component] integerValue];
-                row = ((index > 0 && index < itemArr.count) ? index : 0);
+            if (self.selectIndexs.count > 0) {
+                if (i < self.selectIndexs.count) {
+                    NSInteger index = [self.selectIndexs[i] integerValue];
+                    row = ((index > 0 && index < itemArr.count) ? index : 0);
+                }
+            } else {
+                if (self.mSelectValues.count > 0 && i < self.mSelectValues.count) {
+                    NSString *value = self.mSelectValues[i];
+                    id item = [itemArr firstObject];
+                    if ([item isKindOfClass:[BRResultModel class]]) {
+                        for (NSInteger j = 0; j < itemArr.count; j++) {
+                            BRResultModel *model = itemArr[j];
+                            if ([model.value isEqualToString:value]) {
+                                row = j;
+                                break;
+                            }
+                        }
+                    } else {
+                        if ([itemArr containsObject:value]) {
+                            row = [itemArr indexOfObject:value];
+                        }
+                    }
+                }
             }
             [selectIndexs addObject:@(row)];
         }
         self.selectIndexs = [selectIndexs copy];
-    } else if (self.pickerMode == BRTextPickerComponentCascade) {
-        NSMutableArray *dataList = [[NSMutableArray alloc]init];
-        [dataList addObject:self.dataSourceArr];
-        NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
         
-        BOOL hasNext = self.dataSourceArr.count > 0;
+    } else if (self.pickerMode == BRStringPickerComponentLinkage) {
+        
+        NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
+        NSMutableArray *mDataSourceArr = [[NSMutableArray alloc]init];
+        
+        BRResultModel *selectModel = nil;
+        BOOL hasNext = YES;
         NSInteger i = 0;
-        NSInteger selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
-        [selectIndexs addObject:@(selectIndex)];
-        BRTextModel *selectModel = self.dataSourceArr[selectIndex];
-        while (hasNext) {
-            NSArray *nextArr = selectModel.children;
-            if (!nextArr || nextArr.count == 0) {
+
+        NSMutableArray *dataArr = [self.dataSourceArr mutableCopy];
+        
+        do {
+            NSArray *nextArr = [self getNextDataArr:dataArr selectModel:selectModel];
+            // 设置 numberOfComponents，防止 key 等于 parentKey 时进入死循环
+            if (nextArr.count == 0 || i > self.numberOfComponents - 1) {
                 hasNext = NO;
                 break;
             }
-            [dataList addObject:nextArr];
             
-            i++;
-            selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
-            [selectIndexs addObject:@(selectIndex)];
-            selectModel = nextArr[selectIndex];
-        }
-        
-        // 控制选择器固定显示的列数
-        if (self.showColumnNum > 0) {
-            NSInteger dataListCount = dataList.count;
-            if (self.showColumnNum < dataListCount) {
-                // 显示子集数据
-                dataList = [[dataList subarrayWithRange:NSMakeRange(0, self.showColumnNum)] mutableCopy];
-                selectIndexs = [[selectIndexs subarrayWithRange:NSMakeRange(0, self.showColumnNum)] mutableCopy];
-            } else {
-                // 补全占位数据
-                for (NSInteger i = 0; i < self.showColumnNum - dataListCount; i++) {
-                    // 添加空白占位数据
-                    BRTextModel *placeholderModel = [[BRTextModel alloc]init];
-                    NSArray *placeholderArr = @[placeholderModel];
-                    [dataList addObject:placeholderArr];
-                    [selectIndexs addObject:@(0)];
-                }
+            NSInteger selectIndex = 0;
+            if (self.selectIndexs.count > i && [self.selectIndexs[i] integerValue] < nextArr.count) {
+                selectIndex = [self.selectIndexs[i] integerValue];
             }
-        }
-        self.dataList = [dataList copy];
+            selectModel = nextArr[selectIndex];
+            
+            [selectIndexs addObject:@(selectIndex)];
+            [mDataSourceArr addObject:nextArr];
+
+            i++;
+            
+        } while (hasNext);
+        
         self.selectIndexs = [selectIndexs copy];
+        self.mDataSourceArr = [mDataSourceArr copy];
     }
+}
+
+- (NSArray <BRResultModel *>*)getNextDataArr:(NSArray *)dataArr selectModel:(BRResultModel *)selectModel {
+    NSMutableArray *tempArr = [[NSMutableArray alloc]init];
+    // parentKey = @"-1"，表示是第一列数据
+    NSString *key = selectModel ? selectModel.key : @"-1";
+    for (BRResultModel *model in dataArr) {
+        if ([model.parentKey isEqualToString:key]) {
+            [tempArr addObject:model];
+        }
+    }
+    return [tempArr copy];
 }
 
 #pragma mark - 选择器
@@ -185,16 +256,14 @@
 // 1.返回组件数量
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     switch (self.pickerMode) {
-        case BRTextPickerComponentSingle:
+        case BRStringPickerComponentSingle:
             return 1;
-        case BRTextPickerComponentMulti:
-        case BRTextPickerComponentCascade:
-        {
+        case BRStringPickerComponentMulti:
+        case BRStringPickerComponentLinkage:
             if (self.pickerStyle.columnSpacing > 0) {
-                return self.dataList.count * 2 - 1;
+                return self.mDataSourceArr.count * 2 - 1;
             }
-            return self.dataList.count;
-        }
+            return self.mDataSourceArr.count;
             
         default:
             break;
@@ -204,10 +273,11 @@
 // 2.返回每个组件的行数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     switch (self.pickerMode) {
-        case BRTextPickerComponentSingle:
-            return self.dataList.count;
-        case BRTextPickerComponentMulti:
-        case BRTextPickerComponentCascade:
+        case BRStringPickerComponentSingle:
+            return self.mDataSourceArr.count;
+            break;
+        case BRStringPickerComponentMulti:
+        case BRStringPickerComponentLinkage:
         {
             if (self.pickerStyle.columnSpacing > 0) {
                 if (component % 2 == 1) {
@@ -216,7 +286,7 @@
                     component = component / 2;
                 }
             }
-            NSArray *itemArr = self.dataList[component];
+            NSArray *itemArr = self.mDataSourceArr[component];
             return itemArr.count;
         }
             break;
@@ -237,7 +307,6 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.font = self.pickerStyle.pickerTextFont;
         label.textColor = self.pickerStyle.pickerTextColor;
-        label.numberOfLines = self.pickerStyle.maxTextLines;
         // 字体自适应属性
         label.adjustsFontSizeToFitWidth = YES;
         // 自适应最小字体缩放比例
@@ -256,15 +325,16 @@
     }
 
     // 设置文本
-    if (self.pickerMode == BRTextPickerComponentSingle) {
-        id item = self.dataList[row];
-        if ([item isKindOfClass:[BRTextModel class]]) {
-            BRTextModel *model = (BRTextModel *)item;
-            label.text = model.text;
+    if (self.pickerMode == BRStringPickerComponentSingle) {
+        id item = self.mDataSourceArr[row];
+        if ([item isKindOfClass:[BRResultModel class]]) {
+            BRResultModel *model = (BRResultModel *)item;
+            label.text = model.value;
         } else {
             label.text = item;
         }
-    } else if (self.pickerMode == BRTextPickerComponentMulti || self.pickerMode == BRTextPickerComponentCascade) {
+    } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
+        
         // 如果有设置列间距，且是第奇数列，则不显示内容（即空白间隔列）
         if (self.pickerStyle.columnSpacing > 0) {
             if (component % 2 == 1) {
@@ -275,11 +345,11 @@
             }
         }
         
-        NSArray *itemArr = self.dataList[component];
+        NSArray *itemArr = self.mDataSourceArr[component];
         id item = [itemArr objectAtIndex:row];
-        if ([item isKindOfClass:[BRTextModel class]]) {
-            BRTextModel *model = (BRTextModel *)item;
-            label.text = model.text;
+        if ([item isKindOfClass:[BRResultModel class]]) {
+            BRResultModel *model = (BRResultModel *)item;
+            label.text = model.value;
         } else {
             label.text = item;
         }
@@ -315,14 +385,24 @@
 // 4.滚动 pickerView 执行的回调方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     switch (self.pickerMode) {
-        case BRTextPickerComponentSingle:
+        case BRStringPickerComponentSingle:
         {
             self.selectIndex = row;
-            // 滚动选择时执行 singleChangeBlock
-            self.singleChangeBlock ? self.singleChangeBlock([self getSingleSelectModel], self.selectIndex): nil;
+            
+            // 滚动选择时执行 changeModelBlock
+            if (self.changeModelBlock) {
+                self.changeModelBlock([self getResultModel]);
+            }
+            
+            // 设置自动选择时，滚动选择时就执行 resultModelBlock
+            if (self.isAutoSelect) {
+                if (self.resultModelBlock) {
+                    self.resultModelBlock([self getResultModel]);
+                }
+            }
         }
             break;
-        case BRTextPickerComponentMulti:
+        case BRStringPickerComponentMulti:
         {
             // 处理选择器有设置列间距时，选择器的滚动问题
             if (self.pickerStyle.columnSpacing > 0) {
@@ -339,11 +419,20 @@
                 self.selectIndexs = [mutableArr copy];
             }
             
-            // 滚动选择时执行 multiChangeBlock
-            self.multiChangeBlock ? self.multiChangeBlock([self getMultiSelectModels], self.selectIndexs): nil;
+            // 滚动选择时执行 changeModelArrayBlock
+            if (self.changeModelArrayBlock) {
+                self.changeModelArrayBlock([self getResultModelArr]);
+            }
+            
+            // 设置自动选择时，滚动选择时就执行 resultModelArrayBlock
+            if (self.isAutoSelect) {
+                if (self.resultModelArrayBlock) {
+                    self.resultModelArrayBlock([self getResultModelArr]);
+                }
+            }
         }
             break;
-        case BRTextPickerComponentCascade:
+        case BRStringPickerComponentLinkage:
         {
             // 处理选择器有设置列间距时，选择器的滚动问题
             if (self.pickerStyle.columnSpacing > 0) {
@@ -371,8 +460,17 @@
             // 刷新选择器数据
             [self reloadData];
             
-            // 滚动选择时执行 multiChangeBlock
-            self.multiChangeBlock ? self.multiChangeBlock([self getMultiSelectModels], self.selectIndexs): nil;
+            // 滚动选择时执行 changeModelArrayBlock
+            if (self.changeModelArrayBlock) {
+                self.changeModelArrayBlock([self getResultModelArr]);
+            }
+            
+            // 设置自动选择时，滚动选择时就执行 resultModelArrayBlock
+            if (self.isAutoSelect) {
+                if (self.resultModelArrayBlock) {
+                    self.resultModelArrayBlock([self getResultModelArr]);
+                }
+            }
         }
             break;
             
@@ -382,40 +480,40 @@
 }
 
 #pragma mark - 获取【单列】选择器选择的值
-- (BRTextModel *)getSingleSelectModel {
-    id item = self.selectIndex < self.dataList.count ? self.dataList[self.selectIndex] : nil;
-    if ([item isKindOfClass:[BRTextModel class]]) {
-        BRTextModel *model = (BRTextModel *)item;
+- (BRResultModel *)getResultModel {
+    id item = self.selectIndex < self.mDataSourceArr.count ? self.mDataSourceArr[self.selectIndex] : nil;
+    if ([item isKindOfClass:[BRResultModel class]]) {
+        BRResultModel *model = (BRResultModel *)item;
         model.index = self.selectIndex;
         return model;
     } else {
-        BRTextModel *model = [[BRTextModel alloc]init];
+        BRResultModel *model = [[BRResultModel alloc]init];
         model.index = self.selectIndex;
-        model.text = item;
+        model.value = item;
         return model;
     }
 }
 
 #pragma mark - 获取【多列】选择器选择的值
-- (NSArray *)getMultiSelectModels {
-    NSMutableArray *modelArr = [[NSMutableArray alloc]init];
-    for (NSInteger i = 0; i < self.dataList.count; i++) {
+- (NSArray *)getResultModelArr {
+    NSMutableArray *resultModelArr = [[NSMutableArray alloc]init];
+    for (NSInteger i = 0; i < self.mDataSourceArr.count; i++) {
         NSInteger index = [self.selectIndexs[i] integerValue];
-        NSArray *dataArr = self.dataList[i];
+        NSArray *dataArr = self.mDataSourceArr[i];
         
         id item = index < dataArr.count ? dataArr[index] : nil;
-        if ([item isKindOfClass:[BRTextModel class]]) {
-            BRTextModel *model = (BRTextModel *)item;
+        if ([item isKindOfClass:[BRResultModel class]]) {
+            BRResultModel *model = (BRResultModel *)item;
             model.index = index;
-            [modelArr addObject:model];
+            [resultModelArr addObject:model];
         } else {
-            BRTextModel *model = [[BRTextModel alloc]init];
+            BRResultModel *model = [[BRResultModel alloc]init];
             model.index = index;
-            model.text = item;
-            [modelArr addObject:model];
+            model.value = item;
+            [resultModelArr addObject:model];
         }
     }
-    return [modelArr copy];
+    return [resultModelArr copy];
 }
 
 // 设置行高
@@ -443,19 +541,23 @@
     // 2.刷新选择器
     [self.pickerView reloadAllComponents];
     // 3.滚动到选择的值
-    if (self.pickerMode == BRTextPickerComponentSingle) {
-        [self.pickerView selectRow:self.selectIndex inComponent:0 animated:self.selectRowAnimated];
-    } else if (self.pickerMode == BRTextPickerComponentMulti || self.pickerMode == BRTextPickerComponentCascade) {
+    if (self.pickerMode == BRStringPickerComponentSingle) {
+        [self.pickerView selectRow:self.selectIndex inComponent:0 animated:NO];
+    } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
         for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
             NSNumber *row = [self.selectIndexs objectAtIndex:i];
             NSInteger component = i;
             if (self.pickerStyle.columnSpacing > 0) {
                 component = i * 2;
             }
-            [self.pickerView selectRow:[row integerValue] inComponent:component animated:self.selectRowAnimated];
+            [self.pickerView selectRow:[row integerValue] inComponent:component animated:NO];
         }
     }
 }
+
+// 0 【1】 2 【3】 4 【5】
+// 0 2 4
+// 0 1 2
 
 - (void)addPickerToView:(UIView *)view {
     // 1.添加选择器
@@ -495,11 +597,15 @@
             [weakSelf pickerView:weakSelf.pickerView didSelectRow:weakSelf.rollingRow inComponent:weakSelf.rollingComponent];
         }
     
-        // 点击确定，执行选择结果回调
-        if (weakSelf.pickerMode == BRTextPickerComponentSingle) {
-            weakSelf.singleResultBlock ? weakSelf.singleResultBlock([weakSelf getSingleSelectModel], weakSelf.selectIndex): nil;
-        } else if (weakSelf.pickerMode == BRTextPickerComponentMulti || weakSelf.pickerMode == BRTextPickerComponentCascade) {
-            weakSelf.multiResultBlock ? weakSelf.multiResultBlock([weakSelf getMultiSelectModels], weakSelf.selectIndexs): nil;
+        // 执行选择结果回调
+        if (weakSelf.pickerMode == BRStringPickerComponentSingle) {
+            if (weakSelf.resultModelBlock) {
+                weakSelf.resultModelBlock([weakSelf getResultModel]);
+            }
+        } else if (weakSelf.pickerMode == BRStringPickerComponentMulti || weakSelf.pickerMode == BRStringPickerComponentLinkage) {
+            if (weakSelf.resultModelArrayBlock) {
+                weakSelf.resultModelArrayBlock([weakSelf getResultModelArr]);
+            }
         }
     };
     
@@ -522,24 +628,48 @@
 }
 
 #pragma mark - setter 方法
-- (void)setFileName:(NSString *)fileName {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
-    if (filePath && filePath.length > 0) {
-        if ([fileName hasSuffix:@".plist"]) {
-            // 获取本地 plist文件 数据源
-            NSArray *dataArr = [[NSArray alloc] initWithContentsOfFile:filePath];
-            if (dataArr && dataArr.count > 0) {
-                self.dataSourceArr = dataArr;
-            }
-        } else if ([fileName hasSuffix:@".json"]) {
-            // 获取本地 JSON文件 数据源
-            NSData *jsonData = [NSData dataWithContentsOfFile:filePath];
-            NSArray *dataArr = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
-            if (dataArr && dataArr.count > 0) {
-                self.dataSourceArr = [NSArray br_modelArrayWithJson:dataArr mapper:nil];
-            }
-        }
+- (void)setPlistName:(NSString *)plistName {
+    NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
+    if (path && path.length > 0) {
+        self.dataSourceArr = [[NSArray alloc] initWithContentsOfFile:path];
     }
+}
+
+- (void)setSelectValue:(NSString *)selectValue {
+    self.mSelectValue = selectValue;
+}
+
+- (void)setSelectValues:(NSArray<NSString *> *)selectValues {
+    self.mSelectValues = selectValues;
+}
+
+#pragma mark - getter 方法
+- (NSArray *)mDataSourceArr {
+    if (!_mDataSourceArr) {
+        _mDataSourceArr = [NSArray array];
+    }
+    return _mDataSourceArr;
+}
+
+- (NSArray<NSNumber *> *)selectIndexs {
+    if (!_selectIndexs) {
+        _selectIndexs = [NSArray array];
+    }
+    return _selectIndexs;
+}
+
+- (NSArray<NSString *> *)mSelectValues {
+    if (!_mSelectValues) {
+        _mSelectValues = [NSArray array];
+    }
+    return _mSelectValues;
+}
+
+- (NSInteger)numberOfComponents {
+    if (_numberOfComponents <= 0) {
+        _numberOfComponents = 3;
+    }
+    return _numberOfComponents;
 }
 
 @end

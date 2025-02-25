@@ -6,8 +6,8 @@
 //
 
 let firstUrl = "app://"
-let middleUrl = "ios.pitaka"
-let lastURL = ".peso"
+let middleUrl = "ios.pitaka.p"
+let lastURL = "eso"
 
 struct BaseModel: Codable {
     var herself: String

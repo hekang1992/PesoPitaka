@@ -1,31 +1,17 @@
 PODS:
   - Alamofire (5.10.2)
-  - BRPickerView (2.9.1):
-    - BRPickerView/All (= 2.9.1)
-  - BRPickerView/All (2.9.1):
-    - BRPickerView/Default
-    - BRPickerView/Deprecated
-  - BRPickerView/Core (2.9.1)
-  - BRPickerView/DatePicker (2.9.1):
-    - BRPickerView/Core
-  - BRPickerView/Default (2.9.1):
-    - BRPickerView/DatePicker
-    - BRPickerView/TextPicker
-  - BRPickerView/Deprecated (2.9.1):
-    - BRPickerView/Core
-    - BRPickerView/Deprecated/AddressPickerView (= 2.9.1)
-    - BRPickerView/Deprecated/Base (= 2.9.1)
-    - BRPickerView/Deprecated/StringPickerView (= 2.9.1)
-  - BRPickerView/Deprecated/AddressPickerView (2.9.1):
-    - BRPickerView/Core
-    - BRPickerView/Deprecated/Base
-  - BRPickerView/Deprecated/Base (2.9.1):
-    - BRPickerView/Core
-  - BRPickerView/Deprecated/StringPickerView (2.9.1):
-    - BRPickerView/Core
-    - BRPickerView/Deprecated/Base
-  - BRPickerView/TextPicker (2.9.1):
-    - BRPickerView/Core
+  - BRPickerView (2.8.8):
+    - BRPickerView/AddressPickerView (= 2.8.8)
+    - BRPickerView/Base (= 2.8.8)
+    - BRPickerView/DatePickerView (= 2.8.8)
+    - BRPickerView/StringPickerView (= 2.8.8)
+  - BRPickerView/AddressPickerView (2.8.8):
+    - BRPickerView/Base
+  - BRPickerView/Base (2.8.8)
+  - BRPickerView/DatePickerView (2.8.8):
+    - BRPickerView/Base
+  - BRPickerView/StringPickerView (2.8.8):
+    - BRPickerView/Base
   - DeviceKit (5.2.3)
   - FBAEMKit (17.4.0):
     - FBSDKCoreKit_Basics (= 17.4.0)
@@ -56,7 +42,7 @@ PODS:
   - TYCyclePagerView (1.2.0)
 
 DEPENDENCIES:
-  - BRPickerView (~> 2.9.1)
+  - BRPickerView (~> 2.8.8)
   - DeviceKit (~> 5.2.3)
   - FBSDKCoreKit (~> 17.4.0)
   - IQKeyboardManagerSwift (~> 6.5.16)
@@ -96,7 +82,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
-  BRPickerView: 6dd69ea2c48e0a0abf1d197a705050e13143ee63
+  BRPickerView: 7b9aa967ee34ebb58e01111bd6367b4eeb721ae4
   DeviceKit: 4504e64df8f8ad1c42aae68f30ece5b51d56022a
   FBAEMKit: 58cb5f302cdd715a56d4c1d0dfdd2e423ac1421a
   FBSDKCoreKit: 94d7461d0cecf441b1ba7c41acfff41daa8ccd41
@@ -115,6 +101,6 @@ SPEC CHECKSUMS:
   TYAlertController: c121090edb0bea7426f987da94cdddd81eef4231
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
 
-PODFILE CHECKSUM: 24f6341bf4a9378f52609f4b445e7a26042ef6fe
+PODFILE CHECKSUM: a1674591f9df127f25ca24e99074409b1482812c
 
 COCOAPODS: 1.16.2

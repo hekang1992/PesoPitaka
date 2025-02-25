@@ -144,10 +144,16 @@ extension PaMaskViewController: WKScriptMessageHandler,
         }else if messageName == "zucchiniL" {
             handleMessageBody(message.body)
         }else if messageName == "kiteGelat" {
+//            app://ios.pitaka.peso/fennelCapers?week=2
             let messageBody = message.body
             guard let url = messageBody as? String else { return }
             if url.contains("ugliMisoJack") {
                 loginSuccessPush.toRootVc()
+            } else if url.contains("fennelCapers") {
+                guard let gourl = URL(string: url) else { return }
+                if let week = weekUrlStr(url: gourl) {
+                    self.productDetailInfo(from: week)
+                }
             }
         }
     }
