@@ -70,7 +70,7 @@ class ContactManager {
     private static func showPermissionDeniedAlert(completion: (() -> Void)? = nil) {
         let alert = UIAlertController(
             title: "Permission Denied",
-            message: "Please enable contacts access in Settings.",
+            message: "Please go to Settings and set the contact permissions to All, not Restricted or None, in order to successfully complete the authentication",
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in

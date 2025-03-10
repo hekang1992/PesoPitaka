@@ -86,7 +86,7 @@ class CameraPhotoManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
     private func showPermissionAlert(in viewController: UIViewController, for sourceType: UIImagePickerController.SourceType) {
         let alert = UIAlertController(
             title: "Permission Denied",
-            message: sourceType == .camera ? "Please enable camera access in Settings." : "Please enable photo library access in Settings.",
+            message: sourceType == .camera ? "Please go to settings to enable camera permissions to complete the authentication" : "Please go to settings to enable album permissions to complete the authentication",
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

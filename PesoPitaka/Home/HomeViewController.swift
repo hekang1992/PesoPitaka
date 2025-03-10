@@ -67,7 +67,7 @@ class HomeViewController: BaseViewController {
         
         oneView.priBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
-            let pageUrl = API_H5_URL + "/mouseLavend"
+            let pageUrl = API_H5_URL + "/parsnipWall"
             self.pushWebVc(from: pageUrl)
         }).disposed(by: disposeBag)
         
@@ -253,7 +253,7 @@ extension HomeViewController {
     }
     
     private func showAlert() {
-        let alert = UIAlertController(title: "Location Permission", message: "Location Permission Location Permission Location Permission", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Location Permission", message: "Please go to settings to enable location permissions to complete the authentication", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Go", style: .default) { (action) in
             if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
                 if UIApplication.shared.canOpenURL(settingsURL) {
