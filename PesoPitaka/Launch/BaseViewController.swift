@@ -190,15 +190,17 @@ extension BaseViewController {
         let alertVc = TYAlertController(alert: imageView, preferredStyle: .alert)!
         self.present(alertVc, animated: true)
         imageView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+        imageView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.dismiss(animated: true, completion: {
                 self?.navigationController?.popToRootViewController(animated: true)
             })
         }).disposed(by: disposeBag)
-        imageView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.dismiss(animated: true)
-        }).disposed(by: disposeBag)
         imageView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.dismiss(animated: true)
+            self?.dismiss(animated: true, completion: {
+                self?.navigationController?.popToRootViewController(animated: true)
+            })
         }).disposed(by: disposeBag)
     }
     

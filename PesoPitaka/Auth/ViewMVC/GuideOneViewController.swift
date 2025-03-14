@@ -33,6 +33,8 @@ class GuideOneViewController: BaseViewController {
     var leftImage: UIImage?
     var rightImage: UIImage?
     
+    var ktype: String?
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "loginbgimage")
@@ -163,9 +165,10 @@ class GuideOneViewController: BaseViewController {
 //            self?.navigationController?.popToRootViewController(animated: true)
         }).disposed(by: disposeBag)
         
-        
         oneView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
-            self?.authID()
+            if let since = self?.since, since.isEmpty {
+                self?.authID()
+            }
         }).disposed(by: disposeBag)
         
         self.authModel.asObservable().subscribe(onNext: { [weak self] model in
@@ -214,21 +217,18 @@ class GuideOneViewController: BaseViewController {
         
         nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
-            if self.leftImage != nil && self.rightImage != nil {
+            if self.leftView.placeImageView.isHidden == false && self.rightView.placeImageView.isHidden == false {
                 self.productDetailInfo(from: week.value)
             }else {
                 ToastConfig.showMessage(form: view, message: "Please complete the identity authentication process first")
             }
         }).disposed(by: disposeBag)
-        
-        
-        getIDAuthPidInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getServiceInfo {
-            
+        getServiceInfo { [weak self] in
+            self?.getIDAuthPidInfo()
         }
     }
     
@@ -253,7 +253,7 @@ class GuideOneViewController: BaseViewController {
                     if let standing = model.henceforth.standing, standing == 1 {
                         self.rightView.isUserInteractionEnabled = false
                         self.rightView.placeImageView.isHidden = false
-                        self.rightView.placeImageView.image = self.rightImage
+                        self.rightView.placeImageView.kf.setImage(with: URL(string: model.henceforth.residing ?? ""), placeholder: self.rightImage)
                     }else {
                         self.rightView.isUserInteractionEnabled = true
                         self.rightView.placeImageView.isHidden = true
@@ -265,6 +265,7 @@ class GuideOneViewController: BaseViewController {
                             self.leftView.placeImageView.isHidden = false
                             self.leftView.placeImageView.kf.setImage(with: URL(string: model.residing ?? ""), placeholder: self.leftImage)
                             self.oneView.nameLabel.text = model.since ?? ""
+                            self.since = model.since ?? ""
                         }else {
                             self.leftView.isUserInteractionEnabled = true
                             self.leftView.placeImageView.isHidden = true
@@ -384,6 +385,11 @@ extension GuideOneViewController {
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
                     self.model.accept(model)
+                    let imageArray = model.henceforth.instantly ?? []
+                    imageArray.filter { $0.hadn == self.since }
+                        .forEach { model in
+                            self.oneView.mustImageView.kf.setImage(with: URL(string: model.probably ?? ""))
+                    }
                 }
             } catch  {
                 print("JSON: \(error)")

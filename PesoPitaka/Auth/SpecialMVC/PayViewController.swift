@@ -301,6 +301,7 @@ extension PayViewController: UITableViewDelegate, UITableViewDataSource {
             }else {
                 cell.descLabel.text = remember
             }
+            cell.descLabel.textColor = UIColor.init(colorHexStr: "#717171")
             if type == "familiark" {
                 if knot.contains("E-") {
                     cell.bgView
@@ -344,6 +345,7 @@ extension PayViewController: UITableViewDelegate, UITableViewDataSource {
         }).disposed(by: disposeBag)
         authView.block = { model in
             cell.descLabel.text = model.hadn ?? ""
+            cell.descLabel.textColor = UIColor.init(colorHexStr: "#000000")
             model1.first?.pitiful = model.pitiful
         }
     }

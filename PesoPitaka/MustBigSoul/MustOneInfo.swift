@@ -7,7 +7,8 @@
 
 import NetworkExtension
 import SystemConfiguration.CaptiveNetwork
-
+import MachO
+import Foundation
 
 class MustMaskInfo: NSObject {
     
@@ -76,28 +77,36 @@ class MustSurgInfo: NSObject {
         }
         return nil
     }
-    
-    static func getMemoryUsage() -> (used: UInt64, free: UInt64, total: UInt64)? {
-        let HOST_VM_INFO_COUNT = mach_msg_type_number_t(MemoryLayout<vm_statistics_data_t>.size / MemoryLayout<integer_t>.size)
-        var size = mach_msg_type_number_t(MemoryLayout<vm_statistics_data_t>.size)
-        var hostInfo = vm_statistics_data_t()
 
-        let result = withUnsafeMutablePointer(to: &hostInfo) {
-            $0.withMemoryRebound(to: integer_t.self, capacity: Int(size)) {
-                host_statistics(mach_host_self(), HOST_VM_INFO, $0, &size)
+    static func getMemoryUsage() -> (used: String, free: String, total: String)? {
+            let totalMemoryBytes = ProcessInfo.processInfo.physicalMemory
+            
+            var taskInfo = task_vm_info_data_t()
+            var count = mach_msg_type_number_t(MemoryLayout<task_vm_info>.size) / 4
+            let result: kern_return_t = withUnsafeMutablePointer(to: &taskInfo) {
+                $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
+                    task_info(mach_task_self_, task_flavor_t(TASK_VM_INFO), $0, &count)
+                }
             }
+            
+            guard result == KERN_SUCCESS else {
+                return nil
+            }
+            
+            let usedMemoryBytes = taskInfo.internal + taskInfo.compressed
+            
+            let freeMemoryBytes = totalMemoryBytes - UInt64(usedMemoryBytes)
+            
+            func bytesToKB(_ bytes: UInt64) -> String {
+                return "\(bytes)"
+            }
+            
+            let totalMemoryKB = bytesToKB(totalMemoryBytes)
+            let usedMemoryKB = bytesToKB(UInt64(usedMemoryBytes))
+            let freeMemoryKB = bytesToKB(freeMemoryBytes)
+            
+            return (used: usedMemoryKB, free: freeMemoryKB, total: totalMemoryKB)
         }
-
-        if result == KERN_SUCCESS {
-            let totalMemory = ProcessInfo.processInfo.physicalMemory
-            let freeMemory = UInt64(hostInfo.free_count) * UInt64(vm_page_size)
-            let usedMemory = totalMemory - freeMemory
-            return (used: usedMemory, free: freeMemory, total: totalMemory)
-        } else {
-            print("Error: Failed to get memory usage")
-            return nil
-        }
-    }
     
     
     static func requDict() -> [String: Any] {

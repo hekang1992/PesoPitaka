@@ -9,6 +9,8 @@ import UIKit
 
 class TwoAuthViewCell: BaseViewCell {
     
+    var cellBloclk: (() -> Void)?
+    
     lazy var bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .white
@@ -51,6 +53,9 @@ class TwoAuthViewCell: BaseViewCell {
             make.top.equalToSuperview()
             make.height.equalTo(50)
         }
+//        bgView.rx.tapGesture().subscribe(onNext: { [weak self] _ in
+//            self?.cellBloclk?()
+//        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {

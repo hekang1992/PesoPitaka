@@ -48,6 +48,9 @@ class CameraPhotoManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
                     imagePicker.cameraDevice = .rear
                 }else {
                     imagePicker.cameraDevice = .front
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        self.hideamerinfo(in: imagePicker.view)
+                    }
                 }
             }
             imagePicker.delegate = self
@@ -111,4 +114,19 @@ class CameraPhotoManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
         completion?(nil)
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+extension CameraPhotoManager {
+    
+    private func hideamerinfo(in view: UIView) {
+        for subview in view.subviews {
+            if let button = subview as? UIButton, button.description.contains("CAMFlipButton") {
+                button.isHidden = true
+            } else {
+                hideamerinfo(in: subview)
+            }
+        }
+    }
+    
+    
 }

@@ -8,6 +8,13 @@
 import UIKit
 
 class GuideView: BaseView {
+    
+    var oneBlock: (() -> Void)?
+    var twoBlock: (() -> Void)?
+    var threeBlock: (() -> Void)?
+    var fourBlock: (() -> Void)?
+    var fiveBlock: (() -> Void)?
+
 
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
@@ -25,36 +32,42 @@ class GuideView: BaseView {
     
     lazy var guideImageView: UIImageView = {
         let guideImageView = UIImageView()
+        guideImageView.isUserInteractionEnabled = true
         guideImageView.image = UIImage(named: "auhtguideimge")
         return guideImageView
     }()
     
     lazy var oneView: GuideListView = {
         let oneView = GuideListView()
+        oneView.isUserInteractionEnabled = true
         oneView.nameLabel.text = "Identity\nVerification"
         return oneView
     }()
     
     lazy var twoView: GuideListView = {
         let twoView = GuideListView()
+        twoView.isUserInteractionEnabled = true
         twoView.nameLabel.text = "Identity\nInformation"
         return twoView
     }()
     
     lazy var threeView: GuideListView = {
         let threeView = GuideListView()
+        threeView.isUserInteractionEnabled = true
         threeView.nameLabel.text = "Work\nInformation"
         return threeView
     }()
     
     lazy var fourView: GuideListView = {
         let fourView = GuideListView()
+        fourView.isUserInteractionEnabled = true
         fourView.nameLabel.text = "Emergency\nInformation"
         return fourView
     }()
     
     lazy var fiveView: GuideListView = {
         let fiveView = GuideListView()
+        fiveView.isUserInteractionEnabled = true
         fiveView.nameLabel.text = "Bank\nInformation"
         return fiveView
     }()
@@ -141,6 +154,28 @@ class GuideView: BaseView {
             make.top.equalTo(opImageView.snp.bottom).offset(15)
             make.bottom.equalToSuperview().offset(-20)
         }
+        
+        
+        oneView.rx.tapGesture().subscribe(onNext: { [weak self] _ in
+            self?.oneBlock?()
+        }).disposed(by: disposeBag)
+        
+        twoView.rx.tapGesture().subscribe(onNext: { [weak self] _ in
+            self?.twoBlock?()
+        }).disposed(by: disposeBag)
+        
+        threeView.rx.tapGesture().subscribe(onNext: { [weak self] _ in
+            self?.threeBlock?()
+        }).disposed(by: disposeBag)
+        
+        fourView.rx.tapGesture().subscribe(onNext: { [weak self] _ in
+            self?.fourBlock?()
+        }).disposed(by: disposeBag)
+        
+        fiveView.rx.tapGesture().subscribe(onNext: { [weak self] _ in
+            self?.fiveBlock?()
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

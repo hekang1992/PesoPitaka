@@ -110,10 +110,16 @@ extension OrderListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.twolabel.text = model.moneyText ?? ""
             cell.timelabel.text = model.dateValue ?? ""
             cell.defineBlueLabel.text = model.dateText ?? ""
-            cell.applyBtn.text = model.secret?.although ?? ""
+            let rest = model.secret?.rest ?? ""
+            if rest.isEmpty {
+                cell.applyBtn.isHidden = true
+            }else {
+                cell.applyBtn.text = rest
+                cell.applyBtn.isHidden = false
+            }
             cell.titlabel.text = model.secret?.liar ?? ""
             let good = model.secret?.good ?? 0
-            cell.appBtn.setTitle(model.statusTextDescButton ?? "", for: .normal)
+            cell.appBtn.setTitle(model.secret?.although ?? "", for: .normal)
             if good == 1 {
                 cell.appBtn.setBackgroundImage(UIImage(named: "redimgeim"), for: .normal)
             }else if good == 2 || good == 3 {
