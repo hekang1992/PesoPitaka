@@ -48,7 +48,12 @@ class GuideViewController: BaseViewController {
         
         guideView.nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             let week = self?.dict.value?["week"] ?? ""
-            self?.productDetailInfo(from: week, type: "1")
+            let type = self?.dict.value?["type"] ?? ""
+            if type == "familiark" {
+                self?.productDetailInfo(from: week, type: "0")
+            }else {
+                self?.productDetailInfo(from: week, type: "1")
+            }
         }).disposed(by: disposeBag)
         
         guideView.opImageView
@@ -62,10 +67,10 @@ class GuideViewController: BaseViewController {
         }).disposed(by: disposeBag)
         
         guideView.oneBlock = { [weak self] in
-            guard let self = self, let model = self.model else { return }
-            let type = model.henceforth.indicating?.help ?? ""
+            guard let self = self else { return }
+            let type = model?.henceforth.indicating?.help ?? ""
             let week = self.dict.value?["week"] ?? ""
-            if type >= "familiarf" {
+            if type >= "familiarf" || type == "" {
                 let oneVc = GuideOneViewController()
                 oneVc.week.accept(week)
                 self.navigationController?.pushViewController(oneVc, animated: true)
@@ -75,10 +80,10 @@ class GuideViewController: BaseViewController {
         }
         
         guideView.twoBlock = { [weak self] in
-            guard let self = self, let model = self.model else { return }
-            let type = model.henceforth.indicating?.help ?? ""
+            guard let self = self else { return }
+            let type = model?.henceforth.indicating?.help ?? ""
             let week = self.dict.value?["week"] ?? ""
-            if type >= "familiarg" {
+            if type >= "familiarg" || type == "" {
                 let twoVc = MonsterViewController()
                 twoVc.week.accept(week)
                 twoVc.onePageUrl = "/entertain/necessary"
@@ -92,10 +97,10 @@ class GuideViewController: BaseViewController {
         }
         
         guideView.threeBlock = { [weak self] in
-            guard let self = self, let model = self.model else { return }
-            let type = model.henceforth.indicating?.help ?? ""
+            guard let self = self else { return }
+            let type = model?.henceforth.indicating?.help ?? ""
             let week = self.dict.value?["week"] ?? ""
-            if type >= "familiarh" {
+            if type >= "familiarh" || type == "" {
                 let workVc = MonsterViewController()
                 workVc.week.accept(week)
                 workVc.onePageUrl = "/entertain/bucket"
@@ -109,10 +114,10 @@ class GuideViewController: BaseViewController {
         }
         
         guideView.fourBlock = { [weak self] in
-            guard let self = self, let model = self.model else { return }
-            let type = model.henceforth.indicating?.help ?? ""
+            guard let self = self else { return }
+            let type = model?.henceforth.indicating?.help ?? ""
             let week = self.dict.value?["week"] ?? ""
-            if type >= "familiari" {
+            if type >= "familiari" || type == "" {
                 let serviceVc = ServerViewController()
                 serviceVc.week.accept(week)
                 self.navigationController?.pushViewController(serviceVc, animated: true)
@@ -122,10 +127,10 @@ class GuideViewController: BaseViewController {
         }
         
         guideView.fiveBlock = { [weak self] in
-            guard let self = self, let model = self.model else { return }
-            let type = model.henceforth.indicating?.help ?? ""
+            guard let self = self else { return }
+            let type = model?.henceforth.indicating?.help ?? ""
             let week = self.dict.value?["week"] ?? ""
-            if type >= "familiarj" {
+            if type >= "familiarj" || type == "" {
                 let week = self.dict.value?["week"] ?? ""
                 let payVc = PayViewController()
                 payVc.week.accept(week)
@@ -140,7 +145,12 @@ class GuideViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let week = self.dict.value?["week"] ?? ""
-        productDetailInfo(from: week, type: "0")
+        let type = self.dict.value?["type"] ?? ""
+        if type != "familiark" {
+            productDetailInfo(from: week, type: "0")
+        }else {
+            uiInfo(for: type)
+        }
     }
     
 }
@@ -171,10 +181,12 @@ extension GuideViewController {
                             self.toGuideVc(from: help, week: weak)
                         }else {
                             //UI
-                            uiInfo(for: model)
+                            let type = model.henceforth.indicating?.help ?? ""
+                            uiInfo(for: type)
                         }
                     }else {
-                        
+                        let orderID = model.henceforth.summoned?.orderID ?? ""
+                        self.orderIDToVc(for: orderID, week: weak)
                     }
                 }
             } catch  {
@@ -184,12 +196,10 @@ extension GuideViewController {
         result.store(in: &cancellables)
     }
     
-    private func uiInfo(for model: BaseModel) {
-        let type = model.henceforth.indicating?.help ?? ""
+    private func uiInfo(for type: String) {
         let defaultImage = UIImage(named: "futhaimage")
         switch type {
         case "familiarf":
-            
             break
         case "familiarg":
             guideView.oneView.bgImageView.image = defaultImage
@@ -205,12 +215,13 @@ extension GuideViewController {
             guideView.twoView.bgImageView.image = defaultImage
             guideView.threeView.bgImageView.image = defaultImage
             guideView.fourView.bgImageView.image = defaultImage
-        default:
+        case "familiark":
             guideView.oneView.bgImageView.image = defaultImage
             guideView.twoView.bgImageView.image = defaultImage
             guideView.threeView.bgImageView.image = defaultImage
             guideView.fourView.bgImageView.image = defaultImage
             guideView.fiveView.bgImageView.image = defaultImage
+        default: break
         }
     }
     

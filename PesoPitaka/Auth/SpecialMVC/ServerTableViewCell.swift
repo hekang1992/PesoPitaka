@@ -26,7 +26,6 @@ class ServerTableViewCell: BaseViewCell {
     
     lazy var descLabel: UILabel = {
         let descLabel = UIUtils.createLabel(font: .regularFontOfSize(size: 14), textColor: .init(colorHexStr: "#717171")!, textAlignment: .left)
-        descLabel.text = "Choose Your Relationship"
         return descLabel
     }()
     
@@ -45,7 +44,6 @@ class ServerTableViewCell: BaseViewCell {
     
     lazy var nameLabel: UILabel = {
         let nameLabel = UIUtils.createLabel(font: .regularFontOfSize(size: 14), textColor: .init(colorHexStr: "#717171")!, textAlignment: .left)
-        nameLabel.text = "Contact Information"
         return nameLabel
     }()
     

@@ -148,12 +148,12 @@ extension BaseViewController {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return nil
         }
-
+        
         let queryItems = components.queryItems ?? []
         let lastQueryItem = queryItems.reduce(nil) { (result, item) -> URLQueryItem? in
             return item
         }
-
+        
         return lastQueryItem?.value
     }
     
@@ -193,15 +193,29 @@ extension BaseViewController {
             self?.dismiss(animated: true)
         }).disposed(by: disposeBag)
         imageView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.dismiss(animated: true, completion: {
-                self?.navigationController?.popToRootViewController(animated: true)
+            guard let self = self else { return }
+            self.dismiss(animated: true, completion: {
+                self.popToTargetViewController()
             })
         }).disposed(by: disposeBag)
         imageView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.dismiss(animated: true, completion: {
-                self?.navigationController?.popToRootViewController(animated: true)
+            guard let self = self else { return }
+            self.dismiss(animated: true, completion: {
+                self.popToTargetViewController()
             })
         }).disposed(by: disposeBag)
+    }
+    
+    func popToTargetViewController() {
+        if let targetViewController = self.navigationController?.viewControllers.first(where: { $0 is GuideViewController }) {
+            if self == targetViewController {
+                self.navigationController?.popViewController(animated: true)
+            }else {
+                self.navigationController?.popToViewController(targetViewController, animated: true)
+            }
+        }else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
 }

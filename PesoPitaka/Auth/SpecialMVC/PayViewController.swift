@@ -298,10 +298,11 @@ extension PayViewController: UITableViewDelegate, UITableViewDataSource {
             let knot = model?.knot ?? ""
             if remember.isEmpty {
                 cell.descLabel.text = knot
+                cell.descLabel.textColor = UIColor.init(colorHexStr: "#717171")
             }else {
                 cell.descLabel.text = remember
+                cell.descLabel.textColor = UIColor.init(colorHexStr: "#000000")
             }
-            cell.descLabel.textColor = UIColor.init(colorHexStr: "#717171")
             if type == "familiark" {
                 if knot.contains("E-") {
                     cell.bgView

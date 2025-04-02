@@ -88,7 +88,7 @@ extension UserCenterViewController {
                     let pageUrl = API_H5_URL + "/radishVanil"
                     self.pushWebVc(from: pageUrl)
                 case self.centerView.connectBtn:
-                    let pageUrl = API_H5_URL
+                    let pageUrl = API_H5_URL + "/radishVanil"
                     self.pushWebVc(from: pageUrl)
                 case self.centerView.termsBtn:
                     let termsVc = TermsViewController()

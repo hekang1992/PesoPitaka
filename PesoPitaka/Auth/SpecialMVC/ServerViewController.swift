@@ -121,7 +121,7 @@ class ServerViewController: BaseViewController {
                     return [
                         "settle": model.settle ?? "",
                         "hadn": model.hadn ?? "",
-                        "particular": model.pitiful ?? "",
+                        "particular": model.particular ?? "",
                         "helped": model.helped ?? "",
                     ]
                 }
@@ -188,6 +188,26 @@ extension ServerViewController: UITableViewDelegate, UITableViewDataSource {
         cell.miLabel.text = model?.liz ?? ""
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
+        let relationText = model?.relationText ?? ""
+        if relationText.isEmpty {
+            cell.descLabel.text = "Choose Your Relationship"
+            cell.descLabel.textColor = .init(colorHexStr: "#717171")
+        }else {
+            cell.descLabel.text = relationText
+            cell.descLabel.textColor = .black
+        }
+        
+        let settle = model?.settle ?? ""
+        let hadn = model?.hadn ?? ""
+        if settle.isEmpty {
+            cell.nameLabel.text = "Contact Information"
+            cell.nameLabel.textColor = .init(colorHexStr: "#717171")
+        }else {
+            cell.nameLabel.text = "\(hadn)" + "-" + "\(settle)"
+            cell.nameLabel.textColor = .black
+        }
+        
+        
         cell.oneBlock = {
             let modelArray = model?.northwest ?? []
             let oneArray = PrimaryDataProcessor.processPrimaryData(dataSource: modelArray)

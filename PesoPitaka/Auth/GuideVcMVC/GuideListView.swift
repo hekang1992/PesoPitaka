@@ -12,12 +12,14 @@ class GuideListView: BaseView {
     lazy var nameLabel: UILabel = {
         let nameLabel = UIUtils.createLabel(font: .regularFontOfSize(size: 14), textColor: UIColor.init(colorHexStr: "#000000")!, textAlignment: .left)
         nameLabel.numberOfLines = 0
+        nameLabel.isUserInteractionEnabled = true
         return nameLabel
     }()
     
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "processigme")
+        bgImageView.isUserInteractionEnabled = true
         return bgImageView
     }()
     

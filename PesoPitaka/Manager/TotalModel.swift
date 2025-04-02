@@ -135,7 +135,11 @@ class bangModel: Codable {
     var northwest: [glaredModel]?
     var glared: [glaredModel]?
     var bang: [bangModel]?
+    var relationText: String?
+    var particular: String?
     enum CodingKeys: String, CodingKey {
+        case particular = "particular"
+        case relationText = "relationText"
         case herself = "herself"
         case fiercely = "fiercely"
         case knot = "knot"
@@ -156,6 +160,7 @@ class bangModel: Codable {
         self.herself = try container.decodeIfPresent(String.self, forKey: .herself)
         self.fiercely = try container.decodeIfPresent(Int.self, forKey: .fiercely)
         self.knot = try container.decodeIfPresent(String.self, forKey: .knot)
+        self.particular = try container.decodeIfPresent(String.self, forKey: .particular)
         self.points = try container.decodeIfPresent(String.self, forKey: .points)
         self.went = try container.decodeIfPresent(String.self, forKey: .went)
         self.remember = try container.decodeIfPresent(String.self, forKey: .remember)
@@ -170,6 +175,7 @@ class bangModel: Codable {
         self.helped = try container.decodeIfPresent(String.self, forKey: .helped)
         self.liz = try container.decodeIfPresent(String.self, forKey: .liz)
         self.settle = try container.decodeIfPresent(String.self, forKey: .settle)
+        self.relationText = try container.decodeIfPresent(String.self, forKey: .relationText)
         self.northwest = try container.decodeIfPresent([glaredModel].self, forKey: .northwest)
         self.glared = try container.decodeIfPresent([glaredModel].self, forKey: .glared)
         self.bang = try container.decodeIfPresent([bangModel].self, forKey: .bang)

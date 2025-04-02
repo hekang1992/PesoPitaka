@@ -217,7 +217,7 @@ extension HomeViewController {
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
                     let pageUrl = model.henceforth.residing ?? ""
-                    self.accordingUrl(from: pageUrl)
+                    self.accordingUrl(from: pageUrl, week: weak)
                 }
             } catch  {
                 print("JSON: \(error)")
@@ -243,7 +243,7 @@ extension HomeViewController {
                 let invalidValues: Set<String> = ["0", "00"]
                 if invalidValues.contains(herself) {
                     let pageUrl = model.henceforth.residing ?? ""
-                    self.accordingUrl(from: pageUrl)
+                    self.accordingUrl(from: pageUrl, week: week)
                 }
             } catch  {
                 print("JSON: \(error)")
@@ -269,7 +269,7 @@ extension HomeViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func accordingUrl(from pageUrl: String) {
+    private func accordingUrl(from pageUrl: String, week: String) {
         if pageUrl.contains(SCHEME_URL) {
             if pageUrl.contains("fennelCapers") {
                 if let url = URL(string: pageUrl), let query = url.query {
@@ -281,7 +281,12 @@ extension HomeViewController {
                 }
             }
         }else {
-            self.pushWebVc(from: pageUrl)
+            let choose = self.model.value?.henceforth.choose ?? 0
+            if choose == 0 {//go guideVc
+                toOneGuideVc(from: "familiark", week: week)
+            }else {
+                self.pushWebVc(from: pageUrl)
+            }
         }
     }
     
@@ -304,8 +309,14 @@ extension HomeViewController {
                     if let authModel = model.henceforth.indicating, let help = authModel.help, !help.isEmpty {
                         self.toOneGuideVc(from: help, week: weak)
                     }else {
-                        let orderID = model.henceforth.summoned?.orderID ?? ""
-                        self.orderIDToVc(for: orderID, week: weak)
+                        let choose = self.model.value?.henceforth.choose ?? 0
+                        if choose == 0 {//go guideVc
+                            toOneGuideVc(from: "familiark", week: weak)
+                        }else {
+                            let orderID = model.henceforth.summoned?.orderID ?? ""
+                            self.orderIDToVc(for: orderID, week: weak)
+                        }
+                        
                     }
                 }
             } catch  {

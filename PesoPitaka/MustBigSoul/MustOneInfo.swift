@@ -40,6 +40,34 @@ class MustMaskInfo: NSObject {
         return nil
     }
     
+    static func getWiFiIPBAddress() -> String? {
+        var address: String?
+        var ifaddr: UnsafeMutablePointer<ifaddrs>? = nil
+        if getifaddrs(&ifaddr) == 0 {
+            var ptr = ifaddr
+            while ptr != nil {
+                defer { ptr = ptr?.pointee.ifa_next }
+                
+                let interface = ptr?.pointee
+                let addrFamily = interface?.ifa_addr.pointee.sa_family
+                if addrFamily == UInt8(AF_INET) || addrFamily == UInt8(AF_INET6) {
+                    
+                    let name = String(cString: (interface?.ifa_name)!)
+                    if name == "en0" || name == "en1" {
+                        
+                        var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+                        getnameinfo(interface?.ifa_addr, socklen_t((interface?.ifa_addr.pointee.sa_len)!),
+                                    &hostname, socklen_t(hostname.count),
+                                    nil, socklen_t(0), NI_NUMERICHOST)
+                        address = String(cString: hostname)
+                    }
+                }
+            }
+            freeifaddrs(ifaddr)
+        }
+        return address
+    }
+    
     static func requDict() -> [String: Any] {
         
         let hadn: String  = MustMaskInfo.getWiFiIPAddress() ?? ""
@@ -54,7 +82,7 @@ class MustMaskInfo: NSObject {
                     "treat": treat]
         
         let array: [[String: String]] = [dict]
-        let adict: [String: Any] = ["angrily": ["suki": MustMaskInfo.getWiFiIPAddress() ?? "",
+        let adict: [String: Any] = ["angrily": ["suki": MustMaskInfo.getWiFiIPBAddress() ?? "",
                                                 "rhaegar": array,
                                                 "explain": dict,
                                                 "house": 1]]
@@ -77,36 +105,36 @@ class MustSurgInfo: NSObject {
         }
         return nil
     }
-
+    
     static func getMemoryUsage() -> (used: String, free: String, total: String)? {
-            let totalMemoryBytes = ProcessInfo.processInfo.physicalMemory
-            
-            var taskInfo = task_vm_info_data_t()
-            var count = mach_msg_type_number_t(MemoryLayout<task_vm_info>.size) / 4
-            let result: kern_return_t = withUnsafeMutablePointer(to: &taskInfo) {
-                $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
-                    task_info(mach_task_self_, task_flavor_t(TASK_VM_INFO), $0, &count)
-                }
+        let totalMemoryBytes = ProcessInfo.processInfo.physicalMemory
+        
+        var taskInfo = task_vm_info_data_t()
+        var count = mach_msg_type_number_t(MemoryLayout<task_vm_info>.size) / 4
+        let result: kern_return_t = withUnsafeMutablePointer(to: &taskInfo) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
+                task_info(mach_task_self_, task_flavor_t(TASK_VM_INFO), $0, &count)
             }
-            
-            guard result == KERN_SUCCESS else {
-                return nil
-            }
-            
-            let usedMemoryBytes = taskInfo.internal + taskInfo.compressed
-            
-            let freeMemoryBytes = totalMemoryBytes - UInt64(usedMemoryBytes)
-            
-            func bytesToKB(_ bytes: UInt64) -> String {
-                return "\(bytes)"
-            }
-            
-            let totalMemoryKB = bytesToKB(totalMemoryBytes)
-            let usedMemoryKB = bytesToKB(UInt64(usedMemoryBytes))
-            let freeMemoryKB = bytesToKB(freeMemoryBytes)
-            
-            return (used: usedMemoryKB, free: freeMemoryKB, total: totalMemoryKB)
         }
+        
+        guard result == KERN_SUCCESS else {
+            return nil
+        }
+        
+        let usedMemoryBytes = taskInfo.internal + taskInfo.compressed
+        
+        let freeMemoryBytes = totalMemoryBytes - UInt64(usedMemoryBytes)
+        
+        func bytesToKB(_ bytes: UInt64) -> String {
+            return "\(bytes)"
+        }
+        
+        let totalMemoryKB = bytesToKB(totalMemoryBytes)
+        let usedMemoryKB = bytesToKB(UInt64(usedMemoryBytes))
+        let freeMemoryKB = bytesToKB(freeMemoryBytes)
+        
+        return (used: usedMemoryKB, free: freeMemoryKB, total: totalMemoryKB)
+    }
     
     
     static func requDict() -> [String: Any] {

@@ -180,11 +180,6 @@ extension MonsterViewController: UITableViewDelegate, UITableViewDataSource {
         let type = model?.went ?? ""
         if type == "familiarl" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OneAuthViewCell", for: indexPath) as! OneAuthViewCell
-            let attrString = NSMutableAttributedString(string: model?.knot ?? "", attributes: [
-                .foregroundColor: UIColor.init(colorHexStr: "#717171") as Any,
-                .font: UIFont.regularFontOfSize(size: 15)
-            ])
-            cell.nameTx.attributedPlaceholder = attrString
             cell.backgroundColor = .clear
             cell.selectionStyle = .none
             cell.nameTx
@@ -199,6 +194,13 @@ extension MonsterViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.nameTx.keyboardType = .numberPad
             }else {
                 cell.nameTx.keyboardType = .default
+            }
+            let remember = model?.remember ?? ""
+            cell.nameTx.textColor = .black
+            if remember.isEmpty {
+                cell.nameTx.placeholder = model?.knot ?? ""
+            }else {
+                cell.nameTx.text = remember
             }
             return cell
         }else {
